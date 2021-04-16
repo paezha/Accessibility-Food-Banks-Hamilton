@@ -1,0 +1,3256 @@
+gta06_hhld,income,total,Mode
+5007,2,15,Transit (Excluding GO rail)
+5012,7,62,Transit (Excluding GO rail)
+5020,6,20,Transit (Excluding GO rail)
+5032,3,149,Transit (Excluding GO rail)
+5032,5,149,Transit (Excluding GO rail)
+5040,6,87,Transit (Excluding GO rail)
+5041,7,30,Transit (Excluding GO rail)
+5044,6,185,Transit (Excluding GO rail)
+5044,7,85,Transit (Excluding GO rail)
+5045,2,85,Transit (Excluding GO rail)
+5045,6,25,Transit (Excluding GO rail)
+5046,2,383,Transit (Excluding GO rail)
+5046,4,221,Transit (Excluding GO rail)
+5046,5,142,Transit (Excluding GO rail)
+5046,7,135,Transit (Excluding GO rail)
+5047,6,126,Transit (Excluding GO rail)
+5050,2,142,Transit (Excluding GO rail)
+5050,3,140,Transit (Excluding GO rail)
+5050,4,174,Transit (Excluding GO rail)
+5050,6,79,Transit (Excluding GO rail)
+5050,7,451,Transit (Excluding GO rail)
+5051,2,144,Transit (Excluding GO rail)
+5051,6,101,Transit (Excluding GO rail)
+5051,7,99,Transit (Excluding GO rail)
+5052,3,44,Transit (Excluding GO rail)
+5052,7,274,Transit (Excluding GO rail)
+5053,4,64,Transit (Excluding GO rail)
+5053,5,69,Transit (Excluding GO rail)
+5054,6,128,Transit (Excluding GO rail)
+5056,2,82,Transit (Excluding GO rail)
+5056,4,321,Transit (Excluding GO rail)
+5056,7,92,Transit (Excluding GO rail)
+5057,1,266,Transit (Excluding GO rail)
+5057,2,125,Transit (Excluding GO rail)
+5057,3,193,Transit (Excluding GO rail)
+5057,4,46,Transit (Excluding GO rail)
+5057,5,44,Transit (Excluding GO rail)
+5058,3,41,Transit (Excluding GO rail)
+5058,5,37,Transit (Excluding GO rail)
+5059,4,224,Transit (Excluding GO rail)
+5059,7,31,Transit (Excluding GO rail)
+5060,2,122,Transit (Excluding GO rail)
+5061,6,73,Transit (Excluding GO rail)
+5063,4,39,Transit (Excluding GO rail)
+5063,7,340,Transit (Excluding GO rail)
+5066,1,29,Transit (Excluding GO rail)
+5066,2,187,Transit (Excluding GO rail)
+5066,3,143,Transit (Excluding GO rail)
+5066,4,135,Transit (Excluding GO rail)
+5066,5,259,Transit (Excluding GO rail)
+5066,6,113,Transit (Excluding GO rail)
+5067,4,53,Transit (Excluding GO rail)
+5068,2,163,Transit (Excluding GO rail)
+5068,5,109,Transit (Excluding GO rail)
+5068,6,148,Transit (Excluding GO rail)
+5068,7,132,Transit (Excluding GO rail)
+5069,2,302,Transit (Excluding GO rail)
+5069,3,247,Transit (Excluding GO rail)
+5069,4,50,Transit (Excluding GO rail)
+5069,7,30,Transit (Excluding GO rail)
+5071,4,129,Transit (Excluding GO rail)
+5071,6,70,Transit (Excluding GO rail)
+5071,7,25,Transit (Excluding GO rail)
+5073,6,31,Transit (Excluding GO rail)
+5074,2,122,Transit (Excluding GO rail)
+5074,3,73,Transit (Excluding GO rail)
+5074,4,103,Transit (Excluding GO rail)
+5074,5,53,Transit (Excluding GO rail)
+5074,7,51,Transit (Excluding GO rail)
+5075,2,91,Transit (Excluding GO rail)
+5075,3,153,Transit (Excluding GO rail)
+5075,4,238,Transit (Excluding GO rail)
+5075,5,360,Transit (Excluding GO rail)
+5076,6,19,Transit (Excluding GO rail)
+5077,5,28,Transit (Excluding GO rail)
+5077,6,54,Transit (Excluding GO rail)
+5079,4,76,Transit (Excluding GO rail)
+5080,4,41,Transit (Excluding GO rail)
+5081,7,95,Transit (Excluding GO rail)
+5082,1,154,Transit (Excluding GO rail)
+5082,2,295,Transit (Excluding GO rail)
+5082,4,210,Transit (Excluding GO rail)
+5082,5,65,Transit (Excluding GO rail)
+5082,6,67,Transit (Excluding GO rail)
+5082,7,144,Transit (Excluding GO rail)
+5084,1,75,Transit (Excluding GO rail)
+5084,3,88,Transit (Excluding GO rail)
+5084,4,141,Transit (Excluding GO rail)
+5084,5,175,Transit (Excluding GO rail)
+5084,6,294,Transit (Excluding GO rail)
+5086,3,106,Transit (Excluding GO rail)
+5086,4,45,Transit (Excluding GO rail)
+5086,7,63,Transit (Excluding GO rail)
+5087,1,114,Transit (Excluding GO rail)
+5087,5,56,Transit (Excluding GO rail)
+5089,2,73,Transit (Excluding GO rail)
+5089,3,141,Transit (Excluding GO rail)
+5090,3,20,Transit (Excluding GO rail)
+5090,6,146,Transit (Excluding GO rail)
+5091,2,181,Transit (Excluding GO rail)
+5091,6,214,Transit (Excluding GO rail)
+5091,7,52,Transit (Excluding GO rail)
+5092,1,49,Transit (Excluding GO rail)
+5092,3,74,Transit (Excluding GO rail)
+5092,4,33,Transit (Excluding GO rail)
+5092,6,96,Transit (Excluding GO rail)
+5093,1,54,Transit (Excluding GO rail)
+5093,2,12,Transit (Excluding GO rail)
+5093,5,25,Transit (Excluding GO rail)
+5094,2,53,Transit (Excluding GO rail)
+5094,4,59,Transit (Excluding GO rail)
+5094,6,339,Transit (Excluding GO rail)
+5095,1,111,Transit (Excluding GO rail)
+5095,2,628,Transit (Excluding GO rail)
+5095,3,309,Transit (Excluding GO rail)
+5095,4,18,Transit (Excluding GO rail)
+5096,4,41,Transit (Excluding GO rail)
+5096,5,102,Transit (Excluding GO rail)
+5096,6,48,Transit (Excluding GO rail)
+5097,1,259,Transit (Excluding GO rail)
+5097,3,140,Transit (Excluding GO rail)
+5098,2,349,Transit (Excluding GO rail)
+5098,5,194,Transit (Excluding GO rail)
+5098,6,53,Transit (Excluding GO rail)
+5099,2,51,Transit (Excluding GO rail)
+5099,7,143,Transit (Excluding GO rail)
+5100,3,29,Transit (Excluding GO rail)
+5100,5,130,Transit (Excluding GO rail)
+5101,3,163,Transit (Excluding GO rail)
+5101,4,155,Transit (Excluding GO rail)
+5101,7,88,Transit (Excluding GO rail)
+5102,4,209,Transit (Excluding GO rail)
+5104,1,425,Transit (Excluding GO rail)
+5104,2,186,Transit (Excluding GO rail)
+5104,3,96,Transit (Excluding GO rail)
+5104,4,283,Transit (Excluding GO rail)
+5104,7,95,Transit (Excluding GO rail)
+5106,2,94,Transit (Excluding GO rail)
+5106,3,108,Transit (Excluding GO rail)
+5106,7,63,Transit (Excluding GO rail)
+5109,7,56,Transit (Excluding GO rail)
+5110,1,45,Transit (Excluding GO rail)
+5110,5,108,Transit (Excluding GO rail)
+5110,6,22,Transit (Excluding GO rail)
+5110,7,66,Transit (Excluding GO rail)
+5111,2,241,Transit (Excluding GO rail)
+5111,4,34,Transit (Excluding GO rail)
+5111,5,42,Transit (Excluding GO rail)
+5111,7,41,Transit (Excluding GO rail)
+5115,2,70,Transit (Excluding GO rail)
+5115,3,167,Transit (Excluding GO rail)
+5115,7,54,Transit (Excluding GO rail)
+5116,2,50,Transit (Excluding GO rail)
+5116,3,165,Transit (Excluding GO rail)
+5116,7,628,Transit (Excluding GO rail)
+5117,3,65,Transit (Excluding GO rail)
+5117,7,82,Transit (Excluding GO rail)
+5118,2,287,Transit (Excluding GO rail)
+5118,4,59,Transit (Excluding GO rail)
+5120,2,39,Transit (Excluding GO rail)
+5120,7,183,Transit (Excluding GO rail)
+5121,2,110,Transit (Excluding GO rail)
+5121,3,83,Transit (Excluding GO rail)
+5123,1,162,Transit (Excluding GO rail)
+5123,2,122,Transit (Excluding GO rail)
+5123,3,134,Transit (Excluding GO rail)
+5123,4,206,Transit (Excluding GO rail)
+5123,7,126,Transit (Excluding GO rail)
+5125,2,52,Transit (Excluding GO rail)
+5126,3,144,Transit (Excluding GO rail)
+5127,1,49,Transit (Excluding GO rail)
+5127,2,631,Transit (Excluding GO rail)
+5127,3,71,Transit (Excluding GO rail)
+5127,4,199,Transit (Excluding GO rail)
+5127,7,40,Transit (Excluding GO rail)
+5129,1,221,Transit (Excluding GO rail)
+5129,6,38,Transit (Excluding GO rail)
+5130,2,501,Transit (Excluding GO rail)
+5130,3,72,Transit (Excluding GO rail)
+5130,4,94,Transit (Excluding GO rail)
+5131,1,50,Transit (Excluding GO rail)
+5131,2,92,Transit (Excluding GO rail)
+5131,3,169,Transit (Excluding GO rail)
+5131,4,30,Transit (Excluding GO rail)
+5131,7,205,Transit (Excluding GO rail)
+5132,2,133,Transit (Excluding GO rail)
+5132,7,390,Transit (Excluding GO rail)
+5133,2,292,Transit (Excluding GO rail)
+5133,3,153,Transit (Excluding GO rail)
+5133,4,161,Transit (Excluding GO rail)
+5135,1,31,Transit (Excluding GO rail)
+5135,2,22,Transit (Excluding GO rail)
+5135,3,130,Transit (Excluding GO rail)
+5135,4,428,Transit (Excluding GO rail)
+5137,5,176,Transit (Excluding GO rail)
+5139,1,30,Transit (Excluding GO rail)
+5139,2,330,Transit (Excluding GO rail)
+5139,3,89,Transit (Excluding GO rail)
+5139,4,221,Transit (Excluding GO rail)
+5139,5,725,Transit (Excluding GO rail)
+5139,6,88,Transit (Excluding GO rail)
+5140,2,60,Transit (Excluding GO rail)
+5140,3,21,Transit (Excluding GO rail)
+5140,4,21,Transit (Excluding GO rail)
+5140,5,53,Transit (Excluding GO rail)
+5141,1,7,Transit (Excluding GO rail)
+5141,2,82,Transit (Excluding GO rail)
+5141,5,261,Transit (Excluding GO rail)
+5141,6,166,Transit (Excluding GO rail)
+5143,2,67,Transit (Excluding GO rail)
+5143,4,91,Transit (Excluding GO rail)
+5144,2,192,Transit (Excluding GO rail)
+5144,3,257,Transit (Excluding GO rail)
+5144,4,265,Transit (Excluding GO rail)
+5144,6,44,Transit (Excluding GO rail)
+5144,7,286,Transit (Excluding GO rail)
+5148,1,218,Transit (Excluding GO rail)
+5148,2,975,Transit (Excluding GO rail)
+5148,3,1105,Transit (Excluding GO rail)
+5148,4,53,Transit (Excluding GO rail)
+5148,5,240,Transit (Excluding GO rail)
+5148,7,373,Transit (Excluding GO rail)
+5149,1,174,Transit (Excluding GO rail)
+5149,3,219,Transit (Excluding GO rail)
+5150,1,333,Transit (Excluding GO rail)
+5150,2,864,Transit (Excluding GO rail)
+5150,3,148,Transit (Excluding GO rail)
+5150,4,146,Transit (Excluding GO rail)
+5150,5,155,Transit (Excluding GO rail)
+5151,2,188,Transit (Excluding GO rail)
+5151,3,197,Transit (Excluding GO rail)
+5151,4,276,Transit (Excluding GO rail)
+5151,7,29,Transit (Excluding GO rail)
+5154,4,135,Transit (Excluding GO rail)
+5154,5,177,Transit (Excluding GO rail)
+5155,2,308,Transit (Excluding GO rail)
+5155,4,160,Transit (Excluding GO rail)
+5155,6,120,Transit (Excluding GO rail)
+5156,2,92,Transit (Excluding GO rail)
+5156,7,18,Transit (Excluding GO rail)
+5157,1,65,Transit (Excluding GO rail)
+5157,2,587,Transit (Excluding GO rail)
+5157,4,73,Transit (Excluding GO rail)
+5157,5,166,Transit (Excluding GO rail)
+5158,2,48,Transit (Excluding GO rail)
+5158,4,292,Transit (Excluding GO rail)
+5158,5,68,Transit (Excluding GO rail)
+5158,6,201,Transit (Excluding GO rail)
+5159,1,150,Transit (Excluding GO rail)
+5159,2,302,Transit (Excluding GO rail)
+5159,3,198,Transit (Excluding GO rail)
+5159,4,100,Transit (Excluding GO rail)
+5159,5,34,Transit (Excluding GO rail)
+5161,3,58,Transit (Excluding GO rail)
+5161,4,268,Transit (Excluding GO rail)
+5161,7,165,Transit (Excluding GO rail)
+5162,2,56,Transit (Excluding GO rail)
+5163,1,287,Transit (Excluding GO rail)
+5163,2,48,Transit (Excluding GO rail)
+5163,3,96,Transit (Excluding GO rail)
+5163,6,116,Transit (Excluding GO rail)
+5164,1,476,Transit (Excluding GO rail)
+5164,2,1037,Transit (Excluding GO rail)
+5164,3,10,Transit (Excluding GO rail)
+5164,4,75,Transit (Excluding GO rail)
+5164,5,187,Transit (Excluding GO rail)
+5164,6,16,Transit (Excluding GO rail)
+5164,7,117,Transit (Excluding GO rail)
+5165,1,180,Transit (Excluding GO rail)
+5165,2,28,Transit (Excluding GO rail)
+5165,3,43,Transit (Excluding GO rail)
+5165,7,81,Transit (Excluding GO rail)
+5166,1,824,Transit (Excluding GO rail)
+5166,2,1315,Transit (Excluding GO rail)
+5166,3,615,Transit (Excluding GO rail)
+5166,4,17,Transit (Excluding GO rail)
+5166,5,207,Transit (Excluding GO rail)
+5166,7,446,Transit (Excluding GO rail)
+5167,2,29,Transit (Excluding GO rail)
+5167,3,156,Transit (Excluding GO rail)
+5167,4,133,Transit (Excluding GO rail)
+5167,6,24,Transit (Excluding GO rail)
+5167,7,130,Transit (Excluding GO rail)
+5168,1,104,Transit (Excluding GO rail)
+5168,2,730,Transit (Excluding GO rail)
+5168,3,158,Transit (Excluding GO rail)
+5168,4,34,Transit (Excluding GO rail)
+5168,5,287,Transit (Excluding GO rail)
+5168,7,82,Transit (Excluding GO rail)
+5170,1,351,Transit (Excluding GO rail)
+5170,2,309,Transit (Excluding GO rail)
+5170,3,1382,Transit (Excluding GO rail)
+5170,4,128,Transit (Excluding GO rail)
+5170,5,53,Transit (Excluding GO rail)
+5170,7,50,Transit (Excluding GO rail)
+5171,1,146,Transit (Excluding GO rail)
+5171,2,148,Transit (Excluding GO rail)
+5171,3,172,Transit (Excluding GO rail)
+5171,5,187,Transit (Excluding GO rail)
+5171,7,552,Transit (Excluding GO rail)
+5172,1,487,Transit (Excluding GO rail)
+5172,2,315,Transit (Excluding GO rail)
+5172,4,219,Transit (Excluding GO rail)
+5172,5,324,Transit (Excluding GO rail)
+5172,7,23,Transit (Excluding GO rail)
+5174,2,111,Transit (Excluding GO rail)
+5174,3,201,Transit (Excluding GO rail)
+5174,4,115,Transit (Excluding GO rail)
+5174,5,42,Transit (Excluding GO rail)
+5174,6,94,Transit (Excluding GO rail)
+5175,1,490,Transit (Excluding GO rail)
+5175,2,469,Transit (Excluding GO rail)
+5175,3,128,Transit (Excluding GO rail)
+5175,4,37,Transit (Excluding GO rail)
+5176,3,23,Transit (Excluding GO rail)
+5176,7,222,Transit (Excluding GO rail)
+5178,5,111,Transit (Excluding GO rail)
+5178,7,26,Transit (Excluding GO rail)
+5179,1,24,Transit (Excluding GO rail)
+5179,2,646,Transit (Excluding GO rail)
+5179,3,100,Transit (Excluding GO rail)
+5179,4,34,Transit (Excluding GO rail)
+5179,7,118,Transit (Excluding GO rail)
+5180,3,57,Transit (Excluding GO rail)
+5180,4,83,Transit (Excluding GO rail)
+5180,5,24,Transit (Excluding GO rail)
+5180,7,67,Transit (Excluding GO rail)
+5181,1,167,Transit (Excluding GO rail)
+5181,2,1659,Transit (Excluding GO rail)
+5181,3,294,Transit (Excluding GO rail)
+5181,4,68,Transit (Excluding GO rail)
+5181,7,269,Transit (Excluding GO rail)
+5183,2,169,Transit (Excluding GO rail)
+5183,3,33,Transit (Excluding GO rail)
+5183,7,28,Transit (Excluding GO rail)
+5186,2,217,Transit (Excluding GO rail)
+5186,3,148,Transit (Excluding GO rail)
+5186,4,94,Transit (Excluding GO rail)
+5186,5,78,Transit (Excluding GO rail)
+5186,7,152,Transit (Excluding GO rail)
+5187,1,501,Transit (Excluding GO rail)
+5187,2,456,Transit (Excluding GO rail)
+5187,3,118,Transit (Excluding GO rail)
+5187,5,74,Transit (Excluding GO rail)
+5187,7,215,Transit (Excluding GO rail)
+5188,2,128,Transit (Excluding GO rail)
+5188,4,120,Transit (Excluding GO rail)
+5191,2,26,Transit (Excluding GO rail)
+5191,7,156,Transit (Excluding GO rail)
+5192,1,242,Transit (Excluding GO rail)
+5192,2,156,Transit (Excluding GO rail)
+5192,3,177,Transit (Excluding GO rail)
+5192,4,100,Transit (Excluding GO rail)
+5192,5,64,Transit (Excluding GO rail)
+5192,7,516,Transit (Excluding GO rail)
+5194,1,61,Transit (Excluding GO rail)
+5194,3,86,Transit (Excluding GO rail)
+5194,7,62,Transit (Excluding GO rail)
+5195,1,156,Transit (Excluding GO rail)
+5195,2,28,Transit (Excluding GO rail)
+5195,3,71,Transit (Excluding GO rail)
+5195,7,253,Transit (Excluding GO rail)
+5196,3,387,Transit (Excluding GO rail)
+5196,4,193,Transit (Excluding GO rail)
+5196,5,33,Transit (Excluding GO rail)
+5196,6,19,Transit (Excluding GO rail)
+5196,7,38,Transit (Excluding GO rail)
+5198,1,64,Transit (Excluding GO rail)
+5198,3,34,Transit (Excluding GO rail)
+5198,6,26,Transit (Excluding GO rail)
+5199,1,23,Transit (Excluding GO rail)
+5199,2,234,Transit (Excluding GO rail)
+5199,3,363,Transit (Excluding GO rail)
+5199,4,366,Transit (Excluding GO rail)
+5199,5,114,Transit (Excluding GO rail)
+5199,6,50,Transit (Excluding GO rail)
+5200,1,432,Transit (Excluding GO rail)
+5200,2,140,Transit (Excluding GO rail)
+5200,3,51,Transit (Excluding GO rail)
+5200,4,159,Transit (Excluding GO rail)
+5200,5,66,Transit (Excluding GO rail)
+5200,7,42,Transit (Excluding GO rail)
+5201,6,662,Transit (Excluding GO rail)
+5202,3,59,Transit (Excluding GO rail)
+5202,4,123,Transit (Excluding GO rail)
+5203,1,211,Transit (Excluding GO rail)
+5203,2,76,Transit (Excluding GO rail)
+5203,3,62,Transit (Excluding GO rail)
+5203,4,164,Transit (Excluding GO rail)
+5203,5,45,Transit (Excluding GO rail)
+5203,7,124,Transit (Excluding GO rail)
+5204,1,34,Transit (Excluding GO rail)
+5204,2,181,Transit (Excluding GO rail)
+5204,7,111,Transit (Excluding GO rail)
+5205,1,339,Transit (Excluding GO rail)
+5205,4,56,Transit (Excluding GO rail)
+5205,6,116,Transit (Excluding GO rail)
+5206,1,182,Transit (Excluding GO rail)
+5206,2,123,Transit (Excluding GO rail)
+5206,4,87,Transit (Excluding GO rail)
+5207,7,112,Transit (Excluding GO rail)
+5208,2,400,Transit (Excluding GO rail)
+5208,3,433,Transit (Excluding GO rail)
+5208,4,148,Transit (Excluding GO rail)
+5208,5,149,Transit (Excluding GO rail)
+5208,7,253,Transit (Excluding GO rail)
+5212,4,282,Transit (Excluding GO rail)
+5212,7,64,Transit (Excluding GO rail)
+5223,7,17,Transit (Excluding GO rail)
+5226,7,26,Transit (Excluding GO rail)
+5231,6,39,Transit (Excluding GO rail)
+5232,6,16,Transit (Excluding GO rail)
+5236,5,100,Transit (Excluding GO rail)
+5236,6,66,Transit (Excluding GO rail)
+5237,7,120,Transit (Excluding GO rail)
+5238,4,13,Transit (Excluding GO rail)
+5238,6,63,Transit (Excluding GO rail)
+5238,7,100,Transit (Excluding GO rail)
+5239,2,29,Transit (Excluding GO rail)
+5239,3,19,Transit (Excluding GO rail)
+5240,1,26,Transit (Excluding GO rail)
+5240,7,35,Transit (Excluding GO rail)
+5241,1,76,Transit (Excluding GO rail)
+5241,2,503,Transit (Excluding GO rail)
+5241,3,391,Transit (Excluding GO rail)
+5241,4,433,Transit (Excluding GO rail)
+5241,5,164,Transit (Excluding GO rail)
+5241,6,112,Transit (Excluding GO rail)
+5241,7,302,Transit (Excluding GO rail)
+5242,4,269,Transit (Excluding GO rail)
+5244,4,50,Transit (Excluding GO rail)
+5244,7,43,Transit (Excluding GO rail)
+5245,3,88,Transit (Excluding GO rail)
+5246,5,465,Transit (Excluding GO rail)
+5247,6,18,Transit (Excluding GO rail)
+5248,7,17,Transit (Excluding GO rail)
+5252,2,53,Transit (Excluding GO rail)
+5005,4,45,Cycle
+5032,2,119,Cycle
+5046,3,115,Cycle
+5046,6,79,Cycle
+5050,2,16,Cycle
+5051,6,168,Cycle
+5051,7,39,Cycle
+5052,4,69,Cycle
+5053,4,47,Cycle
+5057,4,108,Cycle
+5059,7,57,Cycle
+5065,7,47,Cycle
+5068,5,95,Cycle
+5069,3,111,Cycle
+5079,5,286,Cycle
+5081,6,52,Cycle
+5081,7,48,Cycle
+5093,4,312,Cycle
+5094,7,112,Cycle
+5095,3,48,Cycle
+5095,4,44,Cycle
+5095,6,113,Cycle
+5100,6,67,Cycle
+5102,1,93,Cycle
+5105,3,32,Cycle
+5110,3,37,Cycle
+5111,4,71,Cycle
+5111,7,34,Cycle
+5121,6,239,Cycle
+5122,7,49,Cycle
+5127,2,101,Cycle
+5130,2,129,Cycle
+5131,6,69,Cycle
+5133,4,59,Cycle
+5135,5,65,Cycle
+5139,3,31,Cycle
+5140,4,79,Cycle
+5143,2,35,Cycle
+5148,2,52,Cycle
+5149,3,426,Cycle
+5150,2,53,Cycle
+5150,3,70,Cycle
+5150,4,167,Cycle
+5154,7,73,Cycle
+5156,2,46,Cycle
+5157,2,22,Cycle
+5157,7,24,Cycle
+5158,3,227,Cycle
+5158,4,93,Cycle
+5158,6,369,Cycle
+5159,3,90,Cycle
+5159,6,62,Cycle
+5161,2,228,Cycle
+5162,2,56,Cycle
+5162,3,97,Cycle
+5164,2,197,Cycle
+5164,3,266,Cycle
+5164,6,32,Cycle
+5165,5,80,Cycle
+5165,7,160,Cycle
+5166,1,196,Cycle
+5166,6,170,Cycle
+5167,4,228,Cycle
+5167,5,48,Cycle
+5167,6,61,Cycle
+5167,7,62,Cycle
+5168,3,106,Cycle
+5171,3,57,Cycle
+5172,2,127,Cycle
+5174,4,176,Cycle
+5174,5,188,Cycle
+5174,6,407,Cycle
+5175,1,92,Cycle
+5175,2,390,Cycle
+5175,4,215,Cycle
+5179,4,62,Cycle
+5179,5,73,Cycle
+5180,3,89,Cycle
+5180,4,117,Cycle
+5181,1,74,Cycle
+5181,2,127,Cycle
+5182,4,118,Cycle
+5183,2,606,Cycle
+5186,1,197,Cycle
+5186,2,42,Cycle
+5186,4,61,Cycle
+5187,4,47,Cycle
+5188,2,182,Cycle
+5191,1,69,Cycle
+5191,6,140,Cycle
+5192,2,33,Cycle
+5194,2,106,Cycle
+5194,4,132,Cycle
+5196,1,90,Cycle
+5196,3,297,Cycle
+5196,4,47,Cycle
+5196,7,76,Cycle
+5198,3,69,Cycle
+5200,2,80,Cycle
+5200,4,118,Cycle
+5200,6,71,Cycle
+5201,2,17,Cycle
+5201,6,265,Cycle
+5202,2,81,Cycle
+5202,7,163,Cycle
+5203,3,83,Cycle
+5203,4,93,Cycle
+5203,5,35,Cycle
+5203,6,41,Cycle
+5203,7,151,Cycle
+5204,3,39,Cycle
+5204,4,11,Cycle
+5204,5,43,Cycle
+5205,6,497,Cycle
+5206,2,119,Cycle
+5207,6,54,Cycle
+5208,4,56,Cycle
+5208,5,99,Cycle
+5208,6,35,Cycle
+5223,2,25,Cycle
+5226,6,124,Cycle
+5230,7,27,Cycle
+5252,2,43,Cycle
+5001,2,40,Auto driver
+5001,4,232,Auto driver
+5001,5,493,Auto driver
+5001,7,747,Auto driver
+5002,2,426,Auto driver
+5002,3,1009,Auto driver
+5002,4,163,Auto driver
+5002,5,165,Auto driver
+5002,6,551,Auto driver
+5002,7,642,Auto driver
+5003,2,245,Auto driver
+5003,4,282,Auto driver
+5003,5,26,Auto driver
+5003,7,234,Auto driver
+5004,4,196,Auto driver
+5004,5,949,Auto driver
+5004,6,369,Auto driver
+5004,7,958,Auto driver
+5005,2,231,Auto driver
+5005,3,1143,Auto driver
+5005,4,1463,Auto driver
+5005,5,1260,Auto driver
+5005,6,5006,Auto driver
+5005,7,284,Auto driver
+5006,7,53,Auto driver
+5007,2,178,Auto driver
+5007,3,38,Auto driver
+5007,4,63,Auto driver
+5007,5,376,Auto driver
+5007,6,1043,Auto driver
+5007,7,196,Auto driver
+5008,2,101,Auto driver
+5008,3,285,Auto driver
+5008,4,149,Auto driver
+5008,5,269,Auto driver
+5009,3,311,Auto driver
+5009,4,2091,Auto driver
+5009,5,1226,Auto driver
+5009,6,942,Auto driver
+5009,7,630,Auto driver
+5010,1,17,Auto driver
+5011,2,40,Auto driver
+5011,6,62,Auto driver
+5011,7,571,Auto driver
+5012,3,56,Auto driver
+5012,4,104,Auto driver
+5012,5,80,Auto driver
+5012,6,639,Auto driver
+5012,7,313,Auto driver
+5014,3,63,Auto driver
+5014,5,37,Auto driver
+5016,2,67,Auto driver
+5016,3,137,Auto driver
+5016,4,79,Auto driver
+5016,6,345,Auto driver
+5018,6,267,Auto driver
+5018,7,338,Auto driver
+5020,2,63,Auto driver
+5020,4,300,Auto driver
+5020,5,685,Auto driver
+5020,6,735,Auto driver
+5020,7,743,Auto driver
+5026,4,43,Auto driver
+5028,3,250,Auto driver
+5030,1,49,Auto driver
+5030,2,55,Auto driver
+5030,4,306,Auto driver
+5030,5,559,Auto driver
+5030,6,186,Auto driver
+5030,7,136,Auto driver
+5032,1,373,Auto driver
+5032,2,530,Auto driver
+5032,3,530,Auto driver
+5032,4,968,Auto driver
+5032,5,908,Auto driver
+5032,6,3159,Auto driver
+5032,7,4014,Auto driver
+5033,2,78,Auto driver
+5033,5,417,Auto driver
+5033,6,653,Auto driver
+5033,7,451,Auto driver
+5035,2,480,Auto driver
+5036,3,251,Auto driver
+5036,4,24,Auto driver
+5036,5,620,Auto driver
+5036,6,1857,Auto driver
+5036,7,550,Auto driver
+5037,3,21,Auto driver
+5037,6,251,Auto driver
+5037,7,278,Auto driver
+5038,4,85,Auto driver
+5038,7,85,Auto driver
+5039,4,29,Auto driver
+5040,2,67,Auto driver
+5040,3,52,Auto driver
+5040,6,87,Auto driver
+5040,7,28,Auto driver
+5041,2,859,Auto driver
+5041,3,1430,Auto driver
+5041,4,1827,Auto driver
+5041,5,1332,Auto driver
+5041,6,1698,Auto driver
+5041,7,1895,Auto driver
+5044,2,130,Auto driver
+5044,4,1244,Auto driver
+5044,5,560,Auto driver
+5044,6,1037,Auto driver
+5044,7,286,Auto driver
+5045,1,48,Auto driver
+5045,2,339,Auto driver
+5045,3,251,Auto driver
+5045,4,1160,Auto driver
+5045,5,966,Auto driver
+5045,6,1095,Auto driver
+5045,7,540,Auto driver
+5046,2,685,Auto driver
+5046,3,942,Auto driver
+5046,4,2207,Auto driver
+5046,5,2242,Auto driver
+5046,6,1961,Auto driver
+5046,7,1184,Auto driver
+5047,1,26,Auto driver
+5047,2,556,Auto driver
+5047,3,1505,Auto driver
+5047,4,568,Auto driver
+5047,5,1047,Auto driver
+5047,6,1286,Auto driver
+5047,7,2251,Auto driver
+5048,2,14,Auto driver
+5048,3,62,Auto driver
+5049,3,82,Auto driver
+5049,4,261,Auto driver
+5049,6,73,Auto driver
+5049,7,32,Auto driver
+5050,1,281,Auto driver
+5050,2,498,Auto driver
+5050,3,251,Auto driver
+5050,4,1768,Auto driver
+5050,5,945,Auto driver
+5050,6,573,Auto driver
+5050,7,1467,Auto driver
+5051,1,434,Auto driver
+5051,2,98,Auto driver
+5051,3,23,Auto driver
+5051,4,1122,Auto driver
+5051,5,807,Auto driver
+5051,6,5356,Auto driver
+5051,7,1286,Auto driver
+5052,2,181,Auto driver
+5052,3,26,Auto driver
+5052,4,395,Auto driver
+5052,5,274,Auto driver
+5052,6,447,Auto driver
+5052,7,549,Auto driver
+5053,2,55,Auto driver
+5053,3,659,Auto driver
+5053,4,1102,Auto driver
+5053,5,1260,Auto driver
+5053,6,2656,Auto driver
+5053,7,1992,Auto driver
+5054,1,282,Auto driver
+5054,5,502,Auto driver
+5054,6,638,Auto driver
+5054,7,61,Auto driver
+5055,2,115,Auto driver
+5055,4,214,Auto driver
+5056,2,236,Auto driver
+5056,3,623,Auto driver
+5056,4,397,Auto driver
+5056,5,705,Auto driver
+5056,6,1108,Auto driver
+5056,7,771,Auto driver
+5057,2,1096,Auto driver
+5057,3,928,Auto driver
+5057,4,1373,Auto driver
+5057,5,558,Auto driver
+5057,7,1429,Auto driver
+5058,2,884,Auto driver
+5058,3,264,Auto driver
+5058,4,575,Auto driver
+5058,5,927,Auto driver
+5058,6,131,Auto driver
+5058,7,571,Auto driver
+5059,2,227,Auto driver
+5059,3,1181,Auto driver
+5059,4,3665,Auto driver
+5059,5,920,Auto driver
+5059,6,1350,Auto driver
+5059,7,3955,Auto driver
+5060,2,343,Auto driver
+5060,3,246,Auto driver
+5060,4,530,Auto driver
+5060,6,1215,Auto driver
+5060,7,964,Auto driver
+5061,2,422,Auto driver
+5061,3,1029,Auto driver
+5061,4,1409,Auto driver
+5061,5,362,Auto driver
+5061,6,916,Auto driver
+5061,7,1186,Auto driver
+5063,1,186,Auto driver
+5063,3,845,Auto driver
+5063,4,1296,Auto driver
+5063,5,623,Auto driver
+5063,6,441,Auto driver
+5063,7,1307,Auto driver
+5065,3,933,Auto driver
+5065,4,158,Auto driver
+5065,5,617,Auto driver
+5065,6,3729,Auto driver
+5065,7,1015,Auto driver
+5066,1,147,Auto driver
+5066,2,356,Auto driver
+5066,3,1255,Auto driver
+5066,4,1575,Auto driver
+5066,5,2944,Auto driver
+5066,6,1354,Auto driver
+5066,7,1683,Auto driver
+5067,2,50,Auto driver
+5067,4,1519,Auto driver
+5067,5,613,Auto driver
+5067,6,1612,Auto driver
+5067,7,431,Auto driver
+5068,1,54,Auto driver
+5068,2,748,Auto driver
+5068,3,858,Auto driver
+5068,4,1909,Auto driver
+5068,5,1531,Auto driver
+5068,6,2210,Auto driver
+5068,7,447,Auto driver
+5069,2,1315,Auto driver
+5069,3,1353,Auto driver
+5069,4,845,Auto driver
+5069,5,266,Auto driver
+5069,6,93,Auto driver
+5069,7,1656,Auto driver
+5071,2,24,Auto driver
+5071,3,1232,Auto driver
+5071,4,480,Auto driver
+5071,5,643,Auto driver
+5071,6,468,Auto driver
+5071,7,1495,Auto driver
+5072,3,23,Auto driver
+5072,4,236,Auto driver
+5072,5,42,Auto driver
+5072,6,364,Auto driver
+5072,7,324,Auto driver
+5073,2,438,Auto driver
+5073,3,361,Auto driver
+5073,4,3959,Auto driver
+5073,5,1251,Auto driver
+5073,6,1716,Auto driver
+5073,7,3140,Auto driver
+5074,1,196,Auto driver
+5074,2,661,Auto driver
+5074,3,868,Auto driver
+5074,4,1437,Auto driver
+5074,5,2355,Auto driver
+5074,7,583,Auto driver
+5075,2,571,Auto driver
+5075,3,1475,Auto driver
+5075,4,1161,Auto driver
+5075,5,298,Auto driver
+5075,6,673,Auto driver
+5075,7,813,Auto driver
+5076,2,33,Auto driver
+5076,3,220,Auto driver
+5076,4,1455,Auto driver
+5076,5,389,Auto driver
+5076,6,637,Auto driver
+5076,7,925,Auto driver
+5077,2,28,Auto driver
+5077,4,74,Auto driver
+5077,5,57,Auto driver
+5077,6,215,Auto driver
+5077,7,311,Auto driver
+5078,3,71,Auto driver
+5078,4,144,Auto driver
+5078,5,277,Auto driver
+5078,6,653,Auto driver
+5078,7,750,Auto driver
+5079,2,199,Auto driver
+5079,4,131,Auto driver
+5079,5,1168,Auto driver
+5079,7,223,Auto driver
+5080,3,400,Auto driver
+5080,4,475,Auto driver
+5080,6,69,Auto driver
+5080,7,75,Auto driver
+5081,2,67,Auto driver
+5081,3,335,Auto driver
+5081,4,297,Auto driver
+5081,5,189,Auto driver
+5081,6,416,Auto driver
+5081,7,841,Auto driver
+5082,2,284,Auto driver
+5082,3,775,Auto driver
+5082,4,1865,Auto driver
+5082,5,544,Auto driver
+5082,6,1024,Auto driver
+5082,7,1120,Auto driver
+5084,2,119,Auto driver
+5084,3,1230,Auto driver
+5084,4,1348,Auto driver
+5084,5,1759,Auto driver
+5084,6,3144,Auto driver
+5084,7,752,Auto driver
+5086,1,81,Auto driver
+5086,2,841,Auto driver
+5086,3,502,Auto driver
+5086,4,1694,Auto driver
+5086,5,122,Auto driver
+5086,6,748,Auto driver
+5086,7,471,Auto driver
+5087,2,57,Auto driver
+5087,3,69,Auto driver
+5087,5,224,Auto driver
+5088,2,97,Auto driver
+5088,4,47,Auto driver
+5088,6,474,Auto driver
+5089,2,405,Auto driver
+5089,3,1319,Auto driver
+5089,4,1112,Auto driver
+5089,5,1589,Auto driver
+5089,6,453,Auto driver
+5089,7,316,Auto driver
+5090,2,224,Auto driver
+5090,3,217,Auto driver
+5090,4,1010,Auto driver
+5090,5,632,Auto driver
+5090,6,1344,Auto driver
+5090,7,919,Auto driver
+5091,2,684,Auto driver
+5091,3,291,Auto driver
+5091,4,693,Auto driver
+5091,6,813,Auto driver
+5091,7,764,Auto driver
+5092,1,356,Auto driver
+5092,2,770,Auto driver
+5092,3,844,Auto driver
+5092,4,581,Auto driver
+5092,5,309,Auto driver
+5092,6,645,Auto driver
+5092,7,643,Auto driver
+5093,1,25,Auto driver
+5093,2,458,Auto driver
+5093,3,439,Auto driver
+5093,4,579,Auto driver
+5093,5,202,Auto driver
+5093,6,391,Auto driver
+5093,7,478,Auto driver
+5094,2,409,Auto driver
+5094,3,917,Auto driver
+5094,4,2460,Auto driver
+5094,5,391,Auto driver
+5094,6,4148,Auto driver
+5094,7,2268,Auto driver
+5095,2,1182,Auto driver
+5095,3,917,Auto driver
+5095,4,1640,Auto driver
+5095,5,232,Auto driver
+5095,6,340,Auto driver
+5095,7,855,Auto driver
+5096,2,307,Auto driver
+5096,3,377,Auto driver
+5096,4,1730,Auto driver
+5096,5,1592,Auto driver
+5096,6,602,Auto driver
+5096,7,811,Auto driver
+5097,1,54,Auto driver
+5097,2,133,Auto driver
+5097,3,448,Auto driver
+5097,4,696,Auto driver
+5097,7,191,Auto driver
+5098,2,431,Auto driver
+5098,3,258,Auto driver
+5098,4,1855,Auto driver
+5098,5,1885,Auto driver
+5098,6,1139,Auto driver
+5098,7,2038,Auto driver
+5099,2,892,Auto driver
+5099,3,325,Auto driver
+5099,4,499,Auto driver
+5099,5,399,Auto driver
+5099,6,389,Auto driver
+5099,7,530,Auto driver
+5100,1,118,Auto driver
+5100,2,69,Auto driver
+5100,3,165,Auto driver
+5100,4,1673,Auto driver
+5100,5,1312,Auto driver
+5100,6,2301,Auto driver
+5100,7,1368,Auto driver
+5101,2,143,Auto driver
+5101,3,921,Auto driver
+5101,4,1321,Auto driver
+5101,5,249,Auto driver
+5101,6,34,Auto driver
+5101,7,195,Auto driver
+5102,2,589,Auto driver
+5102,3,505,Auto driver
+5102,4,579,Auto driver
+5102,7,482,Auto driver
+5103,3,35,Auto driver
+5103,5,510,Auto driver
+5103,6,867,Auto driver
+5103,7,112,Auto driver
+5104,1,125,Auto driver
+5104,2,1314,Auto driver
+5104,3,687,Auto driver
+5104,4,1591,Auto driver
+5104,5,501,Auto driver
+5104,6,872,Auto driver
+5104,7,1266,Auto driver
+5105,2,240,Auto driver
+5105,3,183,Auto driver
+5105,4,1422,Auto driver
+5105,5,215,Auto driver
+5105,6,1450,Auto driver
+5105,7,1122,Auto driver
+5106,2,297,Auto driver
+5106,3,969,Auto driver
+5106,4,865,Auto driver
+5106,5,38,Auto driver
+5106,6,361,Auto driver
+5106,7,285,Auto driver
+5107,2,61,Auto driver
+5107,3,151,Auto driver
+5107,4,516,Auto driver
+5107,5,74,Auto driver
+5107,6,207,Auto driver
+5107,7,141,Auto driver
+5109,2,167,Auto driver
+5109,3,133,Auto driver
+5109,4,363,Auto driver
+5109,5,781,Auto driver
+5109,6,2571,Auto driver
+5109,7,1015,Auto driver
+5110,1,103,Auto driver
+5110,2,523,Auto driver
+5110,3,243,Auto driver
+5110,4,453,Auto driver
+5110,5,801,Auto driver
+5110,6,599,Auto driver
+5110,7,1780,Auto driver
+5111,1,135,Auto driver
+5111,2,605,Auto driver
+5111,3,718,Auto driver
+5111,4,1476,Auto driver
+5111,5,287,Auto driver
+5111,6,712,Auto driver
+5111,7,1006,Auto driver
+5113,2,238,Auto driver
+5113,3,356,Auto driver
+5113,4,1482,Auto driver
+5113,5,983,Auto driver
+5113,6,43,Auto driver
+5113,7,326,Auto driver
+5114,2,219,Auto driver
+5114,3,350,Auto driver
+5114,4,879,Auto driver
+5114,6,986,Auto driver
+5114,7,229,Auto driver
+5115,2,86,Auto driver
+5115,3,1186,Auto driver
+5115,4,1857,Auto driver
+5115,5,1095,Auto driver
+5115,6,1124,Auto driver
+5115,7,479,Auto driver
+5116,2,108,Auto driver
+5116,3,456,Auto driver
+5116,4,2523,Auto driver
+5116,7,964,Auto driver
+5117,2,43,Auto driver
+5117,3,378,Auto driver
+5117,4,607,Auto driver
+5117,5,42,Auto driver
+5117,6,161,Auto driver
+5117,7,164,Auto driver
+5118,1,83,Auto driver
+5118,2,803,Auto driver
+5118,3,2034,Auto driver
+5118,4,1342,Auto driver
+5118,5,372,Auto driver
+5118,7,1210,Auto driver
+5119,2,132,Auto driver
+5120,1,291,Auto driver
+5120,2,251,Auto driver
+5120,3,249,Auto driver
+5120,4,837,Auto driver
+5120,5,588,Auto driver
+5120,6,208,Auto driver
+5120,7,606,Auto driver
+5121,2,1092,Auto driver
+5121,3,129,Auto driver
+5121,4,810,Auto driver
+5121,6,159,Auto driver
+5121,7,2244,Auto driver
+5122,1,106,Auto driver
+5122,2,735,Auto driver
+5122,3,561,Auto driver
+5122,4,670,Auto driver
+5122,5,832,Auto driver
+5122,6,868,Auto driver
+5122,7,1121,Auto driver
+5123,1,242,Auto driver
+5123,2,1411,Auto driver
+5123,3,1815,Auto driver
+5123,4,2295,Auto driver
+5123,6,623,Auto driver
+5123,7,1477,Auto driver
+5125,2,671,Auto driver
+5125,3,61,Auto driver
+5125,4,155,Auto driver
+5126,3,144,Auto driver
+5126,4,871,Auto driver
+5126,5,116,Auto driver
+5126,7,69,Auto driver
+5127,2,558,Auto driver
+5127,3,641,Auto driver
+5127,4,3538,Auto driver
+5127,5,1043,Auto driver
+5127,6,76,Auto driver
+5127,7,846,Auto driver
+5129,1,221,Auto driver
+5129,2,157,Auto driver
+5129,4,833,Auto driver
+5129,5,309,Auto driver
+5129,6,1801,Auto driver
+5129,7,54,Auto driver
+5130,2,1680,Auto driver
+5130,3,1663,Auto driver
+5130,4,1410,Auto driver
+5130,5,1289,Auto driver
+5130,6,665,Auto driver
+5130,7,372,Auto driver
+5131,2,239,Auto driver
+5131,3,466,Auto driver
+5131,4,887,Auto driver
+5131,5,123,Auto driver
+5131,6,46,Auto driver
+5131,7,729,Auto driver
+5132,1,32,Auto driver
+5132,2,255,Auto driver
+5132,3,52,Auto driver
+5132,4,703,Auto driver
+5132,5,1650,Auto driver
+5132,6,747,Auto driver
+5132,7,1793,Auto driver
+5133,2,753,Auto driver
+5133,3,457,Auto driver
+5133,4,764,Auto driver
+5133,5,601,Auto driver
+5133,6,1459,Auto driver
+5133,7,871,Auto driver
+5135,2,410,Auto driver
+5135,3,1385,Auto driver
+5135,4,3343,Auto driver
+5135,5,428,Auto driver
+5135,6,230,Auto driver
+5135,7,1388,Auto driver
+5137,2,27,Auto driver
+5137,3,147,Auto driver
+5137,4,41,Auto driver
+5137,5,1168,Auto driver
+5137,6,1263,Auto driver
+5137,7,594,Auto driver
+5138,3,104,Auto driver
+5138,6,515,Auto driver
+5138,7,67,Auto driver
+5139,1,62,Auto driver
+5139,2,1905,Auto driver
+5139,3,814,Auto driver
+5139,4,1800,Auto driver
+5139,5,3188,Auto driver
+5139,6,1540,Auto driver
+5139,7,1251,Auto driver
+5140,2,411,Auto driver
+5140,3,985,Auto driver
+5140,4,887,Auto driver
+5140,5,804,Auto driver
+5140,6,1416,Auto driver
+5140,7,698,Auto driver
+5141,4,449,Auto driver
+5141,5,1039,Auto driver
+5141,6,422,Auto driver
+5141,7,1014,Auto driver
+5142,7,206,Auto driver
+5143,1,181,Auto driver
+5143,2,482,Auto driver
+5143,3,388,Auto driver
+5143,4,2403,Auto driver
+5143,5,308,Auto driver
+5143,6,664,Auto driver
+5143,7,1121,Auto driver
+5144,2,417,Auto driver
+5144,3,1582,Auto driver
+5144,4,768,Auto driver
+5144,5,341,Auto driver
+5144,6,1860,Auto driver
+5144,7,1365,Auto driver
+5147,4,177,Auto driver
+5147,6,24,Auto driver
+5148,1,356,Auto driver
+5148,2,789,Auto driver
+5148,3,1597,Auto driver
+5148,4,989,Auto driver
+5148,5,600,Auto driver
+5148,6,343,Auto driver
+5148,7,923,Auto driver
+5149,1,67,Auto driver
+5149,2,504,Auto driver
+5149,3,1728,Auto driver
+5149,4,931,Auto driver
+5149,5,172,Auto driver
+5149,6,334,Auto driver
+5150,2,1706,Auto driver
+5150,3,343,Auto driver
+5150,4,2038,Auto driver
+5150,6,229,Auto driver
+5150,7,191,Auto driver
+5151,2,549,Auto driver
+5151,3,2142,Auto driver
+5151,4,1643,Auto driver
+5151,5,472,Auto driver
+5151,6,399,Auto driver
+5151,7,655,Auto driver
+5154,2,508,Auto driver
+5154,3,88,Auto driver
+5154,4,1481,Auto driver
+5154,5,409,Auto driver
+5154,6,140,Auto driver
+5154,7,104,Auto driver
+5155,1,158,Auto driver
+5155,2,598,Auto driver
+5155,3,598,Auto driver
+5155,4,285,Auto driver
+5155,5,685,Auto driver
+5155,6,150,Auto driver
+5155,7,682,Auto driver
+5156,2,34,Auto driver
+5157,2,476,Auto driver
+5157,3,409,Auto driver
+5157,4,1019,Auto driver
+5157,5,721,Auto driver
+5157,6,37,Auto driver
+5157,7,163,Auto driver
+5158,1,34,Auto driver
+5158,2,425,Auto driver
+5158,3,352,Auto driver
+5158,4,1388,Auto driver
+5158,5,503,Auto driver
+5158,6,4877,Auto driver
+5158,7,1110,Auto driver
+5159,1,205,Auto driver
+5159,2,990,Auto driver
+5159,3,440,Auto driver
+5159,4,696,Auto driver
+5159,5,278,Auto driver
+5159,6,231,Auto driver
+5159,7,264,Auto driver
+5160,3,493,Auto driver
+5160,6,650,Auto driver
+5161,1,59,Auto driver
+5161,2,437,Auto driver
+5161,3,2009,Auto driver
+5161,4,861,Auto driver
+5161,5,388,Auto driver
+5161,7,553,Auto driver
+5162,2,337,Auto driver
+5162,3,234,Auto driver
+5162,4,387,Auto driver
+5162,5,276,Auto driver
+5162,6,535,Auto driver
+5162,7,229,Auto driver
+5163,2,149,Auto driver
+5163,3,780,Auto driver
+5163,4,304,Auto driver
+5163,5,114,Auto driver
+5163,6,240,Auto driver
+5163,7,312,Auto driver
+5164,1,247,Auto driver
+5164,2,558,Auto driver
+5164,3,1828,Auto driver
+5164,4,2904,Auto driver
+5164,5,432,Auto driver
+5164,6,1127,Auto driver
+5164,7,339,Auto driver
+5165,2,770,Auto driver
+5165,3,957,Auto driver
+5165,4,1708,Auto driver
+5165,5,160,Auto driver
+5165,6,292,Auto driver
+5165,7,1377,Auto driver
+5166,1,198,Auto driver
+5166,2,843,Auto driver
+5166,3,868,Auto driver
+5166,4,1538,Auto driver
+5166,5,1232,Auto driver
+5166,6,494,Auto driver
+5166,7,1212,Auto driver
+5167,1,308,Auto driver
+5167,2,242,Auto driver
+5167,3,221,Auto driver
+5167,4,145,Auto driver
+5167,5,892,Auto driver
+5167,6,168,Auto driver
+5168,2,246,Auto driver
+5168,3,82,Auto driver
+5168,4,127,Auto driver
+5168,5,165,Auto driver
+5168,6,95,Auto driver
+5170,1,391,Auto driver
+5170,2,833,Auto driver
+5170,3,325,Auto driver
+5170,4,547,Auto driver
+5170,5,715,Auto driver
+5170,7,479,Auto driver
+5171,2,767,Auto driver
+5171,3,587,Auto driver
+5171,4,652,Auto driver
+5171,5,347,Auto driver
+5171,7,316,Auto driver
+5172,1,97,Auto driver
+5172,3,262,Auto driver
+5172,4,325,Auto driver
+5172,5,438,Auto driver
+5172,6,194,Auto driver
+5172,7,223,Auto driver
+5173,3,326,Auto driver
+5173,4,68,Auto driver
+5174,2,727,Auto driver
+5174,4,499,Auto driver
+5174,5,898,Auto driver
+5174,6,302,Auto driver
+5174,7,67,Auto driver
+5175,1,131,Auto driver
+5175,2,90,Auto driver
+5175,3,415,Auto driver
+5175,4,847,Auto driver
+5175,5,325,Auto driver
+5175,6,225,Auto driver
+5175,7,559,Auto driver
+5176,2,381,Auto driver
+5176,3,3161,Auto driver
+5176,4,195,Auto driver
+5176,5,193,Auto driver
+5176,7,335,Auto driver
+5177,2,384,Auto driver
+5177,3,375,Auto driver
+5177,4,1194,Auto driver
+5177,5,551,Auto driver
+5177,6,375,Auto driver
+5177,7,329,Auto driver
+5178,2,249,Auto driver
+5178,3,302,Auto driver
+5178,4,547,Auto driver
+5178,5,879,Auto driver
+5178,6,933,Auto driver
+5178,7,758,Auto driver
+5179,1,189,Auto driver
+5179,2,576,Auto driver
+5179,3,1420,Auto driver
+5179,4,383,Auto driver
+5179,5,414,Auto driver
+5179,6,144,Auto driver
+5179,7,610,Auto driver
+5180,2,375,Auto driver
+5180,3,841,Auto driver
+5180,4,1241,Auto driver
+5180,5,1701,Auto driver
+5180,6,731,Auto driver
+5180,7,188,Auto driver
+5181,1,71,Auto driver
+5181,2,1052,Auto driver
+5181,3,1503,Auto driver
+5181,4,132,Auto driver
+5181,5,114,Auto driver
+5181,7,451,Auto driver
+5182,1,113,Auto driver
+5182,3,849,Auto driver
+5182,4,1142,Auto driver
+5182,6,206,Auto driver
+5182,7,188,Auto driver
+5183,2,265,Auto driver
+5183,3,224,Auto driver
+5183,4,1235,Auto driver
+5183,7,217,Auto driver
+5184,3,172,Auto driver
+5184,6,246,Auto driver
+5186,2,540,Auto driver
+5186,3,17,Auto driver
+5186,4,266,Auto driver
+5186,5,529,Auto driver
+5186,7,54,Auto driver
+5187,1,816,Auto driver
+5187,2,164,Auto driver
+5187,3,264,Auto driver
+5187,4,789,Auto driver
+5187,5,313,Auto driver
+5187,6,1698,Auto driver
+5187,7,154,Auto driver
+5188,2,195,Auto driver
+5188,3,348,Auto driver
+5188,4,166,Auto driver
+5188,7,529,Auto driver
+5190,4,134,Auto driver
+5191,2,351,Auto driver
+5191,3,508,Auto driver
+5191,4,514,Auto driver
+5191,5,702,Auto driver
+5191,6,1735,Auto driver
+5191,7,1281,Auto driver
+5192,1,29,Auto driver
+5192,2,180,Auto driver
+5192,3,366,Auto driver
+5192,4,173,Auto driver
+5192,5,282,Auto driver
+5192,6,615,Auto driver
+5192,7,122,Auto driver
+5193,7,163,Auto driver
+5194,2,162,Auto driver
+5194,3,301,Auto driver
+5194,4,2273,Auto driver
+5194,5,386,Auto driver
+5194,7,47,Auto driver
+5195,1,43,Auto driver
+5195,2,101,Auto driver
+5195,3,346,Auto driver
+5195,4,73,Auto driver
+5195,5,361,Auto driver
+5196,1,90,Auto driver
+5196,3,471,Auto driver
+5196,4,44,Auto driver
+5196,5,428,Auto driver
+5196,6,1144,Auto driver
+5196,7,194,Auto driver
+5197,2,30,Auto driver
+5197,3,128,Auto driver
+5197,4,42,Auto driver
+5198,2,74,Auto driver
+5198,3,172,Auto driver
+5198,6,602,Auto driver
+5198,7,49,Auto driver
+5199,2,282,Auto driver
+5199,3,380,Auto driver
+5199,4,214,Auto driver
+5199,6,347,Auto driver
+5199,7,208,Auto driver
+5200,1,632,Auto driver
+5200,2,1026,Auto driver
+5200,3,912,Auto driver
+5200,4,1408,Auto driver
+5200,5,478,Auto driver
+5200,6,289,Auto driver
+5200,7,365,Auto driver
+5201,2,29,Auto driver
+5201,4,297,Auto driver
+5201,5,108,Auto driver
+5201,6,265,Auto driver
+5201,7,74,Auto driver
+5202,1,67,Auto driver
+5202,2,187,Auto driver
+5202,3,412,Auto driver
+5202,4,1611,Auto driver
+5202,5,365,Auto driver
+5202,6,546,Auto driver
+5202,7,1315,Auto driver
+5203,2,145,Auto driver
+5203,3,724,Auto driver
+5203,4,1165,Auto driver
+5203,5,522,Auto driver
+5203,6,1059,Auto driver
+5203,7,138,Auto driver
+5204,2,1120,Auto driver
+5204,3,162,Auto driver
+5204,4,299,Auto driver
+5204,5,99,Auto driver
+5204,7,16,Auto driver
+5205,2,456,Auto driver
+5205,3,1309,Auto driver
+5205,4,1451,Auto driver
+5205,5,396,Auto driver
+5205,6,1536,Auto driver
+5205,7,1090,Auto driver
+5206,1,1171,Auto driver
+5206,2,516,Auto driver
+5206,3,306,Auto driver
+5206,4,232,Auto driver
+5206,5,73,Auto driver
+5206,6,190,Auto driver
+5207,1,134,Auto driver
+5207,2,1080,Auto driver
+5207,3,658,Auto driver
+5207,4,950,Auto driver
+5207,5,1500,Auto driver
+5207,6,3007,Auto driver
+5207,7,745,Auto driver
+5208,1,24,Auto driver
+5208,2,344,Auto driver
+5208,3,1653,Auto driver
+5208,4,2126,Auto driver
+5208,5,452,Auto driver
+5208,6,1532,Auto driver
+5208,7,651,Auto driver
+5210,1,64,Auto driver
+5210,2,220,Auto driver
+5210,7,99,Auto driver
+5212,1,91,Auto driver
+5212,2,192,Auto driver
+5212,3,427,Auto driver
+5212,4,1320,Auto driver
+5212,5,459,Auto driver
+5212,6,544,Auto driver
+5212,7,175,Auto driver
+5213,4,183,Auto driver
+5214,4,228,Auto driver
+5214,5,74,Auto driver
+5214,6,148,Auto driver
+5214,7,94,Auto driver
+5215,2,80,Auto driver
+5215,4,159,Auto driver
+5215,6,592,Auto driver
+5216,2,410,Auto driver
+5216,3,1612,Auto driver
+5216,4,1371,Auto driver
+5216,5,1311,Auto driver
+5216,6,1162,Auto driver
+5216,7,457,Auto driver
+5219,1,186,Auto driver
+5219,2,303,Auto driver
+5219,3,413,Auto driver
+5219,4,661,Auto driver
+5219,5,1130,Auto driver
+5219,6,764,Auto driver
+5219,7,380,Auto driver
+5223,2,229,Auto driver
+5223,3,174,Auto driver
+5223,4,412,Auto driver
+5223,5,620,Auto driver
+5223,6,1505,Auto driver
+5223,7,825,Auto driver
+5224,3,213,Auto driver
+5224,4,467,Auto driver
+5224,5,105,Auto driver
+5224,6,2267,Auto driver
+5224,7,290,Auto driver
+5225,2,44,Auto driver
+5225,3,126,Auto driver
+5225,4,427,Auto driver
+5225,5,194,Auto driver
+5225,6,230,Auto driver
+5225,7,38,Auto driver
+5226,1,28,Auto driver
+5226,3,495,Auto driver
+5226,4,443,Auto driver
+5226,5,371,Auto driver
+5226,6,3633,Auto driver
+5226,7,1359,Auto driver
+5227,2,66,Auto driver
+5227,3,44,Auto driver
+5227,5,133,Auto driver
+5227,6,385,Auto driver
+5227,7,77,Auto driver
+5228,2,55,Auto driver
+5228,7,215,Auto driver
+5229,2,244,Auto driver
+5229,3,207,Auto driver
+5229,4,635,Auto driver
+5229,5,722,Auto driver
+5229,6,3525,Auto driver
+5229,7,142,Auto driver
+5230,3,502,Auto driver
+5230,4,2078,Auto driver
+5230,5,1362,Auto driver
+5230,6,948,Auto driver
+5230,7,1203,Auto driver
+5231,2,332,Auto driver
+5231,3,52,Auto driver
+5231,4,1285,Auto driver
+5231,5,164,Auto driver
+5231,6,1622,Auto driver
+5231,7,377,Auto driver
+5232,1,142,Auto driver
+5232,2,302,Auto driver
+5232,3,1878,Auto driver
+5232,4,708,Auto driver
+5232,5,2352,Auto driver
+5232,6,3892,Auto driver
+5232,7,1740,Auto driver
+5233,2,69,Auto driver
+5233,3,393,Auto driver
+5233,4,179,Auto driver
+5233,5,866,Auto driver
+5233,6,1823,Auto driver
+5233,7,372,Auto driver
+5234,3,73,Auto driver
+5234,5,645,Auto driver
+5234,6,636,Auto driver
+5234,7,124,Auto driver
+5235,3,114,Auto driver
+5235,4,168,Auto driver
+5235,5,438,Auto driver
+5235,6,333,Auto driver
+5236,3,112,Auto driver
+5236,4,1208,Auto driver
+5236,5,399,Auto driver
+5236,6,876,Auto driver
+5236,7,257,Auto driver
+5237,1,32,Auto driver
+5237,2,143,Auto driver
+5237,3,490,Auto driver
+5237,4,1344,Auto driver
+5237,5,2261,Auto driver
+5237,6,340,Auto driver
+5237,7,1913,Auto driver
+5238,2,518,Auto driver
+5238,3,528,Auto driver
+5238,4,985,Auto driver
+5238,5,462,Auto driver
+5238,6,3026,Auto driver
+5238,7,666,Auto driver
+5239,2,903,Auto driver
+5239,3,317,Auto driver
+5239,4,1253,Auto driver
+5239,5,1905,Auto driver
+5239,6,486,Auto driver
+5239,7,989,Auto driver
+5240,2,140,Auto driver
+5240,3,234,Auto driver
+5240,4,517,Auto driver
+5240,5,26,Auto driver
+5240,6,362,Auto driver
+5240,7,432,Auto driver
+5241,1,163,Auto driver
+5241,2,1321,Auto driver
+5241,3,891,Auto driver
+5241,4,1063,Auto driver
+5241,5,1139,Auto driver
+5241,6,1148,Auto driver
+5241,7,4197,Auto driver
+5242,4,1209,Auto driver
+5242,6,253,Auto driver
+5242,7,388,Auto driver
+5243,7,278,Auto driver
+5244,4,657,Auto driver
+5244,5,737,Auto driver
+5244,6,2018,Auto driver
+5244,7,1885,Auto driver
+5245,2,157,Auto driver
+5245,3,239,Auto driver
+5245,4,225,Auto driver
+5245,5,344,Auto driver
+5245,6,318,Auto driver
+5245,7,57,Auto driver
+5246,2,135,Auto driver
+5246,3,58,Auto driver
+5246,4,733,Auto driver
+5246,5,232,Auto driver
+5246,6,1684,Auto driver
+5246,7,57,Auto driver
+5247,3,143,Auto driver
+5247,4,768,Auto driver
+5247,5,55,Auto driver
+5247,6,856,Auto driver
+5247,7,214,Auto driver
+5248,2,384,Auto driver
+5248,3,463,Auto driver
+5248,4,420,Auto driver
+5248,5,336,Auto driver
+5248,6,1881,Auto driver
+5248,7,1014,Auto driver
+5249,3,125,Auto driver
+5249,4,229,Auto driver
+5249,5,256,Auto driver
+5249,6,132,Auto driver
+5250,3,53,Auto driver
+5250,4,156,Auto driver
+5250,5,100,Auto driver
+5250,6,986,Auto driver
+5250,7,197,Auto driver
+5251,3,51,Auto driver
+5251,5,151,Auto driver
+5252,2,310,Auto driver
+5252,3,766,Auto driver
+5252,4,485,Auto driver
+5252,5,70,Auto driver
+5252,6,208,Auto driver
+5252,7,121,Auto driver
+5001,7,16,GO rail only
+5033,6,192,GO rail only
+5045,6,49,GO rail only
+5047,6,49,GO rail only
+5058,6,37,GO rail only
+5061,5,34,GO rail only
+5063,5,54,GO rail only
+5065,6,56,GO rail only
+5069,6,37,GO rail only
+5071,6,35,GO rail only
+5073,6,98,GO rail only
+5082,7,57,GO rail only
+5084,5,43,GO rail only
+5084,6,33,GO rail only
+5086,4,38,GO rail only
+5086,5,23,GO rail only
+5088,7,67,GO rail only
+5094,7,28,GO rail only
+5096,4,28,GO rail only
+5100,6,114,GO rail only
+5105,6,55,GO rail only
+5110,6,43,GO rail only
+5113,6,84,GO rail only
+5114,4,57,GO rail only
+5120,6,34,GO rail only
+5129,6,16,GO rail only
+5132,7,31,GO rail only
+5137,6,91,GO rail only
+5149,6,67,GO rail only
+5150,6,7,GO rail only
+5150,7,66,GO rail only
+5151,5,141,GO rail only
+5155,5,18,GO rail only
+5158,4,17,GO rail only
+5158,7,48,GO rail only
+5161,4,48,GO rail only
+5163,4,47,GO rail only
+5167,6,77,GO rail only
+5168,3,47,GO rail only
+5171,2,16,GO rail only
+5171,5,47,GO rail only
+5172,4,134,GO rail only
+5172,5,64,GO rail only
+5175,5,27,GO rail only
+5177,2,34,GO rail only
+5178,6,77,GO rail only
+5179,7,47,GO rail only
+5180,5,34,GO rail only
+5186,3,33,GO rail only
+5187,6,63,GO rail only
+5191,5,117,GO rail only
+5192,3,33,GO rail only
+5192,5,23,GO rail only
+5194,4,45,GO rail only
+5196,5,33,GO rail only
+5199,2,43,GO rail only
+5199,5,114,GO rail only
+5199,7,32,GO rail only
+5200,4,28,GO rail only
+5200,6,23,GO rail only
+5201,7,17,GO rail only
+5207,6,126,GO rail only
+5212,2,22,GO rail only
+5215,6,51,GO rail only
+5219,5,65,GO rail only
+5223,7,17,GO rail only
+5226,6,100,GO rail only
+5229,6,170,GO rail only
+5230,4,85,GO rail only
+5230,5,122,GO rail only
+5230,6,82,GO rail only
+5231,6,39,GO rail only
+5232,6,15,GO rail only
+5233,6,38,GO rail only
+5234,5,107,GO rail only
+5235,4,84,GO rail only
+5235,5,23,GO rail only
+5238,4,13,GO rail only
+5239,6,56,GO rail only
+5245,6,27,GO rail only
+5246,6,92,GO rail only
+5247,7,49,GO rail only
+5248,6,69,GO rail only
+5248,7,43,GO rail only
+5252,6,49,GO rail only
+5041,4,14,Go rail and local transit
+5045,5,26,Go rail and local transit
+5058,6,37,Go rail and local transit
+5059,6,12,Go rail and local transit
+5060,6,174,Go rail and local transit
+5065,4,146,Go rail and local transit
+5065,6,35,Go rail and local transit
+5068,5,48,Go rail and local transit
+5071,6,37,Go rail and local transit
+5073,7,106,Go rail and local transit
+5076,2,16,Go rail and local transit
+5078,6,17,Go rail and local transit
+5079,4,29,Go rail and local transit
+5086,3,74,Go rail and local transit
+5104,2,45,Go rail and local transit
+5104,7,42,Go rail and local transit
+5105,6,22,Go rail and local transit
+5122,7,94,Go rail and local transit
+5123,1,37,Go rail and local transit
+5129,6,68,Go rail and local transit
+5130,4,74,Go rail and local transit
+5132,2,18,Go rail and local transit
+5133,3,62,Go rail and local transit
+5133,5,63,Go rail and local transit
+5141,4,73,Go rail and local transit
+5141,7,15,Go rail and local transit
+5144,6,177,Go rail and local transit
+5150,5,155,Go rail and local transit
+5155,6,15,Go rail and local transit
+5157,6,37,Go rail and local transit
+5157,7,24,Go rail and local transit
+5161,3,58,Go rail and local transit
+5163,2,23,Go rail and local transit
+5163,6,82,Go rail and local transit
+5164,4,40,Go rail and local transit
+5164,6,16,Go rail and local transit
+5167,6,12,Go rail and local transit
+5168,2,70,Go rail and local transit
+5171,2,63,Go rail and local transit
+5176,3,23,Go rail and local transit
+5176,5,41,Go rail and local transit
+5179,3,38,Go rail and local transit
+5179,4,34,Go rail and local transit
+5181,5,46,Go rail and local transit
+5186,4,17,Go rail and local transit
+5188,4,46,Go rail and local transit
+5191,3,24,Go rail and local transit
+5192,5,23,Go rail and local transit
+5194,4,45,Go rail and local transit
+5195,1,24,Go rail and local transit
+5195,2,56,Go rail and local transit
+5200,6,23,Go rail and local transit
+5201,4,52,Go rail and local transit
+5202,4,52,Go rail and local transit
+5206,2,63,Go rail and local transit
+5219,6,11,Go rail and local transit
+5229,1,15,Go rail and local transit
+5230,6,47,Go rail and local transit
+5231,6,66,Go rail and local transit
+5232,5,51,Go rail and local transit
+5232,7,32,Go rail and local transit
+5241,7,58,Go rail and local transit
+5244,7,43,Go rail and local transit
+5246,4,19,Go rail and local transit
+5057,4,108,Motorcycle
+5068,4,77,Motorcycle
+5069,7,60,Motorcycle
+5150,1,402,Motorcycle
+5154,4,36,Motorcycle
+5157,4,64,Motorcycle
+5158,6,48,Motorcycle
+5161,4,75,Motorcycle
+5166,4,36,Motorcycle
+5170,5,92,Motorcycle
+5170,7,46,Motorcycle
+5179,3,39,Motorcycle
+5186,7,108,Motorcycle
+5200,2,57,Motorcycle
+5216,6,30,Motorcycle
+5237,5,29,Motorcycle
+5046,7,26,Other
+5059,6,12,Other
+5069,2,73,Other
+5078,5,32,Other
+5089,2,64,Other
+5100,1,79,Other
+5101,3,15,Other
+5104,3,48,Other
+5110,7,73,Other
+5130,2,58,Other
+5135,2,22,Other
+5151,5,129,Other
+5154,1,224,Other
+5159,2,82,Other
+5181,4,96,Other
+5192,7,20,Other
+5195,1,54,Other
+5200,1,67,Other
+5202,4,279,Other
+5202,7,24,Other
+5212,4,32,Other
+5239,1,41,Other
+5240,5,26,Other
+5247,7,49,Other
+5001,2,40,Auto passenger
+5001,5,197,Auto passenger
+5002,2,477,Auto passenger
+5002,3,285,Auto passenger
+5002,6,260,Auto passenger
+5002,7,327,Auto passenger
+5003,2,113,Auto passenger
+5003,7,19,Auto passenger
+5004,4,117,Auto passenger
+5004,7,680,Auto passenger
+5005,3,140,Auto passenger
+5005,4,563,Auto passenger
+5005,5,308,Auto passenger
+5005,6,1056,Auto passenger
+5005,7,40,Auto passenger
+5006,7,27,Auto passenger
+5007,2,93,Auto passenger
+5007,3,267,Auto passenger
+5007,5,83,Auto passenger
+5007,6,68,Auto passenger
+5007,7,19,Auto passenger
+5008,3,190,Auto passenger
+5008,4,37,Auto passenger
+5009,3,81,Auto passenger
+5009,4,124,Auto passenger
+5009,5,19,Auto passenger
+5009,6,86,Auto passenger
+5009,7,93,Auto passenger
+5011,2,40,Auto passenger
+5012,3,16,Auto passenger
+5012,7,62,Auto passenger
+5016,4,79,Auto passenger
+5020,5,287,Auto passenger
+5020,6,208,Auto passenger
+5030,2,20,Auto passenger
+5030,5,85,Auto passenger
+5032,1,81,Auto passenger
+5032,4,143,Auto passenger
+5032,5,88,Auto passenger
+5032,6,385,Auto passenger
+5032,7,209,Auto passenger
+5033,2,78,Auto passenger
+5033,5,278,Auto passenger
+5033,6,384,Auto passenger
+5033,7,150,Auto passenger
+5035,2,63,Auto passenger
+5036,4,12,Auto passenger
+5036,5,513,Auto passenger
+5036,6,962,Auto passenger
+5036,7,50,Auto passenger
+5038,4,85,Auto passenger
+5041,2,166,Auto passenger
+5041,3,614,Auto passenger
+5041,4,126,Auto passenger
+5041,6,165,Auto passenger
+5041,7,318,Auto passenger
+5044,4,588,Auto passenger
+5044,6,185,Auto passenger
+5044,7,30,Auto passenger
+5045,3,62,Auto passenger
+5045,4,51,Auto passenger
+5045,5,414,Auto passenger
+5045,6,25,Auto passenger
+5045,7,251,Auto passenger
+5046,2,89,Auto passenger
+5046,3,239,Auto passenger
+5046,4,941,Auto passenger
+5046,5,533,Auto passenger
+5046,6,107,Auto passenger
+5046,7,808,Auto passenger
+5047,1,13,Auto passenger
+5047,2,117,Auto passenger
+5047,3,533,Auto passenger
+5047,4,243,Auto passenger
+5047,5,210,Auto passenger
+5047,6,1046,Auto passenger
+5047,7,752,Auto passenger
+5049,3,33,Auto passenger
+5050,2,288,Auto passenger
+5050,3,65,Auto passenger
+5050,4,748,Auto passenger
+5050,6,79,Auto passenger
+5050,7,366,Auto passenger
+5051,2,26,Auto passenger
+5051,3,23,Auto passenger
+5051,4,378,Auto passenger
+5051,6,1289,Auto passenger
+5051,7,421,Auto passenger
+5052,4,137,Auto passenger
+5052,5,15,Auto passenger
+5052,6,292,Auto passenger
+5052,7,74,Auto passenger
+5053,2,360,Auto passenger
+5053,3,95,Auto passenger
+5053,4,258,Auto passenger
+5053,5,139,Auto passenger
+5053,6,432,Auto passenger
+5053,7,190,Auto passenger
+5054,1,141,Auto passenger
+5054,5,279,Auto passenger
+5055,4,86,Auto passenger
+5056,2,154,Auto passenger
+5056,3,51,Auto passenger
+5056,4,128,Auto passenger
+5056,5,226,Auto passenger
+5056,6,345,Auto passenger
+5056,7,74,Auto passenger
+5057,2,50,Auto passenger
+5057,3,241,Auto passenger
+5057,4,159,Auto passenger
+5057,5,44,Auto passenger
+5057,7,269,Auto passenger
+5058,2,204,Auto passenger
+5058,3,181,Auto passenger
+5058,4,127,Auto passenger
+5058,5,334,Auto passenger
+5058,6,37,Auto passenger
+5058,7,62,Auto passenger
+5059,3,635,Auto passenger
+5059,4,1298,Auto passenger
+5059,5,276,Auto passenger
+5059,7,266,Auto passenger
+5060,4,157,Auto passenger
+5060,6,110,Auto passenger
+5060,7,178,Auto passenger
+5061,2,17,Auto passenger
+5061,3,107,Auto passenger
+5061,4,180,Auto passenger
+5061,6,166,Auto passenger
+5061,7,357,Auto passenger
+5063,3,68,Auto passenger
+5063,4,185,Auto passenger
+5063,5,54,Auto passenger
+5063,6,124,Auto passenger
+5063,7,369,Auto passenger
+5065,3,213,Auto passenger
+5065,4,91,Auto passenger
+5065,6,1407,Auto passenger
+5065,7,143,Auto passenger
+5066,1,88,Auto passenger
+5066,2,79,Auto passenger
+5066,3,654,Auto passenger
+5066,4,592,Auto passenger
+5066,5,780,Auto passenger
+5066,6,57,Auto passenger
+5066,7,309,Auto passenger
+5067,2,80,Auto passenger
+5067,4,420,Auto passenger
+5067,5,113,Auto passenger
+5067,6,131,Auto passenger
+5067,7,79,Auto passenger
+5068,2,521,Auto passenger
+5068,3,281,Auto passenger
+5068,4,114,Auto passenger
+5068,5,218,Auto passenger
+5068,6,257,Auto passenger
+5069,1,35,Auto passenger
+5069,2,395,Auto passenger
+5069,4,113,Auto passenger
+5069,7,340,Auto passenger
+5071,1,60,Auto passenger
+5071,3,101,Auto passenger
+5071,4,98,Auto passenger
+5071,6,119,Auto passenger
+5071,7,193,Auto passenger
+5072,3,23,Auto passenger
+5072,7,150,Auto passenger
+5073,2,501,Auto passenger
+5073,3,145,Auto passenger
+5073,4,791,Auto passenger
+5073,5,146,Auto passenger
+5073,6,246,Auto passenger
+5073,7,746,Auto passenger
+5074,2,199,Auto passenger
+5074,3,130,Auto passenger
+5074,4,479,Auto passenger
+5074,5,674,Auto passenger
+5074,7,120,Auto passenger
+5075,2,285,Auto passenger
+5075,3,484,Auto passenger
+5075,4,470,Auto passenger
+5075,6,110,Auto passenger
+5075,7,161,Auto passenger
+5076,4,172,Auto passenger
+5076,5,167,Auto passenger
+5076,6,83,Auto passenger
+5076,7,56,Auto passenger
+5077,2,28,Auto passenger
+5077,6,108,Auto passenger
+5078,3,39,Auto passenger
+5078,5,79,Auto passenger
+5078,7,80,Auto passenger
+5079,2,104,Auto passenger
+5079,7,48,Auto passenger
+5080,3,144,Auto passenger
+5080,4,83,Auto passenger
+5080,7,98,Auto passenger
+5081,2,32,Auto passenger
+5081,3,158,Auto passenger
+5081,4,107,Auto passenger
+5081,7,163,Auto passenger
+5082,1,102,Auto passenger
+5082,3,362,Auto passenger
+5082,4,315,Auto passenger
+5082,5,100,Auto passenger
+5082,6,237,Auto passenger
+5082,7,101,Auto passenger
+5084,1,19,Auto passenger
+5084,3,441,Auto passenger
+5084,4,259,Auto passenger
+5084,5,779,Auto passenger
+5084,6,371,Auto passenger
+5086,2,57,Auto passenger
+5086,3,19,Auto passenger
+5086,4,302,Auto passenger
+5086,5,21,Auto passenger
+5086,6,105,Auto passenger
+5086,7,430,Auto passenger
+5087,3,69,Auto passenger
+5087,7,57,Auto passenger
+5088,6,182,Auto passenger
+5089,3,326,Auto passenger
+5089,4,105,Auto passenger
+5089,5,265,Auto passenger
+5089,6,70,Auto passenger
+5090,2,43,Auto passenger
+5090,3,64,Auto passenger
+5090,4,224,Auto passenger
+5090,6,285,Auto passenger
+5090,7,44,Auto passenger
+5091,2,521,Auto passenger
+5091,3,114,Auto passenger
+5091,4,69,Auto passenger
+5091,6,149,Auto passenger
+5092,2,130,Auto passenger
+5092,3,70,Auto passenger
+5092,4,33,Auto passenger
+5092,6,431,Auto passenger
+5092,7,185,Auto passenger
+5093,1,25,Auto passenger
+5093,3,66,Auto passenger
+5093,5,39,Auto passenger
+5093,6,183,Auto passenger
+5093,7,107,Auto passenger
+5094,2,268,Auto passenger
+5094,3,633,Auto passenger
+5094,4,92,Auto passenger
+5094,5,47,Auto passenger
+5094,6,771,Auto passenger
+5094,7,443,Auto passenger
+5095,2,149,Auto passenger
+5095,3,134,Auto passenger
+5095,4,230,Auto passenger
+5095,7,20,Auto passenger
+5096,2,49,Auto passenger
+5096,3,184,Auto passenger
+5096,4,234,Auto passenger
+5096,5,180,Auto passenger
+5096,6,98,Auto passenger
+5096,7,160,Auto passenger
+5097,1,49,Auto passenger
+5097,3,176,Auto passenger
+5097,4,62,Auto passenger
+5098,2,256,Auto passenger
+5098,3,104,Auto passenger
+5098,4,211,Auto passenger
+5098,5,97,Auto passenger
+5098,6,48,Auto passenger
+5098,7,243,Auto passenger
+5099,2,157,Auto passenger
+5099,3,153,Auto passenger
+5099,4,38,Auto passenger
+5099,6,151,Auto passenger
+5099,7,76,Auto passenger
+5100,1,158,Auto passenger
+5100,3,29,Auto passenger
+5100,4,524,Auto passenger
+5100,5,51,Auto passenger
+5100,6,639,Auto passenger
+5100,7,410,Auto passenger
+5101,2,121,Auto passenger
+5101,4,62,Auto passenger
+5101,5,107,Auto passenger
+5101,6,34,Auto passenger
+5101,7,45,Auto passenger
+5102,2,328,Auto passenger
+5102,3,183,Auto passenger
+5102,4,40,Auto passenger
+5102,7,288,Auto passenger
+5103,6,33,Auto passenger
+5104,1,32,Auto passenger
+5104,2,216,Auto passenger
+5104,3,216,Auto passenger
+5104,4,114,Auto passenger
+5104,6,202,Auto passenger
+5104,7,288,Auto passenger
+5105,2,94,Auto passenger
+5105,3,38,Auto passenger
+5105,4,384,Auto passenger
+5105,6,36,Auto passenger
+5105,7,138,Auto passenger
+5106,2,233,Auto passenger
+5106,3,213,Auto passenger
+5106,4,151,Auto passenger
+5106,7,32,Auto passenger
+5107,2,54,Auto passenger
+5107,3,151,Auto passenger
+5107,7,79,Auto passenger
+5109,2,31,Auto passenger
+5109,4,160,Auto passenger
+5109,5,371,Auto passenger
+5109,6,339,Auto passenger
+5109,7,248,Auto passenger
+5110,2,340,Auto passenger
+5110,3,162,Auto passenger
+5110,4,80,Auto passenger
+5110,6,293,Auto passenger
+5110,7,896,Auto passenger
+5111,1,16,Auto passenger
+5111,2,61,Auto passenger
+5111,6,182,Auto passenger
+5111,7,256,Auto passenger
+5113,2,83,Auto passenger
+5113,3,170,Auto passenger
+5113,4,790,Auto passenger
+5113,5,436,Auto passenger
+5113,7,80,Auto passenger
+5114,4,158,Auto passenger
+5114,6,200,Auto passenger
+5114,7,104,Auto passenger
+5115,3,630,Auto passenger
+5115,4,221,Auto passenger
+5115,5,106,Auto passenger
+5115,6,176,Auto passenger
+5115,7,49,Auto passenger
+5116,3,39,Auto passenger
+5116,7,118,Auto passenger
+5117,4,354,Auto passenger
+5118,2,102,Auto passenger
+5118,3,856,Auto passenger
+5118,4,117,Auto passenger
+5118,7,551,Auto passenger
+5120,1,72,Auto passenger
+5120,2,62,Auto passenger
+5120,5,171,Auto passenger
+5120,7,82,Auto passenger
+5121,2,463,Auto passenger
+5121,3,38,Auto passenger
+5121,7,1870,Auto passenger
+5122,2,718,Auto passenger
+5122,3,77,Auto passenger
+5122,4,374,Auto passenger
+5122,6,216,Auto passenger
+5122,7,154,Auto passenger
+5123,2,419,Auto passenger
+5123,3,278,Auto passenger
+5123,4,354,Auto passenger
+5123,6,148,Auto passenger
+5123,7,209,Auto passenger
+5125,2,41,Auto passenger
+5125,3,62,Auto passenger
+5125,4,52,Auto passenger
+5125,7,28,Auto passenger
+5126,4,678,Auto passenger
+5126,5,58,Auto passenger
+5127,1,39,Auto passenger
+5127,2,145,Auto passenger
+5127,3,158,Auto passenger
+5127,4,842,Auto passenger
+5127,5,322,Auto passenger
+5127,7,76,Auto passenger
+5129,2,35,Auto passenger
+5129,5,155,Auto passenger
+5129,6,261,Auto passenger
+5130,2,372,Auto passenger
+5130,3,83,Auto passenger
+5130,4,167,Auto passenger
+5130,6,278,Auto passenger
+5130,7,142,Auto passenger
+5131,2,106,Auto passenger
+5131,3,67,Auto passenger
+5131,4,407,Auto passenger
+5131,5,75,Auto passenger
+5131,7,207,Auto passenger
+5132,3,52,Auto passenger
+5132,4,29,Auto passenger
+5132,5,69,Auto passenger
+5132,6,92,Auto passenger
+5132,7,200,Auto passenger
+5133,2,188,Auto passenger
+5133,3,73,Auto passenger
+5133,4,222,Auto passenger
+5133,5,387,Auto passenger
+5135,1,31,Auto passenger
+5135,2,147,Auto passenger
+5135,3,216,Auto passenger
+5135,4,580,Auto passenger
+5135,5,224,Auto passenger
+5135,6,93,Auto passenger
+5135,7,673,Auto passenger
+5137,5,145,Auto passenger
+5137,6,44,Auto passenger
+5137,7,48,Auto passenger
+5139,1,31,Auto passenger
+5139,2,478,Auto passenger
+5139,3,145,Auto passenger
+5139,4,244,Auto passenger
+5139,5,1207,Auto passenger
+5139,6,239,Auto passenger
+5139,7,156,Auto passenger
+5140,2,106,Auto passenger
+5140,3,170,Auto passenger
+5140,5,408,Auto passenger
+5140,6,336,Auto passenger
+5140,7,100,Auto passenger
+5141,2,27,Auto passenger
+5141,4,117,Auto passenger
+5141,5,66,Auto passenger
+5141,6,494,Auto passenger
+5141,7,15,Auto passenger
+5143,2,95,Auto passenger
+5143,3,179,Auto passenger
+5143,4,140,Auto passenger
+5143,5,43,Auto passenger
+5143,7,125,Auto passenger
+5144,2,84,Auto passenger
+5144,3,283,Auto passenger
+5144,4,448,Auto passenger
+5144,5,257,Auto passenger
+5144,6,307,Auto passenger
+5144,7,459,Auto passenger
+5148,1,67,Auto passenger
+5148,2,298,Auto passenger
+5148,3,207,Auto passenger
+5148,4,98,Auto passenger
+5148,5,311,Auto passenger
+5148,7,370,Auto passenger
+5149,2,99,Auto passenger
+5149,3,735,Auto passenger
+5149,4,161,Auto passenger
+5150,1,166,Auto passenger
+5150,2,359,Auto passenger
+5150,3,79,Auto passenger
+5151,2,129,Auto passenger
+5151,3,770,Auto passenger
+5151,4,276,Auto passenger
+5151,5,129,Auto passenger
+5151,7,29,Auto passenger
+5154,2,36,Auto passenger
+5154,4,297,Auto passenger
+5154,5,63,Auto passenger
+5155,2,186,Auto passenger
+5155,3,104,Auto passenger
+5155,4,109,Auto passenger
+5155,5,81,Auto passenger
+5155,6,37,Auto passenger
+5155,7,173,Auto passenger
+5157,2,128,Auto passenger
+5157,3,105,Auto passenger
+5157,4,211,Auto passenger
+5157,5,166,Auto passenger
+5158,2,122,Auto passenger
+5158,3,39,Auto passenger
+5158,4,223,Auto passenger
+5158,6,1438,Auto passenger
+5158,7,560,Auto passenger
+5159,2,80,Auto passenger
+5159,3,42,Auto passenger
+5159,4,34,Auto passenger
+5159,6,62,Auto passenger
+5159,7,26,Auto passenger
+5160,3,70,Auto passenger
+5160,6,70,Auto passenger
+5161,1,59,Auto passenger
+5161,2,126,Auto passenger
+5161,4,447,Auto passenger
+5161,7,111,Auto passenger
+5162,3,106,Auto passenger
+5162,4,64,Auto passenger
+5162,5,43,Auto passenger
+5163,2,48,Auto passenger
+5163,3,47,Auto passenger
+5163,4,45,Auto passenger
+5163,6,218,Auto passenger
+5164,2,287,Auto passenger
+5164,3,580,Auto passenger
+5164,4,750,Auto passenger
+5164,5,38,Auto passenger
+5164,6,218,Auto passenger
+5164,7,339,Auto passenger
+5165,1,134,Auto passenger
+5165,2,29,Auto passenger
+5165,3,198,Auto passenger
+5165,4,84,Auto passenger
+5165,7,131,Auto passenger
+5166,2,479,Auto passenger
+5166,3,144,Auto passenger
+5166,5,228,Auto passenger
+5166,6,346,Auto passenger
+5166,7,357,Auto passenger
+5167,3,16,Auto passenger
+5167,4,20,Auto passenger
+5167,7,62,Auto passenger
+5168,2,140,Auto passenger
+5168,5,14,Auto passenger
+5170,2,209,Auto passenger
+5170,3,221,Auto passenger
+5170,4,64,Auto passenger
+5170,5,92,Auto passenger
+5170,7,144,Auto passenger
+5171,2,160,Auto passenger
+5171,3,103,Auto passenger
+5171,7,52,Auto passenger
+5172,3,225,Auto passenger
+5172,4,134,Auto passenger
+5172,5,50,Auto passenger
+5172,7,49,Auto passenger
+5174,2,399,Auto passenger
+5174,4,90,Auto passenger
+5174,5,230,Auto passenger
+5174,6,76,Auto passenger
+5175,3,160,Auto passenger
+5175,4,365,Auto passenger
+5175,5,61,Auto passenger
+5175,6,75,Auto passenger
+5175,7,109,Auto passenger
+5176,2,207,Auto passenger
+5176,3,1570,Auto passenger
+5176,5,132,Auto passenger
+5177,3,172,Auto passenger
+5177,4,314,Auto passenger
+5177,5,103,Auto passenger
+5177,6,33,Auto passenger
+5177,7,80,Auto passenger
+5178,2,34,Auto passenger
+5178,3,61,Auto passenger
+5178,4,153,Auto passenger
+5178,5,37,Auto passenger
+5178,6,45,Auto passenger
+5178,7,52,Auto passenger
+5179,1,97,Auto passenger
+5179,2,33,Auto passenger
+5179,3,347,Auto passenger
+5179,4,103,Auto passenger
+5179,5,98,Auto passenger
+5179,7,273,Auto passenger
+5180,3,281,Auto passenger
+5180,4,275,Auto passenger
+5180,5,399,Auto passenger
+5180,6,85,Auto passenger
+5181,1,35,Auto passenger
+5181,2,124,Auto passenger
+5181,3,173,Auto passenger
+5181,4,45,Auto passenger
+5181,7,45,Auto passenger
+5182,2,62,Auto passenger
+5182,3,320,Auto passenger
+5182,4,82,Auto passenger
+5183,2,279,Auto passenger
+5183,3,137,Auto passenger
+5183,4,330,Auto passenger
+5186,1,97,Auto passenger
+5186,4,61,Auto passenger
+5187,1,142,Auto passenger
+5187,3,51,Auto passenger
+5187,4,286,Auto passenger
+5187,5,182,Auto passenger
+5187,6,296,Auto passenger
+5187,7,154,Auto passenger
+5188,2,186,Auto passenger
+5188,3,197,Auto passenger
+5188,7,402,Auto passenger
+5191,2,60,Auto passenger
+5191,3,147,Auto passenger
+5191,5,87,Auto passenger
+5191,6,305,Auto passenger
+5191,7,49,Auto passenger
+5192,1,58,Auto passenger
+5192,3,25,Auto passenger
+5192,4,73,Auto passenger
+5192,5,23,Auto passenger
+5194,2,27,Auto passenger
+5194,4,80,Auto passenger
+5194,5,208,Auto passenger
+5195,1,43,Auto passenger
+5196,3,14,Auto passenger
+5196,5,175,Auto passenger
+5196,6,112,Auto passenger
+5197,3,69,Auto passenger
+5198,3,103,Auto passenger
+5198,6,78,Auto passenger
+5199,2,43,Auto passenger
+5199,6,50,Auto passenger
+5199,7,66,Auto passenger
+5200,2,206,Auto passenger
+5200,3,205,Auto passenger
+5200,4,113,Auto passenger
+5200,5,256,Auto passenger
+5200,6,23,Auto passenger
+5200,7,274,Auto passenger
+5201,2,25,Auto passenger
+5201,4,25,Auto passenger
+5201,5,108,Auto passenger
+5201,6,132,Auto passenger
+5202,3,103,Auto passenger
+5202,4,373,Auto passenger
+5202,5,106,Auto passenger
+5202,6,180,Auto passenger
+5203,1,173,Auto passenger
+5203,3,168,Auto passenger
+5203,4,41,Auto passenger
+5203,5,135,Auto passenger
+5203,6,128,Auto passenger
+5203,7,72,Auto passenger
+5204,1,58,Auto passenger
+5204,2,539,Auto passenger
+5204,3,58,Auto passenger
+5204,4,21,Auto passenger
+5205,1,162,Auto passenger
+5205,2,149,Auto passenger
+5205,3,272,Auto passenger
+5205,4,211,Auto passenger
+5205,5,106,Auto passenger
+5205,6,904,Auto passenger
+5205,7,222,Auto passenger
+5206,1,1506,Auto passenger
+5206,2,296,Auto passenger
+5206,4,48,Auto passenger
+5207,2,103,Auto passenger
+5207,3,112,Auto passenger
+5207,4,169,Auto passenger
+5207,5,270,Auto passenger
+5207,6,30,Auto passenger
+5207,7,89,Auto passenger
+5208,1,24,Auto passenger
+5208,2,211,Auto passenger
+5208,3,737,Auto passenger
+5208,4,521,Auto passenger
+5208,6,188,Auto passenger
+5208,7,46,Auto passenger
+5210,2,98,Auto passenger
+5210,7,36,Auto passenger
+5212,3,76,Auto passenger
+5212,4,32,Auto passenger
+5212,5,190,Auto passenger
+5212,6,96,Auto passenger
+5214,4,53,Auto passenger
+5215,2,53,Auto passenger
+5216,3,232,Auto passenger
+5216,4,564,Auto passenger
+5216,5,83,Auto passenger
+5216,6,101,Auto passenger
+5216,7,67,Auto passenger
+5219,2,74,Auto passenger
+5219,3,84,Auto passenger
+5219,4,127,Auto passenger
+5219,5,349,Auto passenger
+5219,6,11,Auto passenger
+5219,7,54,Auto passenger
+5223,2,53,Auto passenger
+5223,4,25,Auto passenger
+5223,5,73,Auto passenger
+5223,6,234,Auto passenger
+5223,7,43,Auto passenger
+5224,4,115,Auto passenger
+5224,6,132,Auto passenger
+5225,3,37,Auto passenger
+5225,4,50,Auto passenger
+5225,6,46,Auto passenger
+5226,2,39,Auto passenger
+5226,4,25,Auto passenger
+5226,5,97,Auto passenger
+5226,6,509,Auto passenger
+5226,7,219,Auto passenger
+5227,6,16,Auto passenger
+5229,3,27,Auto passenger
+5229,6,664,Auto passenger
+5230,3,126,Auto passenger
+5230,4,293,Auto passenger
+5230,5,89,Auto passenger
+5230,6,88,Auto passenger
+5230,7,244,Auto passenger
+5231,2,45,Auto passenger
+5231,4,119,Auto passenger
+5231,6,354,Auto passenger
+5231,7,235,Auto passenger
+5232,2,104,Auto passenger
+5232,3,414,Auto passenger
+5232,5,92,Auto passenger
+5232,6,796,Auto passenger
+5232,7,234,Auto passenger
+5233,3,27,Auto passenger
+5233,5,71,Auto passenger
+5233,6,698,Auto passenger
+5233,7,55,Auto passenger
+5234,5,51,Auto passenger
+5234,6,406,Auto passenger
+5235,4,168,Auto passenger
+5236,4,461,Auto passenger
+5236,5,300,Auto passenger
+5236,6,51,Auto passenger
+5237,2,20,Auto passenger
+5237,3,91,Auto passenger
+5237,4,44,Auto passenger
+5237,5,356,Auto passenger
+5237,6,196,Auto passenger
+5237,7,455,Auto passenger
+5238,2,189,Auto passenger
+5238,4,246,Auto passenger
+5238,6,406,Auto passenger
+5238,7,172,Auto passenger
+5239,2,467,Auto passenger
+5239,3,97,Auto passenger
+5239,4,271,Auto passenger
+5239,5,199,Auto passenger
+5239,6,91,Auto passenger
+5239,7,268,Auto passenger
+5240,4,104,Auto passenger
+5240,6,61,Auto passenger
+5241,2,590,Auto passenger
+5241,3,357,Auto passenger
+5241,4,284,Auto passenger
+5241,6,112,Auto passenger
+5241,7,601,Auto passenger
+5242,7,46,Auto passenger
+5243,7,307,Auto passenger
+5244,4,138,Auto passenger
+5244,6,196,Auto passenger
+5244,7,332,Auto passenger
+5245,4,113,Auto passenger
+5245,5,198,Auto passenger
+5245,7,57,Auto passenger
+5246,4,251,Auto passenger
+5246,5,232,Auto passenger
+5246,6,164,Auto passenger
+5246,7,57,Auto passenger
+5247,4,113,Auto passenger
+5247,6,216,Auto passenger
+5247,7,49,Auto passenger
+5248,2,27,Auto passenger
+5248,3,84,Auto passenger
+5248,4,80,Auto passenger
+5248,5,35,Auto passenger
+5248,6,304,Auto passenger
+5248,7,485,Auto passenger
+5249,6,19,Auto passenger
+5250,4,157,Auto passenger
+5250,6,172,Auto passenger
+5250,7,74,Auto passenger
+5251,3,26,Auto passenger
+5252,3,123,Auto passenger
+5252,4,129,Auto passenger
+5252,7,103,Auto passenger
+5002,6,74,School bus
+5005,3,94,School bus
+5005,4,103,School bus
+5005,6,74,School bus
+5005,7,199,School bus
+5009,6,86,School bus
+5012,7,124,School bus
+5020,5,88,School bus
+5020,6,20,School bus
+5020,7,163,School bus
+5028,3,75,School bus
+5030,4,112,School bus
+5030,5,85,School bus
+5030,7,118,School bus
+5032,6,314,School bus
+5032,7,151,School bus
+5036,4,24,School bus
+5037,6,167,School bus
+5041,2,70,School bus
+5041,3,22,School bus
+5041,4,71,School bus
+5041,5,83,School bus
+5041,7,324,School bus
+5044,6,65,School bus
+5045,5,75,School bus
+5046,4,60,School bus
+5046,5,25,School bus
+5046,6,193,School bus
+5047,2,48,School bus
+5047,6,63,School bus
+5049,4,261,School bus
+5050,4,38,School bus
+5050,5,79,School bus
+5051,2,51,School bus
+5051,6,168,School bus
+5052,4,44,School bus
+5053,3,236,School bus
+5054,5,28,School bus
+5055,4,257,School bus
+5056,3,64,School bus
+5056,4,93,School bus
+5056,5,233,School bus
+5056,6,152,School bus
+5056,7,92,School bus
+5057,7,94,School bus
+5058,5,161,School bus
+5059,4,277,School bus
+5059,7,195,School bus
+5061,4,673,School bus
+5061,6,118,School bus
+5063,3,85,School bus
+5063,7,98,School bus
+5065,4,146,School bus
+5065,6,244,School bus
+5067,4,106,School bus
+5068,5,52,School bus
+5069,4,77,School bus
+5069,7,327,School bus
+5071,6,106,School bus
+5071,7,294,School bus
+5073,2,125,School bus
+5073,4,267,School bus
+5073,5,358,School bus
+5073,6,189,School bus
+5073,7,545,School bus
+5075,3,41,School bus
+5075,4,40,School bus
+5075,7,49,School bus
+5076,3,70,School bus
+5076,4,46,School bus
+5076,6,19,School bus
+5077,6,108,School bus
+5078,6,247,School bus
+5079,4,87,School bus
+5080,7,17,School bus
+5081,5,16,School bus
+5082,6,99,School bus
+5084,1,37,School bus
+5084,5,35,School bus
+5084,6,150,School bus
+5086,4,97,School bus
+5088,6,63,School bus
+5089,3,333,School bus
+5089,4,145,School bus
+5090,3,15,School bus
+5091,2,205,School bus
+5092,7,34,School bus
+5093,6,86,School bus
+5093,7,110,School bus
+5094,3,154,School bus
+5094,5,47,School bus
+5094,6,274,School bus
+5094,7,248,School bus
+5096,4,41,School bus
+5096,5,87,School bus
+5096,6,50,School bus
+5097,3,363,School bus
+5098,1,493,School bus
+5100,4,135,School bus
+5100,6,225,School bus
+5100,7,96,School bus
+5105,4,176,School bus
+5106,2,131,School bus
+5106,6,242,School bus
+5109,6,140,School bus
+5111,6,91,School bus
+5111,7,70,School bus
+5118,1,125,School bus
+5118,2,113,School bus
+5121,2,530,School bus
+5122,2,253,School bus
+5123,1,46,School bus
+5123,4,236,School bus
+5123,7,272,School bus
+5125,2,66,School bus
+5126,4,97,School bus
+5127,5,161,School bus
+5131,2,21,School bus
+5132,5,60,School bus
+5133,6,270,School bus
+5135,3,74,School bus
+5137,6,16,School bus
+5137,7,35,School bus
+5139,6,44,School bus
+5140,6,115,School bus
+5141,6,287,School bus
+5148,3,201,School bus
+5148,4,34,School bus
+5157,2,191,School bus
+5166,3,116,School bus
+5168,2,178,School bus
+5170,7,144,School bus
+5175,5,102,School bus
+5176,3,237,School bus
+5177,2,177,School bus
+5177,3,160,School bus
+5177,5,47,School bus
+5177,6,17,School bus
+5177,7,26,School bus
+5178,4,59,School bus
+5178,6,69,School bus
+5179,7,143,School bus
+5180,5,30,School bus
+5181,7,208,School bus
+5191,6,387,School bus
+5196,6,79,School bus
+5201,6,132,School bus
+5202,5,63,School bus
+5203,2,14,School bus
+5203,5,45,School bus
+5203,6,67,School bus
+5205,6,30,School bus
+5207,3,71,School bus
+5212,7,64,School bus
+5216,3,556,School bus
+5216,4,278,School bus
+5216,5,83,School bus
+5216,6,82,School bus
+5219,5,114,School bus
+5223,4,365,School bus
+5223,5,73,School bus
+5224,4,19,School bus
+5224,6,132,School bus
+5226,3,144,School bus
+5226,4,110,School bus
+5226,5,97,School bus
+5226,6,579,School bus
+5226,7,73,School bus
+5229,5,105,School bus
+5229,6,197,School bus
+5230,3,52,School bus
+5230,5,164,School bus
+5230,6,219,School bus
+5230,7,173,School bus
+5231,6,308,School bus
+5232,5,127,School bus
+5232,6,42,School bus
+5233,3,142,School bus
+5233,5,39,School bus
+5233,6,146,School bus
+5234,6,41,School bus
+5235,4,84,School bus
+5237,5,202,School bus
+5237,6,65,School bus
+5238,2,40,School bus
+5238,4,203,School bus
+5238,6,172,School bus
+5239,5,392,School bus
+5239,6,56,School bus
+5240,6,27,School bus
+5241,7,247,School bus
+5242,6,126,School bus
+5243,7,77,School bus
+5244,4,127,School bus
+5244,6,56,School bus
+5245,2,78,School bus
+5245,4,113,School bus
+5246,6,147,School bus
+5247,6,113,School bus
+5248,4,101,School bus
+5248,6,162,School bus
+5248,7,52,School bus
+5250,4,73,School bus
+5250,5,40,School bus
+5252,3,96,School bus
+5087,7,57,Taxi passenger
+5092,2,54,Taxi passenger
+5092,7,108,Taxi passenger
+5093,2,12,Taxi passenger
+5094,4,30,Taxi passenger
+5094,5,101,Taxi passenger
+5095,7,40,Taxi passenger
+5102,2,31,Taxi passenger
+5104,2,159,Taxi passenger
+5110,1,41,Taxi passenger
+5111,2,34,Taxi passenger
+5114,7,32,Taxi passenger
+5125,3,62,Taxi passenger
+5129,2,35,Taxi passenger
+5131,2,21,Taxi passenger
+5141,1,7,Taxi passenger
+5148,1,29,Taxi passenger
+5148,4,53,Taxi passenger
+5148,7,72,Taxi passenger
+5155,5,43,Taxi passenger
+5156,7,18,Taxi passenger
+5158,4,134,Taxi passenger
+5159,2,34,Taxi passenger
+5162,2,38,Taxi passenger
+5163,2,30,Taxi passenger
+5164,2,170,Taxi passenger
+5164,3,10,Taxi passenger
+5166,2,113,Taxi passenger
+5166,4,11,Taxi passenger
+5167,7,53,Taxi passenger
+5171,2,57,Taxi passenger
+5173,2,115,Taxi passenger
+5176,2,124,Taxi passenger
+5179,1,103,Taxi passenger
+5179,2,52,Taxi passenger
+5180,5,41,Taxi passenger
+5186,5,100,Taxi passenger
+5196,7,47,Taxi passenger
+5200,4,22,Taxi passenger
+5206,7,58,Taxi passenger
+5216,4,38,Taxi passenger
+5226,6,14,Taxi passenger
+5231,7,15,Taxi passenger
+5236,3,22,Taxi passenger
+5237,7,49,Taxi passenger
+5238,4,36,Taxi passenger
+5005,3,140,Paid rideshare
+5074,1,49,Paid rideshare
+5100,5,113,Paid rideshare
+5132,6,43,Paid rideshare
+5149,2,29,Paid rideshare
+5159,5,69,Paid rideshare
+5166,1,73,Paid rideshare
+5166,2,113,Paid rideshare
+5171,2,123,Paid rideshare
+5175,1,34,Paid rideshare
+5183,2,333,Paid rideshare
+5191,6,70,Paid rideshare
+5192,2,33,Paid rideshare
+5199,3,268,Paid rideshare
+5230,6,40,Paid rideshare
+5231,6,81,Paid rideshare
+5002,6,37,Walk
+5005,3,47,Walk
+5005,5,100,Walk
+5009,4,105,Walk
+5009,5,136,Walk
+5009,6,86,Walk
+5020,6,94,Walk
+5020,7,33,Walk
+5032,4,161,Walk
+5032,6,124,Walk
+5032,7,639,Walk
+5041,2,70,Walk
+5041,3,30,Walk
+5041,5,50,Walk
+5041,7,159,Walk
+5044,4,348,Walk
+5045,2,214,Walk
+5045,5,67,Walk
+5046,2,30,Walk
+5046,3,51,Walk
+5046,4,331,Walk
+5046,5,67,Walk
+5046,6,79,Walk
+5046,7,114,Walk
+5047,6,32,Walk
+5050,2,133,Walk
+5050,4,637,Walk
+5050,5,191,Walk
+5050,7,142,Walk
+5051,1,192,Walk
+5051,5,97,Walk
+5051,6,618,Walk
+5052,3,22,Walk
+5053,2,136,Walk
+5053,5,176,Walk
+5053,7,228,Walk
+5056,4,64,Walk
+5056,6,160,Walk
+5057,1,133,Walk
+5057,2,255,Walk
+5057,5,20,Walk
+5059,2,25,Walk
+5059,3,48,Walk
+5059,4,111,Walk
+5059,6,156,Walk
+5059,7,37,Walk
+5060,7,40,Walk
+5061,7,47,Walk
+5065,6,119,Walk
+5066,4,301,Walk
+5066,5,382,Walk
+5066,6,351,Walk
+5066,7,73,Walk
+5067,4,96,Walk
+5067,6,39,Walk
+5068,6,313,Walk
+5068,7,48,Walk
+5069,2,151,Walk
+5069,3,111,Walk
+5073,4,291,Walk
+5074,1,49,Walk
+5074,4,176,Walk
+5074,5,201,Walk
+5075,3,29,Walk
+5075,6,55,Walk
+5076,4,119,Walk
+5076,5,93,Walk
+5078,6,17,Walk
+5079,7,43,Walk
+5080,3,111,Walk
+5080,4,85,Walk
+5080,7,17,Walk
+5081,6,67,Walk
+5081,7,105,Walk
+5082,3,145,Walk
+5082,6,38,Walk
+5084,1,19,Walk
+5084,3,383,Walk
+5084,4,99,Walk
+5084,5,131,Walk
+5084,6,97,Walk
+5086,3,26,Walk
+5086,4,70,Walk
+5086,5,21,Walk
+5086,7,125,Walk
+5087,5,56,Walk
+5087,7,79,Walk
+5089,3,83,Walk
+5089,4,121,Walk
+5090,4,20,Walk
+5090,6,165,Walk
+5091,3,115,Walk
+5091,7,52,Walk
+5092,1,24,Walk
+5092,3,57,Walk
+5092,4,447,Walk
+5092,7,102,Walk
+5093,2,25,Walk
+5093,5,77,Walk
+5093,6,67,Walk
+5094,6,74,Walk
+5094,7,177,Walk
+5095,1,31,Walk
+5095,2,66,Walk
+5095,3,31,Walk
+5096,4,78,Walk
+5096,5,87,Walk
+5097,1,297,Walk
+5098,1,739,Walk
+5098,4,71,Walk
+5098,5,97,Walk
+5098,7,199,Walk
+5099,2,153,Walk
+5102,2,25,Walk
+5102,4,105,Walk
+5104,1,176,Walk
+5104,2,122,Walk
+5104,4,141,Walk
+5104,5,111,Walk
+5104,6,27,Walk
+5105,7,50,Walk
+5106,3,102,Walk
+5106,7,32,Walk
+5107,2,21,Walk
+5107,4,270,Walk
+5109,4,47,Walk
+5109,6,136,Walk
+5109,7,56,Walk
+5110,5,110,Walk
+5110,7,18,Walk
+5111,2,220,Walk
+5111,3,147,Walk
+5111,4,97,Walk
+5111,7,34,Walk
+5113,2,36,Walk
+5113,5,436,Walk
+5114,4,57,Walk
+5114,6,341,Walk
+5115,3,79,Walk
+5115,4,97,Walk
+5116,7,82,Walk
+5118,2,100,Walk
+5118,3,304,Walk
+5118,7,105,Walk
+5120,1,72,Walk
+5121,6,239,Walk
+5122,2,84,Walk
+5122,3,77,Walk
+5123,2,121,Walk
+5123,3,113,Walk
+5123,7,357,Walk
+5125,7,131,Walk
+5126,4,97,Walk
+5127,2,351,Walk
+5129,4,89,Walk
+5129,5,62,Walk
+5129,6,38,Walk
+5130,3,53,Walk
+5130,4,230,Walk
+5131,1,57,Walk
+5131,2,138,Walk
+5131,3,77,Walk
+5132,2,61,Walk
+5132,4,33,Walk
+5132,5,60,Walk
+5132,6,66,Walk
+5132,7,495,Walk
+5133,2,21,Walk
+5133,4,105,Walk
+5133,7,42,Walk
+5135,4,392,Walk
+5135,6,103,Walk
+5135,7,207,Walk
+5137,6,84,Walk
+5137,7,49,Walk
+5139,1,75,Walk
+5139,2,16,Walk
+5139,3,136,Walk
+5139,4,134,Walk
+5139,5,227,Walk
+5140,2,53,Walk
+5140,4,201,Walk
+5140,5,93,Walk
+5140,6,107,Walk
+5141,4,46,Walk
+5141,6,176,Walk
+5143,2,67,Walk
+5143,4,150,Walk
+5144,1,94,Walk
+5144,3,229,Walk
+5144,4,110,Walk
+5144,6,44,Walk
+5144,7,633,Walk
+5148,2,123,Walk
+5148,7,108,Walk
+5149,1,44,Walk
+5149,3,203,Walk
+5150,2,369,Walk
+5150,3,14,Walk
+5150,4,22,Walk
+5150,5,155,Walk
+5151,3,197,Walk
+5151,7,65,Walk
+5154,2,114,Walk
+5154,4,179,Walk
+5154,5,31,Walk
+5155,1,129,Walk
+5155,2,198,Walk
+5155,3,178,Walk
+5155,4,160,Walk
+5155,5,151,Walk
+5156,2,46,Walk
+5157,2,206,Walk
+5157,3,157,Walk
+5157,4,82,Walk
+5157,5,166,Walk
+5158,2,391,Walk
+5158,3,340,Walk
+5158,4,69,Walk
+5158,6,1326,Walk
+5158,7,167,Walk
+5159,2,50,Walk
+5159,3,60,Walk
+5159,4,53,Walk
+5159,5,103,Walk
+5159,7,158,Walk
+5161,3,786,Walk
+5161,4,455,Walk
+5161,7,110,Walk
+5162,7,107,Walk
+5163,1,27,Walk
+5163,4,220,Walk
+5163,6,62,Walk
+5163,7,54,Walk
+5164,1,168,Walk
+5164,2,746,Walk
+5164,3,260,Walk
+5164,4,362,Walk
+5164,6,202,Walk
+5164,7,265,Walk
+5165,3,43,Walk
+5165,7,80,Walk
+5166,1,136,Walk
+5166,2,200,Walk
+5166,3,334,Walk
+5166,4,71,Walk
+5166,7,99,Walk
+5167,2,29,Walk
+5167,3,94,Walk
+5167,4,386,Walk
+5167,6,50,Walk
+5167,7,145,Walk
+5168,2,272,Walk
+5168,3,106,Walk
+5168,4,141,Walk
+5168,5,156,Walk
+5170,1,290,Walk
+5170,2,149,Walk
+5170,7,742,Walk
+5171,2,82,Walk
+5171,3,82,Walk
+5171,5,239,Walk
+5171,7,274,Walk
+5172,1,199,Walk
+5172,2,85,Walk
+5172,3,83,Walk
+5172,4,355,Walk
+5172,5,100,Walk
+5173,2,68,Walk
+5174,2,81,Walk
+5174,3,502,Walk
+5174,4,89,Walk
+5174,5,47,Walk
+5174,6,154,Walk
+5175,1,220,Walk
+5175,2,501,Walk
+5175,3,224,Walk
+5175,4,450,Walk
+5175,5,61,Walk
+5175,6,75,Walk
+5176,3,158,Walk
+5176,7,256,Walk
+5177,5,29,Walk
+5179,1,56,Walk
+5179,2,309,Walk
+5179,3,37,Walk
+5179,4,110,Walk
+5179,5,116,Walk
+5179,7,36,Walk
+5180,4,94,Walk
+5180,5,115,Walk
+5181,1,37,Walk
+5181,2,709,Walk
+5181,3,441,Walk
+5181,7,188,Walk
+5182,1,49,Walk
+5183,2,220,Walk
+5186,1,115,Walk
+5186,2,117,Walk
+5186,3,90,Walk
+5186,4,31,Walk
+5186,5,587,Walk
+5186,6,152,Walk
+5187,1,98,Walk
+5187,2,464,Walk
+5187,4,393,Walk
+5187,5,52,Walk
+5187,6,62,Walk
+5187,7,35,Walk
+5188,3,66,Walk
+5191,2,26,Walk
+5191,6,72,Walk
+5192,3,26,Walk
+5192,4,152,Walk
+5192,7,102,Walk
+5194,3,86,Walk
+5194,7,169,Walk
+5195,1,24,Walk
+5195,2,47,Walk
+5195,4,358,Walk
+5196,3,463,Walk
+5196,4,141,Walk
+5196,5,102,Walk
+5196,6,163,Walk
+5196,7,336,Walk
+5197,2,30,Walk
+5198,1,128,Walk
+5198,2,223,Walk
+5198,6,91,Walk
+5199,1,11,Walk
+5199,2,149,Walk
+5199,3,833,Walk
+5199,4,176,Walk
+5200,2,51,Walk
+5200,3,51,Walk
+5200,4,542,Walk
+5200,5,36,Walk
+5202,4,369,Walk
+5203,1,51,Walk
+5203,2,52,Walk
+5203,3,450,Walk
+5203,4,393,Walk
+5203,5,57,Walk
+5203,6,60,Walk
+5203,7,76,Walk
+5204,1,17,Walk
+5204,2,59,Walk
+5204,3,39,Walk
+5204,7,55,Walk
+5205,1,59,Walk
+5205,3,81,Walk
+5205,4,112,Walk
+5205,5,26,Walk
+5205,6,568,Walk
+5205,7,61,Walk
+5207,2,54,Walk
+5207,4,153,Walk
+5207,5,23,Walk
+5207,6,54,Walk
+5208,2,149,Walk
+5208,3,84,Walk
+5208,4,140,Walk
+5208,5,189,Walk
+5208,6,117,Walk
+5208,7,57,Walk
+5210,1,127,Walk
+5224,4,31,Walk
+5224,6,46,Walk
+5229,3,275,Walk
+5229,6,228,Walk
+5230,5,57,Walk
+5230,6,80,Walk
+5230,7,86,Walk
+5231,3,26,Walk
+5231,4,489,Walk
+5231,5,38,Walk
+5231,6,107,Walk
+5232,2,21,Walk
+5232,3,158,Walk
+5232,5,238,Walk
+5232,6,257,Walk
+5233,7,37,Walk
+5235,4,84,Walk
+5236,4,461,Walk
+5237,7,32,Walk
+5239,6,91,Walk
+5239,7,15,Walk
+5241,2,565,Walk
+5241,4,185,Walk
+5242,6,126,Walk
+5244,7,115,Walk
+5246,4,196,Walk
+5246,5,232,Walk
+5246,6,264,Walk
+5248,7,19,Walk
+5250,6,43,Walk
+5252,7,27,Walk
