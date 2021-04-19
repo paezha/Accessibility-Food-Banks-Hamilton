@@ -125,7 +125,7 @@ foodbank_locations <- read_csv("input-data-files/foodbanks-hamilton.csv",
                                     NAME = col_character(),
                                     TYPE = col_character(),
                                     ADDRESS = col_character(),
-                                    COVIDClose = col_double(),
+                                    STATUS = col_character(),
                                     latitude = col_double(),
                                     longitude = col_double(),
                                     name = col_character(),
@@ -138,19 +138,23 @@ foodbank_locations <- read_csv("input-data-files/foodbanks-hamilton.csv",
 COVIDClose is an indicator variable for whether this bank closed during the pandemic. Convert to factor:
 ```{r}
 foodbank_locations <- foodbank_locations %>%
-  mutate(COVIDClose = replace_na(COVIDClose, 0),
-         COVIDClose = factor(COVIDClose,
-                             levels = c(0, 1),
-                             labels = c("No", "Yes")))
+  mutate(STATUS = replace_na(STATUS, "Open"),
+         COVIDClose = if_else(STATUS == "Cancelled", true = "Yes", false = "No")) %>%
+  
+  # filter out Meals on Wheels, Student Nutrition programs, Shopping and Transportation, & Good Food Box Programs
+  filter(TYPE %in% c("Community Kitchen", "Congregate Dining", "Community Meals", "Food Banks", "Free Meals", "Low Cost Meals"))
 ```
 
 
 Convert to simple features:
-```{r}
+```{r message = FALSE}
 foodbank_locations <- foodbank_locations %>%
   st_as_sf(coords = c("longitude", "latitude"), 
            crs = 4326) %>%
-  st_transform(crs = 26917)
+  #st_transform(crs = 26917) %>%
+  
+  # filter out points beyond the Hamilton CMA (there's one point in Brantford)
+  filter(st_intersects(x = geometry, y = hamilton_cma, sparse = FALSE))
 ```
 
 Map location of foodbanks:
@@ -162,7 +166,7 @@ ggplot() +
               color = COVIDClose))
 ```
 
-### `dwelling_network_points_2016.RData` 
+### Origin parcel locations
 
 This is based on parcel-level data, approximated to the nearest point on the road network. For processing details, see:
 

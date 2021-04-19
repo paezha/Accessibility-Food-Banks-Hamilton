@@ -127,7 +127,7 @@ ttm_walk <- ttm_walk %>%
             by = c("UID" = "ID"))
 ```
 
-Join the pharmacy data to the travel time matrices:
+Join the food bank data to the travel time matrices:
 ```{r}
 ttm_car <- ttm_car %>%
   left_join(foodbank_locations %>%
