@@ -33,6 +33,19 @@ load("output-data-files/ttm_walk.RData")
 #data("ttm_walk")
 ```
 
+## TEMP: REMOVE INAPPLICABLE DESTINATIONS UNTIL NEW TTMs ARE FINISHED
+
+```{r}
+ttm_car <- ttm_car %>%
+  filter(!between(OBJECTID, left = 59, right = 69))
+
+ttm_transit <- ttm_transit %>%
+  filter(!between(OBJECTID, left = 59, right = 69))
+
+ttm_walk <- ttm_walk %>%
+  filter(!between(OBJECTID, left = 59, right = 69))
+```
+
 ## Quick check
 
 Distribution of the number of foodbanks that can be reached by each mode at the maximum travel time used in the calculation of the time matrices (180 min or 10,000 m).
@@ -49,37 +62,16 @@ Transit:
 ttm_transit %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
 ```
 
-Half of all parcels can reach 63 foodbanks or more in 180 min or less.
+Half of all parcels can reach 52 foodbanks or more in 180 min or less.
 
 Walking:
 ```{r}
 ttm_walk %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
 ```
 
-Half of all parcels can reach 50 foodbanks or more in 180 min or less.
+Half of all parcels can reach 45 foodbanks or more in 180 min or less.
 
 ## Prepare data
-
-Calculate number of households with incomes < \$40k per DA and proportion of households with incomes < \$40k per DA:
-```{r}
-data_da_2016 <- data_da_2016 %>%
-  filter(`Region Name` == "Hamilton") %>%
-  mutate(income_less40k = (`v_CA16_2406: Under $5,000` + 
-                             `v_CA16_2407: $5,000 to $9,999` + 
-                             `v_CA16_2408: $10,000 to $14,999` +
-                             `v_CA16_2409: $15,000 to $19,999` +
-                             `v_CA16_2410: $20,000 to $24,999` +  
-                             `v_CA16_2411: $25,000 to $29,999` +
-                             `v_CA16_2412: $30,000 to $34,999` +
-                             `v_CA16_2413: $35,000 to $39,999`),
-         p_inc_less40k = income_less40k/Households)
-```
-
-Clip `data_da_2016`:
-```{r}
-data_da_2016 <- data_da_2016 %>%
-  st_intersection(hamilton_cma)
-```
 
 Join number of low income households per DA to dwellings and total number of residential units:
 ```{r}
@@ -87,7 +79,10 @@ dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
   left_join(data_da_2016 %>%
               st_drop_geometry() %>%
               dplyr::transmute(DAUID = GeoUID, 
-                               p_inc_less40k),
+                               p_inc_less40k,
+                               linc_age_0to2,
+                               linc_age_0to19,
+                               linc_age_65plus),
             by = "DAUID")
 ```
 
@@ -104,6 +99,9 @@ ttm_car <- ttm_car %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
+                            linc_age_0to2,
+                            linc_age_0to19,
+                            linc_age_65plus,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
@@ -113,6 +111,9 @@ ttm_transit <- ttm_transit %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
+                            linc_age_0to2,
+                            linc_age_0to19,
+                            linc_age_65plus,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
@@ -122,12 +123,15 @@ ttm_walk <- ttm_walk %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
+                            linc_age_0to2,
+                            linc_age_0to19,
+                            linc_age_65plus,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
 ```
 
-Join the pharmacy data to the travel time matrices:
+Join the food bank data to the travel time matrices:
 ```{r}
 ttm_car <- ttm_car %>%
   left_join(foodbank_locations %>%
@@ -219,7 +223,7 @@ ttm %>%
   summary()
 ```
 
-What does this mean? Most DAs missing travel time by transit do not report trips by transit. In some DAs there are trips by transit (p_transit != 0), but no foodbank can be reached by transit (travel_time_transit is NA). How many of these cases?
+What does this mean? Most DAs missing travel time by transit do not report trips by transit in the TTS. In some DAs there are trips by transit (p_transit != 0), but no foodbank can be reached by transit (travel_time_transit is NA). How many of these cases?
 ```{r}
 ttm %>% 
   filter(is.na(travel_time_transit) & p_transit > 0) %>%
@@ -243,7 +247,7 @@ ttm %>%
   summary()
 ```
 
-What does this mean? Most DAs missing travel time by walking do not report trips by walkin In some DAs there are trips by walking (p_walk != 0), but no foodbank can be reached by walk (travel_time_walk is NA). How many of these cases?
+What does this mean? Most DAs missing travel time by walking do not report trips by walking in the TTS. In some DAs there are trips by walking (p_walk != 0), but no foodbank can be reached by walk (travel_time_walk is NA). How many of these cases?
 ```{r}
 ttm %>% 
   filter(is.na(travel_time_walk) & p_walk > 0) %>%
@@ -263,7 +267,7 @@ Summary of the table after these operations:
 summary(ttm)
 ```
 
-Calculate expected travel times by mode. These are the travel time by the mode multiplied by the probability of using the mode (which is proxied by the proportion of trips by mode in the DA). The total expected travel time is the sum of the expected travel times by mode:
+Calculate expected travel times by mode. These are the travel time by the mode multiplied by the probability of using the mode (which is proxied by the proportion of trips by mode in the DA from the TTS). The total expected travel time is the sum of the expected travel times by mode:
 ```{r}
 ttm <- ttm %>%
   mutate(e_travel_time_car = travel_time_car * p_car,
@@ -272,7 +276,7 @@ ttm <- ttm %>%
          e_travel_time = e_travel_time_car + e_travel_time_transit + e_travel_time_walk)
 ```
 
-What is the mean expected travel time for each parcel over all the foodbanks?
+What is the mean expected travel time for each parcel over all the foodbanks (open and closed)?
 ```{r}
 e_travel_time_parcel <- ttm %>% 
   group_by(UID) %>%
@@ -294,6 +298,7 @@ e_travel_time_parcel <- e_travel_time_parcel %>%
 Plot:
 ```{r}
 ggplot() +
+  geom_sf(data = hamilton_cma) +
   geom_sf(data = e_travel_time_parcel,
           aes(color = e_travel_time),
           alpha = 0.3) + 
@@ -323,13 +328,14 @@ e_travel_time_parcel_2 <- e_travel_time_parcel_2 %>%
 Plot:
 ```{r}
 ggplot() +
+  geom_sf(data = hamilton_cma) +
   geom_sf(data = e_travel_time_parcel_2,
           aes(color = e_travel_time),
           alpha = 0.3) + 
   scale_color_distiller(palette = "OrRd", direction = 1)
 ```
 
-Notice how expected travel time can _decrease_ with the closures! Foodbanks on average are a little bit closer, but there are _fewer_ of them, which will tend to increase the demand: 
+Notice how expected travel time to all open food banks can _decrease_ with the closures! Food banks on average are a little bit closer, but there are _fewer_ of them, which will tend to increase the demand: 
 ```{r}
 summary(e_travel_time_parcel)
 summary(e_travel_time_parcel_2)
@@ -513,6 +519,7 @@ accessibility <- accessibility %>%
 Plot levels of service before and during covid:
 ```{r}
 los_pre <- ggplot() +
+  geom_sf(data = hamilton_cma) +
   geom_sf(data = los %>%
             filter(timing == "Pre-covid"),
           aes(color = los,
@@ -524,6 +531,7 @@ los_pre <- ggplot() +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1))
 
 los_covid <- ggplot() +
+  geom_sf(data = hamilton_cma) +
   geom_sf(data = los %>%
             filter(timing == "During covid"),
           aes(color = los,
@@ -545,13 +553,14 @@ los %>%
               values_from = los, 
               values_fill = 0) %>%
   filter(`During covid` > 0) %>%
-  mutate(los_d = `During covid` - `Pre-covid`) %>%
+  mutate(los_d = `During covid` / `Pre-covid` - 1) %>%
   left_join(foodbank_locations %>%
             transmute(OBJECTID = ID,
                       geometry),
           by = "OBJECTID") %>%
   st_as_sf() %>%
   ggplot() +
+  geom_sf(data = hamilton_cma) +
   geom_sf(aes(color = los_d,
               size = los_d)) +
   geom_sf(data = foodbank_locations,
@@ -567,6 +576,7 @@ Here we can see the places where the level of service deteriorated most (excludi
 Plot accessibility before and during covid:
 ```{r}
 acc_pre <- ggplot() +
+  geom_sf(data = hamilton_cma) +
   geom_sf(data = accessibility %>%
             filter(timing == "Pre-covid"),
           aes(color = accessibility)) +
@@ -574,6 +584,7 @@ acc_pre <- ggplot() +
                         direction = 1)
 
 acc_covid <- ggplot() +
+  geom_sf(data = hamilton_cma) +
   geom_sf(data = accessibility %>%
             filter(timing == "During covid"),
           aes(color = accessibility)) +
@@ -590,9 +601,8 @@ accessibility %>%
   # Copy the DA identifier to the accessibility table
   left_join(dwelling_network_points_2016 %>%
               st_drop_geometry() %>%
-            transmute(UID = ID,
-                      DAUID),
-          by = "UID") %>%
+              transmute(UID = ID, DAUID),
+            by = "UID") %>%
   # Group by DA and time
   group_by(DAUID, timing) %>%
   # Calculate the accessibility by DA before and during covid
@@ -603,7 +613,7 @@ accessibility %>%
   pivot_wider(names_from = timing, 
               values_from = accessibility) %>%
   # Calculate changes in accessibility
-  mutate(acc_d = `During covid` - `Pre-covid`) %>%
+  mutate(acc_d = `During covid` / `Pre-covid` - 1) %>%
   # Join DA geometry
   left_join(data_da_2016 %>%
             transmute(DAUID = GeoUID,
@@ -613,6 +623,7 @@ accessibility %>%
   st_as_sf() %>%
   # Plot
   ggplot() +
+  geom_sf(data = hamilton_cma) +
   geom_sf(aes(fill = acc_d),
           color = NA) +
   scale_fill_distiller(palette = "OrRd", 
@@ -620,32 +631,139 @@ accessibility %>%
   
 ```
 
-<!--
-Calculate quintiles of median household income in Hamilton:
+## Further Breakdown by Population Characteristics
+
+### CODE TO BE UPDATED
 ```{r}
-mhi_q <- data_da_2016 %>%
-dplyr::filter(`Region Name` == "Hamilton") %>%
-pull(`v_CA16_2397: Median total income of households in 2015 ($)`) %>%
-quantile(c(0, 0.2, 0.4, 0.6, 0.8, 1), 
-na.rm = TRUE)
+# join tripmaking modal proportions
+ttm_car <- ttm_car %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+
+ttm_transit <- ttm_transit %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+
+ttm_walk <- ttm_walk %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
 ```
 
-Label DAs with income quintiles:
+
+Get minimum travel times in the pre-covid scenario:
+
+```{r minimum-travel-time-baseline, include=FALSE}
+# retrieve minimum travel time during covid to sites that didnt close
+min_ttm_car_pre <- ttm_car %>%
+  #dplyr::filter(COVIDClose == "No") %>%
+  group_by(UID) %>%
+  summarize(travel_time = min(travel_time),
+            linc_age_0to2 = first(linc_age_0to2),
+            linc_age_0to19 = first(linc_age_0to19),
+            linc_age_65plus = first(linc_age_0to19),
+            DAUID = first(DAUID),
+            TAZUID = first(TAZUID),
+            p_car = first(p_car),
+            p_transit = first(p_transit),
+            p_walk = first(p_walk),
+            .groups = "drop")
+
+min_ttm_transit_pre <- ttm_transit %>%
+  #dplyr::filter(COVIDClose == "No") %>%
+  group_by(UID) %>%
+  summarize(travel_time = min(travel_time),
+            linc_age_0to2 = first(linc_age_0to2),
+            linc_age_0to19 = first(linc_age_0to19),
+            linc_age_65plus = first(linc_age_0to19),
+            DAUID = first(DAUID),
+            TAZUID = first(TAZUID),
+            p_car = first(p_car),
+            p_transit = first(p_transit),
+            p_walk = first(p_walk),
+            .groups = "drop")
+
+min_ttm_walk_pre <- ttm_walk %>%
+  #dplyr::filter(COVIDClose == "No") %>%
+  group_by(UID) %>%
+  summarize(travel_time = min(travel_time),
+            linc_age_0to2 = first(linc_age_0to2),
+            linc_age_0to19 = first(linc_age_0to19),
+            linc_age_65plus = first(linc_age_0to19),
+            DAUID = first(DAUID),
+            TAZUID = first(TAZUID),
+            p_car = first(p_car),
+            p_transit = first(p_transit),
+            p_walk = first(p_walk),
+            .groups = "drop")
+```
+
+
+Get minimum travel times in the during covid scenario:
+
+```{r minimum-travel-time-during-covid, include=FALSE}
+# retrieve minimum travel time during covid to sites that didnt close
+min_ttm_car_during <- ttm_car %>%
+  dplyr::filter(COVIDClose == "No") %>%
+  group_by(UID) %>%
+  summarize(travel_time = min(travel_time),
+            linc_age_0to2 = first(linc_age_0to2),
+            linc_age_0to19 = first(linc_age_0to19),
+            linc_age_65plus = first(linc_age_0to19),
+            DAUID = first(DAUID),
+            TAZUID = first(TAZUID),
+            p_car = first(p_car),
+            p_transit = first(p_transit),
+            p_walk = first(p_walk),
+            .groups = "drop")
+
+min_ttm_transit_during <- ttm_transit %>%
+  dplyr::filter(COVIDClose == "No") %>%
+  group_by(UID) %>%
+  summarize(travel_time = min(travel_time),
+            linc_age_0to2 = first(linc_age_0to2),
+            linc_age_0to19 = first(linc_age_0to19),
+            linc_age_65plus = first(linc_age_0to19),
+            DAUID = first(DAUID),
+            TAZUID = first(TAZUID),
+            p_car = first(p_car),
+            p_transit = first(p_transit),
+            p_walk = first(p_walk),
+            .groups = "drop")
+
+min_ttm_walk_during <- ttm_walk %>%
+  dplyr::filter(COVIDClose == "No") %>%
+  group_by(UID) %>%
+  summarize(travel_time = min(travel_time),
+            linc_age_0to2 = first(linc_age_0to2),
+            linc_age_0to19 = first(linc_age_0to19),
+            linc_age_65plus = first(linc_age_0to19),
+            DAUID = first(DAUID),
+            TAZUID = first(TAZUID),
+            p_car = first(p_car),
+            p_transit = first(p_transit),
+            p_walk = first(p_walk),
+            .groups = "drop")
+```
+
+
+
 ```{r}
-data_da_2016 <- data_da_2016 %>%
-rename(Median_household_income = `v_CA16_2397: Median total income of households in 2015 ($)`) %>%
-mutate(income_quintile = case_when(Median_household_income < mhi_q[2] ~ "Bottom 20%",
-Median_household_income >= mhi_q[2] & Median_household_income < mhi_q[3] ~ "Fourth 20%",
-Median_household_income >= mhi_q[3] & Median_household_income < mhi_q[4] ~ "Third 20%",
-Median_household_income >= mhi_q[4] & Median_household_income < mhi_q[5] ~ "Second 20%",
-Median_household_income >= mhi_q[5] ~ "Top 20%"),
-income_quintile = factor(income_quintile,
-levels = c("Top 20%",
-"Second 20%",
-"Third 20%",
-"Fourth 20%",
-"Bottom 20%"),
-ordered = TRUE))
+# FULL JOIN THEM TOGETHER
 ```
 
 ## Exploratory data analysis
@@ -698,4 +816,3 @@ fill = NA) +
 scale_fill_distiller(palette = "OrRd", 
 direction = 1)
 ```
--->

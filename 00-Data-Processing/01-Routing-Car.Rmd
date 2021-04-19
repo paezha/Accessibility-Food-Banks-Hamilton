@@ -49,50 +49,12 @@ load("input-data-files/hamilton_cma.RData")
 
 ### Location of food banks
 
-Read file with locations:
+Read file with food bank locations:
 ```{r}
-foodbank_locations <- read_csv("input-data-files/foodbanks-hamilton.csv",
-                               col_types = cols(ID = col_double(),
-                                    NAME = col_character(),
-                                    TYPE = col_character(),
-                                    ADDRESS = col_character(),
-                                    COVIDClose = col_double(),
-                                    latitude = col_double(),
-                                    longitude = col_double(),
-                                    name = col_character(),
-                                    desc = col_character(),
-                                    source = col_character(),
-                                    precision = col_character()
-                               ))
+load("output-data-files/foodbank_locations.RData")
 ```
 
-COVIDClose is an indicator variable for whether this bank closed during the pandemic. Convert to factor:
-```{r}
-foodbank_locations <- foodbank_locations %>%
-  mutate(COVIDClose = replace_na(COVIDClose, 0),
-         COVIDClose = factor(COVIDClose,
-                             levels = c(0, 1),
-                             labels = c("No", "Yes")))
-```
-
-Convert to simple features:
-```{r}
-foodbank_locations <- foodbank_locations %>%
-  st_as_sf(coords = c("longitude", "latitude"), 
-           crs = 4326) %>%
-  st_transform(crs = 26917)
-```
-
-Map location of foodbanks:
-```{r}
-ggplot() +
-  geom_sf(data = hamilton_cma) +
-  geom_sf(data = foodbank_locations,
-          aes(shape = COVIDClose,
-              color = COVIDClose))
-```
-
-### `dwelling_network_points_2016.RData` 
+### Location of origin parcels
 
 This is based on parcel-level data, approximated to the nearest point on the road network. For processing details, see:
 
