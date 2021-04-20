@@ -33,17 +33,18 @@ load("output-data-files/ttm_walk.RData")
 #data("ttm_walk")
 ```
 
-## TEMP: REMOVE INAPPLICABLE DESTINATIONS UNTIL NEW TTMs ARE FINISHED
+## Remove entries in travel time matrices for inapplicable destinations
 
+As a first step, we will remove the computed travel times to the three Community Kitchen locations (IDs 1-3):
 ```{r}
 ttm_car <- ttm_car %>%
-  filter(!between(OBJECTID, left = 59, right = 69))
+  filter(!between(OBJECTID, left = 1, right = 3))
 
 ttm_transit <- ttm_transit %>%
-  filter(!between(OBJECTID, left = 59, right = 69))
+  filter(!between(OBJECTID, left = 1, right = 3))
 
 ttm_walk <- ttm_walk %>%
-  filter(!between(OBJECTID, left = 59, right = 69))
+  filter(!between(OBJECTID, left = 1, right = 3))
 ```
 
 ## Quick check
@@ -62,14 +63,14 @@ Transit:
 ttm_transit %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
 ```
 
-Half of all parcels can reach 52 foodbanks or more in 180 min or less.
+Half of all parcels can reach 49 foodbanks or more in 180 min or less.
 
 Walking:
 ```{r}
 ttm_walk %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
 ```
 
-Half of all parcels can reach 45 foodbanks or more in 180 min or less.
+Half of all parcels can reach 42 foodbanks or more in 180 min or less.
 
 ## Prepare data
 
@@ -186,6 +187,36 @@ modes <- modes %>%
                 p_walk = replace_na(p_walk, 0))
 ```
 
+```{r}
+# join tripmaking modal proportions
+ttm_car <- ttm_car %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+
+ttm_transit <- ttm_transit %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+
+ttm_walk <- ttm_walk %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+```
+
 Join tables:
 ```{r}
 ttm <- ttm_car %>%
@@ -204,14 +235,14 @@ ttm <- ttm_car %>%
 
 Join proportion of trips to travel time table:
 ```{r}
-ttm <- ttm %>%
-  left_join(modes %>%
-              st_drop_geometry() %>%
-              transmute(TAZUID,
-                        p_car,
-                        p_transit,
-                        p_walk),
-            by = "TAZUID")
+#ttm <- ttm %>%
+#  left_join(modes %>%
+#              st_drop_geometry() %>%
+#              transmute(TAZUID,
+#                        p_car,
+#                        p_transit,
+#                        p_walk),
+#            by = "TAZUID")
 ```
 
 Check the NAs in travel time table:
@@ -631,45 +662,47 @@ accessibility %>%
   
 ```
 
-## Further Breakdown by Population Characteristics
-
-### CODE TO BE UPDATED
 ```{r}
-# join tripmaking modal proportions
-ttm_car <- ttm_car %>%
-  left_join(modes %>%
+access_by_da <- accessibility %>%
+  st_drop_geometry() %>%
+  # Copy the DA identifier to the accessibility table
+  left_join(dwelling_network_points_2016 %>%
               st_drop_geometry() %>%
-              transmute(TAZUID,
-                        p_car,
-                        p_transit,
-                        p_walk),
-            by = "TAZUID")
-
-ttm_transit <- ttm_transit %>%
-  left_join(modes %>%
-              st_drop_geometry() %>%
-              transmute(TAZUID,
-                        p_car,
-                        p_transit,
-                        p_walk),
-            by = "TAZUID")
-
-ttm_walk <- ttm_walk %>%
-  left_join(modes %>%
-              st_drop_geometry() %>%
-              transmute(TAZUID,
-                        p_car,
-                        p_transit,
-                        p_walk),
-            by = "TAZUID")
+              transmute(UID = ID, DAUID),
+            by = "UID") %>%
+  # Group by DA and time
+  group_by(DAUID, timing) %>%
+  # Calculate the accessibility by DA before and during covid
+  summarize(accessibility = sum(accessibility),
+            timing = first(timing),
+            .groups = "drop") %>%
+  # Pivot wider to calculate the differences in accessibility from pre-covid to covid
+  pivot_wider(names_from = timing, 
+              values_from = accessibility) %>%
+  # Calculate changes in accessibility
+  mutate(acc_d = `During covid` / `Pre-covid` - 1) %>%
+  # Join DA geometry
+  left_join(data_da_2016 %>%
+            transmute(DAUID = GeoUID,
+                      geometry),
+          by = "DAUID") %>%
+  # Convert to simple features
+  st_as_sf() 
+tmap_mode("view")
+tm_shape(access_by_da) + 
+  tm_fill("acc_d")
 ```
 
 
+
+## Further Breakdown by Population Characteristics
+
+### CODE TO BE UPDATED
 Get minimum travel times in the pre-covid scenario:
 
 ```{r minimum-travel-time-baseline, include=FALSE}
 # retrieve minimum travel time during covid to sites that didnt close
-min_ttm_car_pre <- ttm_car %>%
+min_ttm_car_baseline <- ttm_car %>%
   #dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
@@ -681,9 +714,12 @@ min_ttm_car_pre <- ttm_car %>%
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
-            .groups = "drop")
+            .groups = "drop") %>%
+  
+  ## Calculate weighted travel time:
+  mutate(weighted_travel_time = travel_time * p_car)
 
-min_ttm_transit_pre <- ttm_transit %>%
+min_ttm_transit_baseline <- ttm_transit %>%
   #dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
@@ -695,9 +731,12 @@ min_ttm_transit_pre <- ttm_transit %>%
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
-            .groups = "drop")
+            .groups = "drop") %>%
+  
+  ## Calculate weighted travel time:
+  mutate(weighted_travel_time = travel_time * p_transit)
 
-min_ttm_walk_pre <- ttm_walk %>%
+min_ttm_walk_baseline <- ttm_walk %>%
   #dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
@@ -709,10 +748,165 @@ min_ttm_walk_pre <- ttm_walk %>%
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
-            .groups = "drop")
+            .groups = "drop") %>%
+  
+  ## Calculate weighted travel time:
+  mutate(weighted_travel_time = travel_time * p_walk)
+```
+
+```{r weighted-travel-time-by-mode-baseline, include=FALSE}
+# Baseline analysis (pre-COVID)
+## Bind the three tables and label them by mode:
+min_ttm_mode_baseline <- rbind(data.frame(min_ttm_car_baseline, Mode = "Car"),
+                               data.frame(min_ttm_transit_baseline, Mode = "Transit"),
+                               data.frame(min_ttm_walk_baseline, Mode = "Walking"))
+```
+
+```{r aggregate-weighted-travel-times-baseline, include=FALSE}
+# Baseline analysis (PILOT LOCATIONS ONLY)
+## Aggregate weighted travel times by mode:
+min_ttm_baseline <- min_ttm_mode_baseline %>%
+  group_by(UID) %>%
+  summarize(DAUID = first(DAUID),
+            TAZUID = first(TAZUID),
+            linc_age_0to2 = first(linc_age_0to2),
+            linc_age_0to19 = first(linc_age_0to19),
+            linc_age_65plus = first(linc_age_0to19),
+            weighted_travel_time = sum(weighted_travel_time)) %>%
+  
+  ## Calculate person-hours of travel:
+  mutate(weighted_person_hours_0to2 = linc_age_0to2 * weighted_travel_time/60)
 ```
 
 
+```{r summarize-results-by-taz-baseline, include=FALSE}
+# Baseline analysis (PILOT LOCATIONS ONLY)
+## Summarize by TAZ and join geometry:
+min_ttm_baseline_taz <- min_ttm_baseline %>%
+  group_by(TAZUID) %>%
+  summarize(weighted_travel_time = mean(weighted_travel_time),
+            weighted_person_hours_0to2 = sum(weighted_person_hours_0to2)) %>%
+  left_join(modes %>%
+              dplyr::select(TAZUID),
+            by = "TAZUID") %>%
+  st_as_sf()
+```
+
+```{r weighted-travel-time-map-baseline}
+ttm_map_baseline <- ggplot() +
+  geom_sf(data = min_ttm_baseline_taz,
+          aes(fill = weighted_travel_time),
+          color = NA) +
+  scale_fill_distiller(name = "Expected travel time (min)",
+                       palette = "OrRd", 
+                       direction = 1) +
+  theme_minimal() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 7),
+        legend.position = "bottom",
+        legend.text = element_text(size = 8))
+
+ttm_map_baseline
+```
+
+
+```{r}
+tmap_mode("view")
+tm_shape(min_ttm_baseline_taz) +
+  tm_fill(col = "weighted_travel_time")
+
+tm_shape(modes) +
+  tm_fill(col = "p_walk")
+```
+
+
+```{r person-hours-traveled-map-baseline}
+# Baseline analysis (PILOT LOCATIONS ONLY)
+## Map weighted person-hours of travel:
+pht_map_baseline <- ggplot() +
+  geom_sf(data = min_ttm_baseline_taz,
+          aes(fill = weighted_person_hours_0to2),
+          color = NA) +
+  scale_fill_distiller(name = "Person-hours of travel",
+                       palette = "OrRd", 
+                       direction = 1) +
+  #geom_sf(data = urban_types,
+  #        aes(color = Type),
+  #        fill = NA) +
+  #scale_color_manual(name = "",
+  #                   values = c("Urban" = "firebrick2",
+  #                              "Suburban" = "cornflowerblue",
+  #                              "Rural" = "forestgreen"))  +
+  theme_minimal() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 7),
+        legend.position = "bottom",
+        legend.text = element_text(size = 8))
+
+pht_map_baseline
+```
+
+```{r join-income-information-baseline, include=FALSE}
+# Baseline analysis (PILOT LOCATIONS ONLY)
+## Join median household information to table:
+min_ttm_baseline <- min_ttm_baseline %>%
+  left_join(data_da_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::transmute(DAUID = GeoUID,
+                               income_quintile),
+            by = "DAUID")
+```
+
+```{r plot-distribution-travel-time-by-income-baseline}
+# Baseline analysis (PILOT LOCATIONS ONLY)
+## Distribution of weighted travel time by income:
+ttm_income_baseline <- ggplot(data = min_ttm_baseline, 
+       aes(x = weighted_travel_time, 
+           color= income_quintile)) +
+  geom_density(size = 0.5, adjust = 2.5) +
+  labs(x = "Travel time (in minutes; weighted by mode)") +
+  scale_color_manual(values = c("Top 20%" = "blue",
+                                "Second 20%" = "steelblue1",
+                                "Third 20%" = "gray40", 
+                                "Fourth 20%" = "tomato",
+                                "Bottom 20%" = "red")) +
+  theme_minimal() +
+  theme(text = element_text(size = 7),
+        legend.text = element_text(size = 7))
+
+ttm_income_baseline
+```
+
+```{r total-weighted-person-hours-by-group-baseline, include=FALSE}
+# Baseline analysis (PILOT LOCATIONS ONLY)
+## Total weighted person-hours by income:
+person_hours_income_baseline <- min_ttm_baseline %>%
+  group_by(income_quintile) %>%
+  summarize(total_weighted_person_hours = sum(weighted_person_hours),
+            total_population = sum(Population),
+            .groups = "drop") %>%
+  mutate(ratio = total_weighted_person_hours/total_population) %>%
+  rename(group = income_quintile)
+
+## Total weighted person-hours by region:
+person_hours_region_baseline <- min_ttm %>%
+  group_by(Urban_type) %>%
+  summarize(total_weighted_person_hours = sum(weighted_person_hours),
+            total_population = sum(Population),
+            .groups = "drop") %>%
+  drop_na() %>%
+  mutate(ratio = total_weighted_person_hours/total_population) %>%
+  rename(group = Urban_type)
+
+person_hours_baseline <- rbind(person_hours_income_baseline,
+                               person_hours_region_baseline)
+```
+
+
+
+
+
+### Do Again for COVID Scenario
 Get minimum travel times in the during covid scenario:
 
 ```{r minimum-travel-time-during-covid, include=FALSE}

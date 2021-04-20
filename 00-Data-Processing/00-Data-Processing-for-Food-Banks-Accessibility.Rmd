@@ -135,7 +135,7 @@ foodbank_locations <- read_csv("input-data-files/foodbanks-hamilton.csv",
                                ))
 ```
 
-COVIDClose is an indicator variable for whether this bank closed during the pandemic. Convert to factor:
+`STATUS` corresponds to the food bank's status during the pandemic. Let's simplify it to a yes-no factor for whether the service remained open or closed after COVID began and then filter out inapplicable services:
 ```{r}
 foodbank_locations <- foodbank_locations %>%
   mutate(STATUS = replace_na(STATUS, "Open"),
@@ -144,7 +144,6 @@ foodbank_locations <- foodbank_locations %>%
   # filter out Meals on Wheels, Student Nutrition programs, Shopping and Transportation, & Good Food Box Programs
   filter(TYPE %in% c("Community Kitchen", "Congregate Dining", "Community Meals", "Food Banks", "Free Meals", "Low Cost Meals"))
 ```
-
 
 Convert to simple features:
 ```{r message = FALSE}
@@ -364,7 +363,8 @@ Code | Income
 Filter modes:
 ```{r}
 travel_modes <- travel_modes %>%
-  dplyr::filter(Mode == "Auto driver" |
+  dplyr::filter(Mode == "Auto driver" | 
+                  Mode == "Auto passenger" |
                   Mode == "Transit (Excluding GO rail)" |
                   Mode == "Walk")
 ```
@@ -392,8 +392,9 @@ travel_modes_1 <- travel_modes_1 %>%
   pivot_wider(names_from = Mode,
               values_from = trips,
               values_fill = 0) %>%
-  rename(Driver = `Auto driver`, 
-         Transit = `Transit (Excluding GO rail)`)
+  mutate(Driver = `Auto driver` + `Auto passenger`) %>%
+  rename(Transit = `Transit (Excluding GO rail)`) %>%
+  select(-c(`Auto driver`, `Auto passenger`))
 ```
 
 Join geometry:
