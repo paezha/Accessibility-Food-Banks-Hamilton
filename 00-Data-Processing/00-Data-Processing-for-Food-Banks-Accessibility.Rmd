@@ -326,7 +326,9 @@ data_da_2016 %>%
 
 ### Transportation Tomorrow Survey
 
-I downloaded a cross-tabulation of travel mode by household income by traffic analysis zone. Read the shape file with the traffic analysis zone boundaries:
+We downloaded a cross-tabulation of travel mode by household income by traffic analysis zone. We also downloaded a cross-tabulation of age of person by household income by traffic analysis zone.
+
+Read the shape file with the traffic analysis zone boundaries:
 ```{r}
 tts_taz <- st_read("input-data-files/tts2016_2006zn_2018_region.shp")
 ```
@@ -350,6 +352,15 @@ travel_modes <- read_csv("input-data-files/ttsCross70628.csv",
                                           ))
 ```
 
+Read population by age by income:
+```{r}
+age_income <- read_csv("input-data-files/ttsCross65713.csv",
+                         col_types = cols(gta06_hhld = col_double(),
+                                          age = col_double(),
+                                          population = col_double(),
+                                          income = col_double()
+                                          ))
+```
 
 Code | Income
 -- | --
@@ -369,9 +380,15 @@ travel_modes <- travel_modes %>%
                   Mode == "Walk")
 ```
 
+Filter low income:
+```{r}
+age_income <- age_income %>%
+  dplyr::filter(income <= 2)
+```
+
 ### Income less than $40,000
 
-Filter age:
+Filter income:
 ```{r}
 travel_modes_1 <- travel_modes %>%
   dplyr::filter(income >= 1 & income <= 2)
@@ -383,6 +400,52 @@ travel_modes_1 <- travel_modes_1 %>%
   group_by(gta06_hhld, Mode) %>%
   summarize(trips = sum(total),
             .groups = "drop")
+```
+
+Summarize population by age by income by traffic analysis zone. Children:
+```{r}
+low_income_children <- age_income %>%
+  dplyr::filter(age <= 18) %>%
+  rename(TAZUID = gta06_hhld) %>%
+  group_by(TAZUID) %>%
+  summarize(children = sum(population),
+            .groups = "drop")
+```
+
+Adults:
+```{r}
+low_income_adults <- age_income %>%
+  dplyr::filter(age > 18 & age < 65) %>%
+  rename(TAZUID = gta06_hhld) %>%
+  group_by(TAZUID) %>%
+  summarize(adults = sum(population),
+            .groups = "drop")
+```
+
+Seniors:
+```{r}
+low_income_seniors <- age_income %>%
+  dplyr::filter(age >= 65) %>%
+  rename(TAZUID = gta06_hhld) %>%
+  group_by(TAZUID) %>%
+  summarize(seniors = sum(population),
+            .groups = "drop")
+```
+
+Join tables with population by age and add geometry:
+```{r}
+population_age_income <- tts_taz %>%
+  transmute(TAZUID = gta06, 
+            geometry) %>%
+  left_join(low_income_children,
+            by = "TAZUID") %>%
+  left_join(low_income_adults,
+            by = "TAZUID") %>%
+  left_join(low_income_seniors,
+            by = "TAZUID") %>%
+  mutate(children = replace_na(children, 0),
+         adults = replace_na(adults, 0),
+         seniors = replace_na(seniors, 0))
 ```
 
 Pivot wider and rename columns:
@@ -431,6 +494,8 @@ Rename table:
 modes_less40k <- travel_modes_1
 ```
 
+## Before saving
+
 Ensure that parcel ids are unique:
 ```{r}
 dwelling_network_points_2016 <- dwelling_network_points_2016 %>% distinct(ID, .keep_all = TRUE)
@@ -442,9 +507,10 @@ Save data files:
 ```{r}
 save(data_da_2016, file = "output-data-files/data_da_2016.RData", compress = "xz")
 save(dwelling_network_points_2016, file = "output-data-files/dwelling_network_points_2016.RData", compress = "xz")
+save(foodbank_locations, file = "output-data-files/foodbank_locations.RData", compress = "xz")
 save(hamilton_cma, file = "output-data-files/hamilton_cma.RData", compress = "xz")
 save(modes_less40k, file = "output-data-files/modes_less40k.RData", compress = "xz")
-save(foodbank_locations, file = "output-data-files/foodbank_locations.RData", compress = "xz")
+save(population_age_income, file = "output-data-files/population_age_income.RData", compress = "xz")
 save(urban_types, file = "output-data-files/urban_types.RData", compress = "xz")
 ```
 
