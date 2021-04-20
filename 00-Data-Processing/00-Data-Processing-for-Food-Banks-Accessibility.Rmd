@@ -180,7 +180,7 @@ load("input-data-files/dwelling_network_points_2016.RData")
 
 We can get an API key to use `cancensus` from [CensusMapper](https://censusmapper.ca/). Once you have an API key, it can be stored locally this way:
 ```{r eval=FALSE}
-set_api_key("your-key", install = TRUE)
+set_api_key("YOUR API KEY HERE")
 ```
 
 Once you have your API you can use `cancensus` like in this example.
@@ -202,7 +202,7 @@ We need CA16.
 
 Search variables:
 ```{r}
-find_census_vectors("income", 
+find_census_vectors("age", 
                     dataset = "CA16", 
                     type = "total", 
                     query_type = "keyword", 
@@ -233,17 +233,36 @@ data_da_2016 <- get_census(dataset='CA16',
                                     "v_CA16_2423",
                                     "v_CA16_2424",
                                     "v_CA16_2425",
-                                    "v_CA16_2426"),
+                                    "v_CA16_2426",
+                                    "v_CA16_2397", # median hhinc
+                                    # age variables
+                                    "v_CA16_10", #<1
+                                    "v_CA16_13", #1
+                                    "v_CA16_16", #2
+                                    "v_CA16_7", #0-4 yo
+                                    "v_CA16_25", #5-9 yo
+                                    "v_CA16_43", #10-14 yo
+                                    "v_CA16_64", # 15-19 yo
+                                    "v_CA16_244"), # 65+
                           level='DA', 
                           use_cache = FALSE,
                           geo_format = "sf")
 ```
 
-Plot population:
-```{r}
-tmap_mode(mode = "view")
+#### Prepare Geography
 
-data_da_2016 %>%
+Clip `data_da_2016`:
+```{r}
+data_da_2016 <- data_da_2016 %>%
+  st_intersection(hamilton_cma)
+```
+
+#### Prepare Summary Measures
+
+Calculate number of households with incomes < \$40k per DA and proportion of households with incomes < \$40k per DA:
+```{r}
+data_da_2016 <- data_da_2016 %>%
+  filter(`Region Name` == "Hamilton") %>%
   mutate(income_less40k = (`v_CA16_2406: Under $5,000` + 
                              `v_CA16_2407: $5,000 to $9,999` + 
                              `v_CA16_2408: $10,000 to $14,999` +
@@ -251,9 +270,57 @@ data_da_2016 %>%
                              `v_CA16_2410: $20,000 to $24,999` +  
                              `v_CA16_2411: $25,000 to $29,999` +
                              `v_CA16_2412: $30,000 to $34,999` +
-                             `v_CA16_2413: $35,000 to $39,999`)) %>%
+                             `v_CA16_2413: $35,000 to $39,999`),
+         p_inc_less40k = income_less40k/Households)
+```
+
+Plot population:
+```{r}
+tmap_mode(mode = "view")
+
+data_da_2016 %>%
   tm_shape() +
   tm_polygons("income_less40k",
+              alpha = 0.8)
+```
+
+Label DAs with income quintiles:
+```{r}
+data_da_2016 <- data_da_2016 %>%
+  rename(Median_household_income = `v_CA16_2397: Median total income of households in 2015 ($)`) %>%
+  mutate(income_quintile = case_when(Median_household_income < mhi_q[2] ~ "Bottom 20%",
+                                    Median_household_income >= mhi_q[2] & Median_household_income < mhi_q[3] ~ "Fourth 20%",
+                                    Median_household_income >= mhi_q[3] & Median_household_income < mhi_q[4] ~ "Third 20%",
+                                    Median_household_income >= mhi_q[4] & Median_household_income < mhi_q[5] ~ "Second 20%",
+                                    Median_household_income >= mhi_q[5] ~ "Top 20%"),
+         income_quintile = factor(income_quintile,
+                                levels = c("Top 20%",
+                                           "Second 20%",
+                                           "Third 20%",
+                                           "Fourth 20%",
+                                           "Bottom 20%"),
+                                ordered = TRUE))
+```
+
+Calculate low-income age totals
+```{r}
+data_da_2016 <- data_da_2016 %>%
+  mutate(tot_age_0to2 = `v_CA16_10: Under 1 year` + `v_CA16_13: 1` + `v_CA16_16: 2`,
+         linc_age_0to2 = tot_age_0to2 * p_inc_less40k,
+         tot_age_0to19 = `v_CA16_7: 0 to 4 years` + `v_CA16_25: 5 to 9 years` + `v_CA16_43: 10 to 14 years` + `v_CA16_64: 15 to 19 years`,
+         linc_age_0to19 = tot_age_0to19 * p_inc_less40k,
+         tot_age_65plus = `v_CA16_244: 65 years and over`,
+         linc_age_65plus = tot_age_65plus * p_inc_less40k,
+         linc_population = Population * p_inc_less40k)
+```
+
+Plot result
+```{r}
+tmap_mode(mode = "view")
+
+data_da_2016 %>%
+  tm_shape() +
+  tm_polygons("linc_population",
               alpha = 0.8)
 ```
 
@@ -301,8 +368,6 @@ travel_modes <- travel_modes %>%
                   Mode == "Transit (Excluding GO rail)" |
                   Mode == "Walk")
 ```
-
-THE NEXT NEEDS TO BE CHANGED TO DO THE ANALYSIS BY INCOME GROUP, NOT BY AGE GROUP
 
 ### Income less than $40,000
 

@@ -1,0 +1,90 @@
+---
+title: "Changes in accessibility to foodbanks during COVID-19 and implications for the food security of vulnerable populations in Hamilton, Ontario"
+author:
+  - name: Author One
+    email: author1@example.com
+    affiliation: Some University
+    footnote: 1
+  - name: Author Two
+    email: author2@example.com
+    affiliation: 
+  - name: Author Three
+    email: author3@example.com
+    affiliation: Some University
+    footnote: 2 
+  - name: Author Four
+    email: author4@example.com
+    affiliation: Another University
+    footnote: 2
+address:
+  - code: Some University
+    address: Department, Street, City, State, Zip
+  - code: Another University
+    address: Department, Street, City, State, Zip
+footnote:
+  - code: 1
+    text: "Corresponding Author"
+  - code: 2
+    text: "Equal contribution"
+abstract: |
+  This is the abstract.
+
+  It consists of two paragraphs.
+
+journal: "An awesome journal"
+date: "`r Sys.Date()`"
+bibliography: references.bib
+#linenumbers: true
+#numbersections: true
+csl: elsevier-harvard.csl
+output: rticles::elsevier_article
+---
+
+\newpage
+
+Introduction
+==========================
+
+Over at least the past four decades food banks have become an essential line of defense against food insecurity in Canadian communities [@riches2002food; @black2020examining; @tarasuk2020relationship]. In this respect, Canada is not unlike numerous other wealthy countries where a systematic dismantling of the welfare state took place in the intervening period [@tarasuk2014food]. 
+
+The emergence of COVID-19, the worst public health crisis since the 1918 flu pandemic, has revealed important social and economic fault lines, and pre-existing patterns of inequality appear to have been exacerbated. Along several other dimensions of stress [e.g., accessibility to health care facilities; @pereira2021geographic], this seems to be the case for food insecurity as well [@laborde2020poverty]. In the US, for example, it has been estimated that there was an increase of more than 30\% in household food insecurity, and more than one third of households were discovered to be newly food insecure - meaning they did not experience food insecurity before the pandemic [@niles2020early]. In Canada, Men and Tarasuk [-@men2021food] report that about 25\% of individuals who experienced job insecurity (a relatively common occurrence during the pandemic), also experienced food insecurity. Similarly, according to Statistics Canada [-@statisticscanada2020food], in the early stages of the pandemic almost 15\% of individuals reported living in a household that faced food insecurity; the risk of food insecurity was substantially higher for households with children. The difference between households with and without children was significant, and 11.7\% of households with children indicated that "food didn’t last and [there was] no money to get more" sometimes or often, compared to 7.3\% of households without children); likewise, 13\% of households with children indicated that they "[c]ouldn’t afford balanced meals" sometimes or often, compared to 8.8\% of households without children.
+
+The impacts of food insecurity during the pandemic are alarming, since diet-related diseases, such as obesity, heart-disease, and diabetes, were already critical public health concerns in Canada prior to COVID-19 [@boucher2017ontario]. While foodbanks are not necessarily a stable solution to food insecurity and in fact may encourage a retrenchment of neoliberal policy [@wakefield2013sweet], at least can be argued to provide a resource of last instance to households in precarious situations [@bazerghi2016role]. As recently as 2019, the Hamilton Hunger Report^[https://www.hamiltonfoodshare.org/wp-content/uploads/Hamilton-Food-Share-Hunger-Report-2019.pdf] noted that food banks in Hamilton, Ontario, recorded the highest number of visitors in the past 29 years; the number of children visiting foodbanks (minors up to 18 years old) was 9,125 in March 2019, up from 8,278 the year before. It is known that the urban food environment, within which people make their daily food choices, is essential in influencing eating behaviours and health outcomes, based on factors such as food availability, ease of accessibility and socio-demographic variations [@paez2010relative; @vanderlee2017food]. To add to the distress of vulnerable households, non-pharmaceutical interventions during the pandemic involving restrictions in mobility increased the friction of travel, in particular by transit on which they are more likely to be reliant [e.g., @deweese2020tale]; while at the same time creating stress for the operators of foodbanks through disruptions in the supply chain [e.g., @mckay2021exploring], in addition to concerns around delivery of service in safe conditions.
+
+For this study, we aim to look at how the landscape of food bank services available in Hamilton, Ontario, has changed before and during the pandemic. Have the number of open food bank services diminished? If so, what was the accessibility to foodbanks before and during the pandemic, from the perspective of low income households? And finally, who are most likely to have been impacted by changes to the accessibility landscape? This paper will first look at the distribution of foodbanks and related services before and during the pandemic. Then, we use the balanced floating catchment areas approach of Paez et al. [@paez2019demand] to investigate the accessibility situation. We use a fully disaggregated approach based on parcel-level data. Socio-economic and demographic data are drawn from the latest Census of Canada (2016), whereas travel information is from the most recent regional travel survey from 2016. This paper follows reproducible research recommendations [see @brunsdon2020opening], and the research was conducted using open source tools for transportation analysis [@lovelace2021open]. The code and data necessary to reproduce the analysis are available in a public repository^[add repository]. 
+
+Literature Review
+============
+
+## Food Insecurity 
+
+Food insecurity is the inability to acquire and consume an adequate amount or good quality food, leading to inadequate nutrient intake (Kirkpatrick and Tarasuk 2008; Tarasuk and Vogt 2009). This nutrient deficiency has been causing major health concerns in Canadians, and particularly those who are at a socioeconomic disadvantage (Bazerghi, McKay, and Dunn 2016). Previous studies have aimed to look at the relationship between the built food environment and sociodemographic characteristics with qualitative and quantitative, or a mixed -method approach. 
+Quantitatively, official governmental surveys have been able to assist with data, such as the Household Food Security Survey Module (HFSSM), the Canadian Community Health Surveys (CCHS) , the Longitudinal and International Study of Adults (LISA), and official classifications determined by Health Canada in relation to  sociodemographic variables (El-hajj and Benhin 2021; Gundersen et al. 2018; Kirkpatrick and Tarasuk 2008; Tarasuk and Vogt 2009). Studies have also aimed to assess food availability of healthy foods (e.g., fruit and vegetables) at supermarkets in relation to sociodemographic characteristics and geographic accessibility (Latham and Moffat 2007). In terms of findings, studies have generated inconsistent relationships between their evaluated availability of food and sociodemographic characteristics that go in hand. 
+
+## Food Banks
+
+The number of food banks has been increasing steadily in Canada (Wakefield et al. 2013). What was supposed to be a temporary solution to accommodate those in hunger due to job retrenchments and economic downfalls since the 1980s, has now developed into a community practice to secure emergency food supplies for those in need (Loopstra and Tarasuk 2012; Wakefield et al. 2013). Food banks were developed as a part of a community response to aide those with inadequate food by voluntarily giving meals and ingredients away (Loopstra and Tarasuk 2012; Riches 2002). The scope and objectives of food banks can vary by region and by country. These organizations can include not only prepared meals and aliments, but also shared spaces to connect in community gardens and community kitchens (Wakefield et al. 2013) or referred to as ‘food pantry’ and ‘food shelf’, where many frequent as their primary location to get food (Bazerghi et al. 2016). However, surveys revealed that only 20 to 30 percent of those experiencing food insecurity were found to frequent food banks in Canada (Tarasuk et al. 2014). 
+
+Previous studies also question if food banks are able to offer a rounded nutritious supply of food, and if food banks are a sustainable practice for those in need to continuously obtain their food from (Bazerghi et al. 2016; Riches 2002).
+
+## Food Insecurity in Canada during the COVID-19
+
+Currently with the COVID-19 pandemic, disrupted economies, rising unemployment rates, and alarming poverty levels have disrupted the food environment by causing higher rates of food insecurity (Niles et al. 2020). In 2012, 12.4% of Canadians households and 11.8% Ontarian households experienced some degree of food insecurity (Gundersen et al. 2018; Tarasuk, Fafard St-Germain, and Mitchell 2019). Recent COVID-19 related food security studies in the US have found a massive increase in households experiencing food insecurity for the first time, and also in households experiencing more severe food insecurity than before (Niles et al. 2020; Wolfson and Leung 2020). Most recently in May 2020, Canada recorded 14.7% of its population living in food insecurity in the past 30 days(Statistics Canada 2020). Food insecurity is a highly concerning public health issue due the vast health consequences that it can induce. Recent publishing suggests that food insecurity in adults could lead to experiencing more stressful events (El-hajj and Benhin 2021). These increases in food insecurity rates due to the pandemic, signal a change in the food environment with potential damages to health outcomes in populations (Niles et al. 2020)
+
+Methods
+===================
+
+Words go here.
+
+Results and Discussion
+===================
+
+Words go here.
+
+Conclusions
+===================
+
+Words go here.
+
+References {#references .unnumbered}
+==========
