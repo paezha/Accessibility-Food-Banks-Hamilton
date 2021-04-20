@@ -136,7 +136,7 @@ for (i in 1:num_chunks){
   ifelse(i == 1, output_df <- as.disk.frame(ttm_chunk,
                                             nchunks = 1,
                                             outdir = "./df/output_ttm_walk",
-                                            compress = 50,
+                                            compress = 100,
                                             overwrite = TRUE),
          add_chunk(output_df, ttm_chunk, chunk_id = i))
   setTxtProgressBar(pb, i)
