@@ -662,7 +662,8 @@ accessibility %>%
   
 ```
 
-```{r}
+Let's do some view maps to see if the results make sense
+```{r message = FALSE}
 access_by_da <- accessibility %>%
   st_drop_geometry() %>%
   # Copy the DA identifier to the accessibility table
@@ -686,11 +687,81 @@ access_by_da <- accessibility %>%
             transmute(DAUID = GeoUID,
                       geometry),
           by = "DAUID") %>%
+  
   # Convert to simple features
   st_as_sf() 
 tmap_mode("view")
 tm_shape(access_by_da) + 
-  tm_fill("acc_d")
+  tm_fill("acc_d") +
+  tm_shape(foodbank_locations) + 
+  tm_dots("COVIDClose")
+
+
+
+d_access_by_taz <- accessibility %>%
+  st_drop_geometry() %>%
+  # Copy the DA identifier to the accessibility table
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              transmute(UID = ID, TAZUID),
+            by = "UID") %>%
+  # Group by DA and time
+  group_by(TAZUID, timing) %>%
+  # Calculate the accessibility by DA before and during covid
+  summarize(accessibility = sum(accessibility),
+            timing = first(timing),
+            .groups = "drop") %>%
+  # Pivot wider to calculate the differences in accessibility from pre-covid to covid
+  pivot_wider(names_from = timing, 
+              values_from = accessibility) %>%
+  # Calculate changes in accessibility
+  mutate(acc_d = `During covid` / `Pre-covid` - 1) %>%
+  # join taz geometry
+  left_join(tts_taz %>%
+            transmute(TAZUID = gta06,
+                      geometry),
+          by = "TAZUID") %>%
+  
+  # Convert to simple features
+  st_as_sf() 
+
+tm_shape(d_access_by_taz) + 
+  tm_fill("acc_d") + 
+  tm_shape(foodbank_locations) + 
+  tm_dots("COVIDClose")
+
+access_by_taz <- accessibility %>%
+  st_drop_geometry() %>%
+  # Copy the DA identifier to the accessibility table
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              transmute(UID = ID, TAZUID),
+            by = "UID") %>%
+  # Group by DA and time
+  group_by(TAZUID, timing) %>%
+  # Calculate the accessibility by DA before and during covid
+  summarize(accessibility = sum(accessibility),
+            timing = first(timing),
+            .groups = "drop") %>%
+  # Pivot wider to calculate the differences in accessibility from pre-covid to covid
+  pivot_wider(names_from = timing, 
+              values_from = accessibility) %>%
+  # Calculate changes in accessibility
+  mutate(acc_pre = `Pre-covid`) %>%
+  # join taz geometry
+  left_join(tts_taz %>%
+            transmute(TAZUID = gta06,
+                      geometry),
+          by = "TAZUID") %>%
+  
+  # Convert to simple features
+  st_as_sf() 
+
+tm_shape(access_by_taz) + 
+  tm_fill("acc_pre") + 
+  tm_shape(foodbank_locations) + 
+  tm_dots("COVIDClose")
+  
 ```
 
 
