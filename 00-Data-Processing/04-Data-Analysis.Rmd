@@ -127,6 +127,7 @@ ttm_car <- ttm_car %>%
   left_join(foodbank_locations %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
+                            TYPE,
                             COVIDClose),
             by = c("OBJECTID" = "ID"))
 
@@ -134,13 +135,15 @@ ttm_transit <- ttm_transit %>%
   left_join(foodbank_locations %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
+                            TYPE,
                             COVIDClose),
             by = c("OBJECTID" = "ID"))
 
 ttm_walk <- ttm_walk %>%
   left_join(foodbank_locations %>%
               st_drop_geometry() %>%
-              dplyr::select(ID, 
+              dplyr::select(ID,
+                            TYPE,
                             COVIDClose),
             by = c("OBJECTID" = "ID"))
 ```
@@ -708,7 +711,7 @@ accessibility %>%
 
 
 
-### Pre-COVID Scenario
+### Pre-COVID Scenario to Meal Services
 
 Get minimum travel times in the pre-covid scenario:
 
@@ -716,6 +719,7 @@ Get minimum travel times in the pre-covid scenario:
 # retrieve minimum travel time for pre-covid locations
 min_ttm_car_baseline <- ttm_car %>%
   #dplyr::filter(COVIDClose == "No") %>%
+  filter(TYPE != "Food Banks") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
             DAUID = first(DAUID),
@@ -733,6 +737,7 @@ min_ttm_car_baseline <- ttm_car %>%
 
 min_ttm_transit_baseline <- ttm_transit %>%
   #dplyr::filter(COVIDClose == "No") %>%
+  filter(TYPE != "Food Banks") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
             DAUID = first(DAUID),
@@ -750,6 +755,7 @@ min_ttm_transit_baseline <- ttm_transit %>%
 
 min_ttm_walk_baseline <- ttm_walk %>%
   #dplyr::filter(COVIDClose == "No") %>%
+  filter(TYPE != "Food Banks") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
             DAUID = first(DAUID),
@@ -847,7 +853,7 @@ ttm_map_baseline
 ```{r minimum-travel-time-covid, include=FALSE}
 # retrieve minimum travel time during covid to sites that didnt close
 min_ttm_car_covid <- ttm_car %>%
-  dplyr::filter(COVIDClose == "No") %>%
+  dplyr::filter(COVIDClose == "No", TYPE != "Food Banks") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
             DAUID = first(DAUID),
@@ -864,7 +870,7 @@ min_ttm_car_covid <- ttm_car %>%
   mutate(weighted_travel_time = travel_time * p_car)
 
 min_ttm_transit_covid <- ttm_transit %>%
-  dplyr::filter(COVIDClose == "No") %>%
+  dplyr::filter(COVIDClose == "No", TYPE != "Food Banks") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
             DAUID = first(DAUID),
@@ -881,7 +887,7 @@ min_ttm_transit_covid <- ttm_transit %>%
   mutate(weighted_travel_time = travel_time * p_transit)
 
 min_ttm_walk_covid <- ttm_walk %>%
-  dplyr::filter(COVIDClose == "No") %>%
+  dplyr::filter(COVIDClose == "No", TYPE != "Food Banks") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
             DAUID = first(DAUID),
@@ -987,8 +993,11 @@ min_ttm_d <- min_ttm_baseline_taz %>%
                         wph_seniors_covid = wph_seniors), 
             by = "TAZUID") %>%
   mutate(wph_children_d = wph_children_covid / wph_children - 1,
+         wph_children_d = replace_na(wph_children_d, 0),
          wph_adults_d = wph_adults_covid / wph_adults - 1,
-         wph_seniors_d = wph_seniors_covid / wph_seniors - 1)
+         wph_adults_d = replace_na(wph_adults_d, 0),
+         wph_seniors_d = wph_seniors_covid / wph_seniors - 1,
+         wph_seniors_d = replace_na(wph_seniors_d, 0))
 
 tm_shape(min_ttm_d) + 
   tm_fill("wph_children_d")
@@ -999,3 +1008,4 @@ tm_shape(min_ttm_d) +
 tm_shape(min_ttm_d) + 
   tm_fill("wph_seniors_d")
 ```
+
