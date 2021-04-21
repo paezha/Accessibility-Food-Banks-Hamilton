@@ -112,6 +112,18 @@ Hamilton, Ontario}
   
  \end{frontmatter}
 
+\hypertarget{credit-author-statement}{%
+\section{CRediT author statement}\label{credit-author-statement}}
+
+\textbf{Author 1:} Conceptualization, Methodology, Software, Validation,
+Formal analysis, Investigation, Data Curation, Writing - Original Draft,
+Visualization, Supervision; \textbf{Author 2:} Conceptualization,
+Methodology, Software, Validation, Formal analysis, Investigation, Data
+Curation, Writing - Original Draft, Visualization; \textbf{Author 3:}
+Conceptualization, Investigation, Data Curation, Writing - Original
+Draft; \textbf{Author 4:} Resources - Writing: Review \& Editing -
+Supervision
+
 \newpage
 
 \hypertarget{introduction}{%
@@ -135,7 +147,7 @@ But the emergence of COVID-19, the worst public health crisis since the
 1918 flu pandemic, has revealed important social and economic fault
 lines, and pre-existing patterns of inequality appear to have been
 exacerbated. Along several other dimensions of stress {[}e.g.,
-accessibility to health care facilities; Pereira et al. (2021){]}, this
+accessibility to health care facilities; Pereira et al. (2021a){]}, this
 seems to be the case for food insecurity as well (Laborde et al., 2020).
 In the US, for example, it has been estimated that there was an increase
 of more than 30\% in household food insecurity, and more than one third
@@ -144,9 +156,9 @@ did not experience food insecurity before the pandemic (Niles et al.,
 2020). In Canada, Men and Tarasuk (2021) report that about 25\% of
 individuals who experienced job insecurity (a relatively common
 occurrence during the pandemic), also experienced food insecurity.
-Similarly, according to Statistics Canada (2020), in the early stages of
-the pandemic almost 15\% of individuals reported living in a household
-that faced food insecurity; the risk of food insecurity was
+Similarly, according to Statistics Canada (2020a), in the early stages
+of the pandemic almost 15\% of individuals reported living in a
+household that faced food insecurity; the risk of food insecurity was
 substantially higher for households with children. The difference
 between households with and without children was significant, and 11.7\%
 of households with children indicated that ``food didn't last and
@@ -181,7 +193,8 @@ previous work has explored differences in \emph{accessing} food banks,
 such as how some households utilize food banks over short periods of
 time while others regularly utilize food banks as longer-term resource
 (e.g., Enns et al., 2020), we are not aware of any research that has
-focused on the geographic component of accessibility.
+focused on the geographic component of accessibility. \textbf{Check
+Tarasuk et al. (2019)}
 
 The study of place-based geographic accessibility is concerned with
 capturing the potential to reach destinations of value using the
@@ -295,7 +308,7 @@ insecurity for the first time, and also in households experiencing more
 severe food insecurity than before (Niles et al., 2020; Wolfson and
 Leung, 2020). Most recently in May 2020, Canada recorded 14.7\% of its
 population living in food insecurity in the past 30 days (Statistics
-Canada, 2020). Food insecurity is a highly concerning public health
+Canada, 2020a). Food insecurity is a highly concerning public health
 issue due to its health impacts. Recent research suggests that food
 insecurity in adults can lead to experiencing more stressful events
 (El-hajj and Benhin 2021). Increases in food insecurity rates due to the
@@ -377,14 +390,95 @@ service) are preserved system-wide: \[
 \sum_{i=1}^nP_iw_{ij}^\text{st}=P_i
 \]
 
-\noindent and therefore: \[
+\noindent and also: \[
 \sum_{j=1}^JL_jw_{ji}^\text{st}=L_j
 \]
 
 \hypertarget{data}{%
 \subsection{Data}\label{data}}
 
-Words go here.
+Data have been prepared for sharing as a data package\footnote{add
+  repository}.
+
+\hypertarget{statistics-canada}{%
+\subsubsection{Statistics Canada}\label{statistics-canada}}
+
+Population and income statistics at the level of Dissemination Areas
+(DAs) were retrieved using the package \texttt{cancensus} (von Bergmann
+et al., 2021). Dissemination Areas are the smallest publicly available
+census geography in Canada. We use data from the 2016 Population Census.
+
+\hypertarget{origins-residential-parcels}{%
+\subsubsection{Origins: Residential
+parcels}\label{origins-residential-parcels}}
+
+We converted all recorded residential parcels in the City of Hamilton to
+points on the road network. Each point includes information about the
+number of residential units in the parcel. Each residential unit is
+``populated'' with the probability of being a ``low income household,''
+which we define as having a total household income of less than CAD
+40,000. This is approximately the mid-point of the low income cut-off
+(LICOs) for families in Canadian cities with populations greater than
+500,000 in 2016, to match other Census data (Statistics Canada, 2020b).
+
+\hypertarget{destinations-foodbanks}{%
+\subsubsection{Destinations: Foodbanks}\label{destinations-foodbanks}}
+
+\textbf{The locations of foodbanks were obtained from public records and
+geocoded. Three urban sites not in the program were also identified and
+geocoded for comparison purposes.}
+
+\hypertarget{routing-and-travel-time-tables}{%
+\subsubsection{Routing and travel time
+tables}\label{routing-and-travel-time-tables}}
+
+Travel time tables for three modes (car, transit, walking) were computed
+using the parcels as the origins and the locations of the foodbanks as
+the destinations. For routing, the package \texttt{r5r} (Pereira et al.,
+2021b) was used, with a network extract for the City of Hamilton from
+OpenStreetMaps and the General Transit Feed Specification from Hamilton
+Street Railway, the local transit operator. For routing purposes we used
+maximum values of 180 min and 10,000 m walking distance: any destination
+that exceeded these thresholds was ignored. The departure time used for
+routing was \textbf{TIME}.
+
+\hypertarget{open-hamilton}{%
+\subsubsection{\texorpdfstring{Open Hamilton
+\textbf{???}}{Open Hamilton ???}}\label{open-hamilton}}
+
+We used the open data portal of the City of
+Hamilton\footnote{\url{https://open.hamilton.ca/}} we obtained
+boundaries for the city's various regions (the definition of urban,
+suburban, and rural regions follows the classification of development
+applications).
+
+\hypertarget{transportation-tomorrow-survey}{%
+\subsubsection{Transportation Tomorrow
+Survey}\label{transportation-tomorrow-survey}}
+
+We used the Data Retrieval System of the Transportation Tomorrow Survey
+(TTS)\footnote{\url{http://dmg.utoronto.ca/}} to download
+cross-tabulations of: 1) primary mode of travel per trip by income by
+place of residence; and 2) age by income by place of residence. These
+data are from the 2016 Survey (the most recent available), and data are
+geocoded at the level of Traffic Analysis Zones (TAZ) using the most
+recent zoning system from 2006. Each parcel point is populated with the
+proportion of trips by three modes of travel: car (as driver or
+passenger), transit, and walk.
+
+\hypertarget{expected-travel-times}{%
+\subsubsection{Expected Travel Times}\label{expected-travel-times}}
+
+Once we obtained travel time tables with population (number of
+households) and proportion of trips by mode, we calculated the expected
+travel time \(ett\) from each parcel \(i\) to a foodbank \(j\) as
+follows: \[
+ett_i = p^c_i\cdot tt^c_{ij} + p^t_i\cdot tt^t_{ij} + p^w_i\cdot tt^w_{ij}
+\] \noindent where \(p^k_i\) is the proportion of trips by mode \(k\) in
+the TAZ of parcel \(i\), and \(tt^k_{ij}\) is the travel time from
+parcel \(i\) to the foodbank. In other words, the expected travel time
+is the weighted sum of travel times to the foodbank, with the weights
+given by the expected modal split in the TAZ.
 
 \hypertarget{results-and-discussion}{%
 \section{Results and Discussion}\label{results-and-discussion}}
@@ -551,10 +645,16 @@ doi:\url{https://doi.org/10.1016/j.jtrangeo.2012.03.016}
 
 \leavevmode\hypertarget{ref-pereira2021geographic}{}%
 Pereira, R.H.M., Braga, C.K.V., Servo, L.M., Serra, B., Amaral, P.,
-Gouveia, N., Paez, A., 2021. Geographic access to COVID-19 healthcare in
-brazil using a balanced float catchment area approach. Social Science \&
-Medicine 273, 113773.
+Gouveia, N., Paez, A., 2021a. Geographic access to COVID-19 healthcare
+in brazil using a balanced float catchment area approach. Social Science
+\& Medicine 273, 113773.
 doi:\url{https://doi.org/10.1016/j.socscimed.2021.113773}
+
+\leavevmode\hypertarget{ref-pereira2021r5r}{}%
+Pereira, R.H.M., Saraiva, M., Herszenhut, D., Braga, C.K.V., Conway,
+M.W., 2021b. r5r: Rapid realistic routing on multimodal transport
+networks with r\textsuperscript{5} in r. Findings.
+doi:\href{https://doi.org/10.32866/001c.21262}{10.32866/001c.21262}
 
 \leavevmode\hypertarget{ref-radke2000spatial}{}%
 Radke, J., Mu, L., 2000. Spatial decomposition, modeling and mapping
@@ -578,8 +678,13 @@ associated with chronic disease among low-income NHANES participants.
 The Journal of nutrition 140, 304--310.
 
 \leavevmode\hypertarget{ref-statisticscanada2020food}{}%
-Statistics Canada, 2020. Food insecurity during the COVID-19 pandemic
+Statistics Canada, 2020a. Food insecurity during the COVID-19 pandemic
 (No. Catalogue no. 45280001).
+
+\leavevmode\hypertarget{ref-statisticscanada2020licos}{}%
+Statistics Canada, 2020b. Table 11-10-0241-01 low income cut-offs
+(LICOs) before and after tax by community size and family size, in
+current dollars. doi:\url{https://doi.org/10.25318/1110024101-eng}
 
 \leavevmode\hypertarget{ref-stuff2004household}{}%
 Stuff, J.E., Casey, P.H., Szeto, K.L., Gossett, J.M., Robbins, J.M.,
@@ -599,6 +704,12 @@ canada. VOLUNTAS: International Journal of Voluntary and Nonprofit
 Organizations 31, 841--852.
 doi:\href{https://doi.org/10.1007/s11266-019-00092-w}{10.1007/s11266-019-00092-w}
 
+\leavevmode\hypertarget{ref-tarasuk2019geographic}{}%
+Tarasuk, V., Fafard St-Germain, A.-A., Mitchell, A., 2019. Geographic
+and socio-demographic predictors of household food insecurity in canada,
+2011--12. BMC Public Health 19, 12.
+doi:\href{https://doi.org/10.1186/s12889-018-6344-2}{10.1186/s12889-018-6344-2}
+
 \leavevmode\hypertarget{ref-tarasuk2009household}{}%
 Tarasuk, V., Vogt, J., 2009. Household food insecurity in ontario.
 Canadian Journal of Public Health 100, 184--188.
@@ -609,6 +720,10 @@ Vanderlee, L., L'Abbé, M., 2017. Food for thought on food environments
 in canada. Health promotion and chronic disease prevention in Canada :
 research, policy and practice 37, 263--265.
 doi:\href{https://doi.org/10.24095/hpcdp.37.9.01}{10.24095/hpcdp.37.9.01}
+
+\leavevmode\hypertarget{ref-vonBergmann2021cancensus}{}%
+von Bergmann, J., Shkolnik, D., Jacobs, A., 2021. Cancensus: R package
+to access, retrieve, and work with canadian census data and geography.
 
 \leavevmode\hypertarget{ref-wakefield2013sweet}{}%
 Wakefield, S., Fleming, J., Klassen, C., Skinner, A., 2013. Sweet
