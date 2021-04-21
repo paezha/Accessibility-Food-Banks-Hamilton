@@ -17,7 +17,8 @@ Invoke data:
 ```{r}
 load("output-data-files/data_da_2016.RData")
 load("output-data-files/dwelling_network_points_2016.RData")
-load("output-data-files/hamilton_cma.RData")
+load("output-data-files/hamilton_boundary.RData")
+load("output-data-files/population_age_income.RData")
 load("output-data-files/foodbank_locations.RData")
 load("output-data-files/modes_less40k.RData")
 load("output-data-files/ttm_car.RData")
@@ -80,14 +81,11 @@ dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
   left_join(data_da_2016 %>%
               st_drop_geometry() %>%
               dplyr::transmute(DAUID = GeoUID, 
-                               p_inc_less40k,
-                               linc_age_0to2,
-                               linc_age_0to19,
-                               linc_age_65plus),
+                               p_inc_less40k),
             by = "DAUID")
 ```
 
-Calculate probability that a point on the network will have low income households. This is the proportion of low income households in the DA multiplied by the total number of residential units a the point:
+Calculate probability that a point on the network will have low income households. This is the proportion of low income households in the DA multiplied by the total number of residential units at the point:
 ```{r}
 dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
   mutate(income_less40k = p_inc_less40k * Dwellings)
@@ -100,9 +98,6 @@ ttm_car <- ttm_car %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
-                            linc_age_0to2,
-                            linc_age_0to19,
-                            linc_age_65plus,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
@@ -112,9 +107,6 @@ ttm_transit <- ttm_transit %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
-                            linc_age_0to2,
-                            linc_age_0to19,
-                            linc_age_65plus,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
@@ -124,9 +116,6 @@ ttm_walk <- ttm_walk %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
-                            linc_age_0to2,
-                            linc_age_0to19,
-                            linc_age_65plus,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
@@ -217,7 +206,72 @@ ttm_walk <- ttm_walk %>%
             by = "TAZUID")
 ```
 
-Join tables:
+Prepare and join population data:
+```{r number-of-residential-units-per-DA, include=FALSE}
+# Data preparation
+## Find number of residential units in each DA. This is needed to assign the population to parcels
+residential_units <- dwelling_network_points_2016 %>%
+  st_drop_geometry() %>%
+  group_by(TAZUID) %>%
+  summarize(residential_units = sum(Dwellings))
+```
+
+```{r join-population-to-parcels, include=FALSE}
+# Data preparation
+## Join number of people age 55+ per DA to dwellings and total number of residential units:
+dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
+  left_join(population_age_income %>%
+              st_drop_geometry() %>%
+              dplyr::transmute(TAZUID,
+                               children,
+                               adults,
+                               seniors),
+            by = "TAZUID") %>%
+  left_join(residential_units,
+            by = "TAZUID")
+```
+
+```{r calculate-population-per-parcel, include=FALSE}
+# Data preparation
+##Calculate population per point on the network. This is the population in the DA divided by the total number of residential units. This gives the average number of people per residential unit. Then, multiply by the number of dwellings (residential units) at the point:
+dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
+  mutate(children = (children/residential_units) * Dwellings,
+         adults = (adults/residential_units) * Dwellings,
+         seniors = (seniors/residential_units) * Dwellings)
+```
+
+```{r join-population-data-to-travel-time-tables, include=FALSE}
+# Data preparation
+## Join the population data to the travel time matrices:
+ttm_car <- ttm_car %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::transmute(ID, 
+                            children,
+                            adults,
+                            seniors),
+            by = c("UID" = "ID"))
+
+ttm_transit <- ttm_transit %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::transmute(ID, 
+                            children,
+                            adults,
+                            seniors),
+            by = c("UID" = "ID"))
+
+ttm_walk <- ttm_walk %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::transmute(ID, 
+                            children,
+                            adults,
+                            seniors),
+            by = c("UID" = "ID"))
+```
+
+Join all tables:
 ```{r}
 ttm <- ttm_car %>%
   rename(travel_time_car = travel_time) %>%
@@ -231,18 +285,6 @@ ttm <- ttm_car %>%
                         OBJECTID,
                         travel_time_walk = travel_time),
             by = c("UID", "OBJECTID"))
-```
-
-Join proportion of trips to travel time table:
-```{r}
-#ttm <- ttm %>%
-#  left_join(modes %>%
-#              st_drop_geometry() %>%
-#              transmute(TAZUID,
-#                        p_car,
-#                        p_transit,
-#                        p_walk),
-#            by = "TAZUID")
 ```
 
 Check the NAs in travel time table:
@@ -329,7 +371,7 @@ e_travel_time_parcel <- e_travel_time_parcel %>%
 Plot:
 ```{r}
 ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = e_travel_time_parcel,
           aes(color = e_travel_time),
           alpha = 0.3) + 
@@ -359,7 +401,7 @@ e_travel_time_parcel_2 <- e_travel_time_parcel_2 %>%
 Plot:
 ```{r}
 ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = e_travel_time_parcel_2,
           aes(color = e_travel_time),
           alpha = 0.3) + 
@@ -550,7 +592,7 @@ accessibility <- accessibility %>%
 Plot levels of service before and during covid:
 ```{r}
 los_pre <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = los %>%
             filter(timing == "Pre-covid"),
           aes(color = los,
@@ -562,7 +604,7 @@ los_pre <- ggplot() +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1))
 
 los_covid <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = los %>%
             filter(timing == "During covid"),
           aes(color = los,
@@ -591,7 +633,7 @@ los %>%
           by = "OBJECTID") %>%
   st_as_sf() %>%
   ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(aes(color = los_d,
               size = los_d)) +
   geom_sf(data = foodbank_locations,
@@ -607,7 +649,7 @@ Here we can see the places where the level of service deteriorated most (excludi
 Plot accessibility before and during covid:
 ```{r}
 acc_pre <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = accessibility %>%
             filter(timing == "Pre-covid"),
           aes(color = accessibility)) +
@@ -615,7 +657,7 @@ acc_pre <- ggplot() +
                         direction = 1)
 
 acc_covid <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = accessibility %>%
             filter(timing == "During covid"),
           aes(color = accessibility)) +
@@ -654,7 +696,7 @@ accessibility %>%
   st_as_sf() %>%
   # Plot
   ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(aes(fill = acc_d),
           color = NA) +
   scale_fill_distiller(palette = "OrRd", 
@@ -662,129 +704,28 @@ accessibility %>%
   
 ```
 
-Let's do some view maps to see if the results make sense
-```{r message = FALSE}
-access_by_da <- accessibility %>%
-  st_drop_geometry() %>%
-  # Copy the DA identifier to the accessibility table
-  left_join(dwelling_network_points_2016 %>%
-              st_drop_geometry() %>%
-              transmute(UID = ID, DAUID),
-            by = "UID") %>%
-  # Group by DA and time
-  group_by(DAUID, timing) %>%
-  # Calculate the accessibility by DA before and during covid
-  summarize(accessibility = sum(accessibility),
-            timing = first(timing),
-            .groups = "drop") %>%
-  # Pivot wider to calculate the differences in accessibility from pre-covid to covid
-  pivot_wider(names_from = timing, 
-              values_from = accessibility) %>%
-  # Calculate changes in accessibility
-  mutate(acc_d = `During covid` / `Pre-covid` - 1) %>%
-  # Join DA geometry
-  left_join(data_da_2016 %>%
-            transmute(DAUID = GeoUID,
-                      geometry),
-          by = "DAUID") %>%
-  
-  # Convert to simple features
-  st_as_sf() 
-tmap_mode("view")
-tm_shape(access_by_da) + 
-  tm_fill("acc_d") +
-  tm_shape(foodbank_locations) + 
-  tm_dots("COVIDClose")
-
-
-
-d_access_by_taz <- accessibility %>%
-  st_drop_geometry() %>%
-  # Copy the DA identifier to the accessibility table
-  left_join(dwelling_network_points_2016 %>%
-              st_drop_geometry() %>%
-              transmute(UID = ID, TAZUID),
-            by = "UID") %>%
-  # Group by DA and time
-  group_by(TAZUID, timing) %>%
-  # Calculate the accessibility by DA before and during covid
-  summarize(accessibility = sum(accessibility),
-            timing = first(timing),
-            .groups = "drop") %>%
-  # Pivot wider to calculate the differences in accessibility from pre-covid to covid
-  pivot_wider(names_from = timing, 
-              values_from = accessibility) %>%
-  # Calculate changes in accessibility
-  mutate(acc_d = `During covid` / `Pre-covid` - 1) %>%
-  # join taz geometry
-  left_join(tts_taz %>%
-            transmute(TAZUID = gta06,
-                      geometry),
-          by = "TAZUID") %>%
-  
-  # Convert to simple features
-  st_as_sf() 
-
-tm_shape(d_access_by_taz) + 
-  tm_fill("acc_d") + 
-  tm_shape(foodbank_locations) + 
-  tm_dots("COVIDClose")
-
-access_by_taz <- accessibility %>%
-  st_drop_geometry() %>%
-  # Copy the DA identifier to the accessibility table
-  left_join(dwelling_network_points_2016 %>%
-              st_drop_geometry() %>%
-              transmute(UID = ID, TAZUID),
-            by = "UID") %>%
-  # Group by DA and time
-  group_by(TAZUID, timing) %>%
-  # Calculate the accessibility by DA before and during covid
-  summarize(accessibility = sum(accessibility),
-            timing = first(timing),
-            .groups = "drop") %>%
-  # Pivot wider to calculate the differences in accessibility from pre-covid to covid
-  pivot_wider(names_from = timing, 
-              values_from = accessibility) %>%
-  # Calculate changes in accessibility
-  mutate(acc_pre = `Pre-covid`) %>%
-  # join taz geometry
-  left_join(tts_taz %>%
-            transmute(TAZUID = gta06,
-                      geometry),
-          by = "TAZUID") %>%
-  
-  # Convert to simple features
-  st_as_sf() 
-
-tm_shape(access_by_taz) + 
-  tm_fill("acc_pre") + 
-  tm_shape(foodbank_locations) + 
-  tm_dots("COVIDClose")
-  
-```
-
-
-
 ## Further Breakdown by Population Characteristics
 
-### CODE TO BE UPDATED
+
+
+### Pre-COVID Scenario
+
 Get minimum travel times in the pre-covid scenario:
 
 ```{r minimum-travel-time-baseline, include=FALSE}
-# retrieve minimum travel time during covid to sites that didnt close
+# retrieve minimum travel time for pre-covid locations
 min_ttm_car_baseline <- ttm_car %>%
   #dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
-            linc_age_0to2 = first(linc_age_0to2),
-            linc_age_0to19 = first(linc_age_0to19),
-            linc_age_65plus = first(linc_age_0to19),
             DAUID = first(DAUID),
             TAZUID = first(TAZUID),
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
+            children = first(children),
+            adults = first(adults),
+            seniors = first(seniors),
             .groups = "drop") %>%
   
   ## Calculate weighted travel time:
@@ -794,14 +735,14 @@ min_ttm_transit_baseline <- ttm_transit %>%
   #dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
-            linc_age_0to2 = first(linc_age_0to2),
-            linc_age_0to19 = first(linc_age_0to19),
-            linc_age_65plus = first(linc_age_0to19),
             DAUID = first(DAUID),
             TAZUID = first(TAZUID),
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
+            children = first(children),
+            adults = first(adults),
+            seniors = first(seniors),
             .groups = "drop") %>%
   
   ## Calculate weighted travel time:
@@ -811,19 +752,21 @@ min_ttm_walk_baseline <- ttm_walk %>%
   #dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
-            linc_age_0to2 = first(linc_age_0to2),
-            linc_age_0to19 = first(linc_age_0to19),
-            linc_age_65plus = first(linc_age_0to19),
             DAUID = first(DAUID),
             TAZUID = first(TAZUID),
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
+            children = first(children),
+            adults = first(adults),
+            seniors = first(seniors),
             .groups = "drop") %>%
   
   ## Calculate weighted travel time:
   mutate(weighted_travel_time = travel_time * p_walk)
 ```
+
+Bind the tables and label by mode:
 
 ```{r weighted-travel-time-by-mode-baseline, include=FALSE}
 # Baseline analysis (pre-COVID)
@@ -834,250 +777,225 @@ min_ttm_mode_baseline <- rbind(data.frame(min_ttm_car_baseline, Mode = "Car"),
 ```
 
 ```{r aggregate-weighted-travel-times-baseline, include=FALSE}
-# Baseline analysis (PILOT LOCATIONS ONLY)
+# Baseline analysis (pre-COVID)
 ## Aggregate weighted travel times by mode:
-min_ttm_baseline <- min_ttm_mode_baseline %>%
+min_ttm_mode_baseline <- min_ttm_mode_baseline %>%
   group_by(UID) %>%
   summarize(DAUID = first(DAUID),
             TAZUID = first(TAZUID),
-            linc_age_0to2 = first(linc_age_0to2),
-            linc_age_0to19 = first(linc_age_0to19),
-            linc_age_65plus = first(linc_age_0to19),
+            children = first(children),
+            adults = first(adults),
+            seniors = first(seniors),
             weighted_travel_time = sum(weighted_travel_time)) %>%
+
+  # add geometry
+  #left_join(population_age_income %>%
+  #            transmute(geometry, TAZUID),
+  #          by = "TAZUID") %>%
   
-  ## Calculate person-hours of travel:
-  mutate(weighted_person_hours_0to2 = linc_age_0to2 * weighted_travel_time/60)
+  # calculate person-weighted hours
+  mutate(wph_children = children*weighted_travel_time/60,
+         wph_adults = adults*weighted_travel_time/60,
+         wph_seniors = seniors*weighted_travel_time/60)
 ```
 
-
 ```{r summarize-results-by-taz-baseline, include=FALSE}
-# Baseline analysis (PILOT LOCATIONS ONLY)
+# Baseline analysis (pre-COVID)
 ## Summarize by TAZ and join geometry:
-min_ttm_baseline_taz <- min_ttm_baseline %>%
+min_ttm_baseline_taz <- min_ttm_mode_baseline %>%
   group_by(TAZUID) %>%
   summarize(weighted_travel_time = mean(weighted_travel_time),
-            weighted_person_hours_0to2 = sum(weighted_person_hours_0to2)) %>%
-  left_join(modes %>%
-              dplyr::select(TAZUID),
+            wph_children = sum(wph_children),
+            wph_adults = sum(wph_adults),
+            wph_seniors = sum(wph_seniors)) %>%
+  
+  left_join(population_age_income %>%
+              transmute(geometry, TAZUID),
             by = "TAZUID") %>%
+  
   st_as_sf()
 ```
 
+```{r}
+tm_shape(min_ttm_baseline_taz) +
+  tm_fill("wph_children")
+
+tm_shape(min_ttm_baseline_taz) +
+  tm_fill("wph_adults")
+
+tm_shape(min_ttm_baseline_taz) +
+  tm_fill("wph_seniors")
+```
+
 ```{r weighted-travel-time-map-baseline}
+# Baseline analysis (pre-COVID)
+## Map weighted travel time:
 ttm_map_baseline <- ggplot() +
   geom_sf(data = min_ttm_baseline_taz,
           aes(fill = weighted_travel_time),
           color = NA) +
   scale_fill_distiller(name = "Expected travel time (min)",
                        palette = "OrRd", 
-                       direction = 1) +
-  theme_minimal() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 7),
-        legend.position = "bottom",
-        legend.text = element_text(size = 8))
+                       direction = 1)
 
 ttm_map_baseline
 ```
 
 
-```{r}
-tmap_mode("view")
-tm_shape(min_ttm_baseline_taz) +
-  tm_fill(col = "weighted_travel_time")
+### Do it again for the during-COVID scenario:
 
-tm_shape(modes) +
-  tm_fill(col = "p_walk")
-```
-
-
-```{r person-hours-traveled-map-baseline}
-# Baseline analysis (PILOT LOCATIONS ONLY)
-## Map weighted person-hours of travel:
-pht_map_baseline <- ggplot() +
-  geom_sf(data = min_ttm_baseline_taz,
-          aes(fill = weighted_person_hours_0to2),
-          color = NA) +
-  scale_fill_distiller(name = "Person-hours of travel",
-                       palette = "OrRd", 
-                       direction = 1) +
-  #geom_sf(data = urban_types,
-  #        aes(color = Type),
-  #        fill = NA) +
-  #scale_color_manual(name = "",
-  #                   values = c("Urban" = "firebrick2",
-  #                              "Suburban" = "cornflowerblue",
-  #                              "Rural" = "forestgreen"))  +
-  theme_minimal() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 7),
-        legend.position = "bottom",
-        legend.text = element_text(size = 8))
-
-pht_map_baseline
-```
-
-```{r join-income-information-baseline, include=FALSE}
-# Baseline analysis (PILOT LOCATIONS ONLY)
-## Join median household information to table:
-min_ttm_baseline <- min_ttm_baseline %>%
-  left_join(data_da_2016 %>%
-              st_drop_geometry() %>%
-              dplyr::transmute(DAUID = GeoUID,
-                               income_quintile),
-            by = "DAUID")
-```
-
-```{r plot-distribution-travel-time-by-income-baseline}
-# Baseline analysis (PILOT LOCATIONS ONLY)
-## Distribution of weighted travel time by income:
-ttm_income_baseline <- ggplot(data = min_ttm_baseline, 
-       aes(x = weighted_travel_time, 
-           color= income_quintile)) +
-  geom_density(size = 0.5, adjust = 2.5) +
-  labs(x = "Travel time (in minutes; weighted by mode)") +
-  scale_color_manual(values = c("Top 20%" = "blue",
-                                "Second 20%" = "steelblue1",
-                                "Third 20%" = "gray40", 
-                                "Fourth 20%" = "tomato",
-                                "Bottom 20%" = "red")) +
-  theme_minimal() +
-  theme(text = element_text(size = 7),
-        legend.text = element_text(size = 7))
-
-ttm_income_baseline
-```
-
-```{r total-weighted-person-hours-by-group-baseline, include=FALSE}
-# Baseline analysis (PILOT LOCATIONS ONLY)
-## Total weighted person-hours by income:
-person_hours_income_baseline <- min_ttm_baseline %>%
-  group_by(income_quintile) %>%
-  summarize(total_weighted_person_hours = sum(weighted_person_hours),
-            total_population = sum(Population),
-            .groups = "drop") %>%
-  mutate(ratio = total_weighted_person_hours/total_population) %>%
-  rename(group = income_quintile)
-
-## Total weighted person-hours by region:
-person_hours_region_baseline <- min_ttm %>%
-  group_by(Urban_type) %>%
-  summarize(total_weighted_person_hours = sum(weighted_person_hours),
-            total_population = sum(Population),
-            .groups = "drop") %>%
-  drop_na() %>%
-  mutate(ratio = total_weighted_person_hours/total_population) %>%
-  rename(group = Urban_type)
-
-person_hours_baseline <- rbind(person_hours_income_baseline,
-                               person_hours_region_baseline)
-```
-
-
-
-
-
-### Do Again for COVID Scenario
-Get minimum travel times in the during covid scenario:
-
-```{r minimum-travel-time-during-covid, include=FALSE}
+```{r minimum-travel-time-covid, include=FALSE}
 # retrieve minimum travel time during covid to sites that didnt close
-min_ttm_car_during <- ttm_car %>%
+min_ttm_car_covid <- ttm_car %>%
   dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
-            linc_age_0to2 = first(linc_age_0to2),
-            linc_age_0to19 = first(linc_age_0to19),
-            linc_age_65plus = first(linc_age_0to19),
             DAUID = first(DAUID),
             TAZUID = first(TAZUID),
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
-            .groups = "drop")
+            children = first(children),
+            adults = first(adults),
+            seniors = first(seniors),
+            .groups = "drop") %>%
+  
+  ## Calculate weighted travel time:
+  mutate(weighted_travel_time = travel_time * p_car)
 
-min_ttm_transit_during <- ttm_transit %>%
+min_ttm_transit_covid <- ttm_transit %>%
   dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
-            linc_age_0to2 = first(linc_age_0to2),
-            linc_age_0to19 = first(linc_age_0to19),
-            linc_age_65plus = first(linc_age_0to19),
             DAUID = first(DAUID),
             TAZUID = first(TAZUID),
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
-            .groups = "drop")
+            children = first(children),
+            adults = first(adults),
+            seniors = first(seniors),
+            .groups = "drop") %>%
+  
+  ## Calculate weighted travel time:
+  mutate(weighted_travel_time = travel_time * p_transit)
 
-min_ttm_walk_during <- ttm_walk %>%
+min_ttm_walk_covid <- ttm_walk %>%
   dplyr::filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
-            linc_age_0to2 = first(linc_age_0to2),
-            linc_age_0to19 = first(linc_age_0to19),
-            linc_age_65plus = first(linc_age_0to19),
             DAUID = first(DAUID),
             TAZUID = first(TAZUID),
             p_car = first(p_car),
             p_transit = first(p_transit),
             p_walk = first(p_walk),
-            .groups = "drop")
+            children = first(children),
+            adults = first(adults),
+            seniors = first(seniors),
+            .groups = "drop") %>%
+  
+  ## Calculate weighted travel time:
+  mutate(weighted_travel_time = travel_time * p_walk)
 ```
 
+Bind the tables and label by mode:
 
-
-```{r}
-# FULL JOIN THEM TOGETHER
+```{r weighted-travel-time-by-mode-covid, include=FALSE}
+# Baseline analysis (pre-COVID)
+## Bind the three tables and label them by mode:
+min_ttm_mode_covid <- rbind(data.frame(min_ttm_car_covid, Mode = "Car"),
+                               data.frame(min_ttm_transit_covid, Mode = "Transit"),
+                               data.frame(min_ttm_walk_covid, Mode = "Walking"))
 ```
 
-## Exploratory data analysis
+```{r aggregate-weighted-travel-times-covid, include=FALSE}
+# Baseline analysis (pre-COVID)
+## Aggregate weighted travel times by mode:
+min_ttm_mode_covid <- min_ttm_mode_covid %>%
+  group_by(UID) %>%
+  summarize(DAUID = first(DAUID),
+            TAZUID = first(TAZUID),
+            children = first(children),
+            adults = first(adults),
+            seniors = first(seniors),
+            weighted_travel_time = sum(weighted_travel_time)) %>%
 
-Summary of population:
-```{r}
-sum(data_da_2016$Population_55to69, na.rm = TRUE)
-sum(data_da_2016$Population_70plus, na.rm = TRUE)
+  # add geometry
+  #left_join(population_age_income %>%
+  #            transmute(geometry, TAZUID),
+  #          by = "TAZUID") %>%
+  
+  # calculate person-weighted hours
+  mutate(wph_children = children*weighted_travel_time/60,
+         wph_adults = adults*weighted_travel_time/60,
+         wph_seniors = seniors*weighted_travel_time/60)
 ```
 
-Check the total population:
-```{r}
-sum(dwelling_network_points_2016$Population_55to69, na.rm = TRUE)
-sum(dwelling_network_points_2016$Population_70plus, na.rm = TRUE)
+```{r summarize-results-by-taz-covid, include=FALSE}
+# Baseline analysis (PILOT LOCATIONS ONLY)
+## Summarize by TAZ and join geometry:
+min_ttm_covid_taz <- min_ttm_mode_covid %>%
+  group_by(TAZUID) %>%
+  summarize(weighted_travel_time = mean(weighted_travel_time),
+            wph_children = sum(wph_children),
+            wph_adults = sum(wph_adults),
+            wph_seniors = sum(wph_seniors)) %>%
+  
+  left_join(population_age_income %>%
+              transmute(geometry, TAZUID),
+            by = "TAZUID") %>%
+  
+  st_as_sf()
 ```
 
-The difference in population is because the residential units considered do not completely cover the Hamilton CMA:
 ```{r}
-ggplot() +
-geom_sf(data = hamilton_cma) + 
-geom_sf(data = dwelling_network_points_2016) + 
-geom_sf(data = pharmacy_locations, 
-aes(color = Type,
-shape = Type), 
-size = 3)
+tm_shape(min_ttm_covid_taz) +
+  tm_fill("wph_children")
+
+tm_shape(min_ttm_covid_taz) +
+  tm_fill("wph_adults")
+
+tm_shape(min_ttm_covid_taz) +
+  tm_fill("wph_seniors")
 ```
 
-Plot population age 55 to 69:
-```{r}
-ggplot() +
-geom_sf(data = data_da_2016 %>%
-filter(`Region Name` == "Hamilton"),
-aes(fill = Population_55to69),
-color = NA) +
-geom_sf(data = hamilton_cma,
-fill = NA) +
-scale_fill_distiller(palette = "OrRd", 
-direction = 1)
+```{r weighted-travel-time-map-covid}
+# Baseline analysis (PILOT LOCATIONS ONLY)
+## Map weighted travel time:
+ttm_map_covid <- ggplot() +
+  geom_sf(data = min_ttm_covid_taz,
+          aes(fill = weighted_travel_time),
+          color = NA) +
+  scale_fill_distiller(name = "Expected travel time (min)",
+                       palette = "OrRd", 
+                       direction = 1)
+
+ttm_map_covid
 ```
 
-Plot population age 70 plus:
+### Map Differences
+
+Join the min travel time tables together
+
 ```{r}
-ggplot() +
-geom_sf(data = data_da_2016 %>%
-filter(`Region Name` == "Hamilton"),
-aes(fill = Population_70plus),
-color = NA) +
-geom_sf(data = hamilton_cma,
-fill = NA) +
-scale_fill_distiller(palette = "OrRd", 
-direction = 1)
+min_ttm_d <- min_ttm_baseline_taz %>% 
+  left_join(min_ttm_covid_taz %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        wph_children_covid = wph_children,
+                        wph_adults_covid = wph_adults,
+                        wph_seniors_covid = wph_seniors), 
+            by = "TAZUID") %>%
+  mutate(wph_children_d = wph_children_covid / wph_children - 1,
+         wph_adults_d = wph_adults_covid / wph_adults - 1,
+         wph_seniors_d = wph_seniors_covid / wph_seniors - 1)
+
+tm_shape(min_ttm_d) + 
+  tm_fill("wph_children_d")
+
+tm_shape(min_ttm_d) + 
+  tm_fill("wph_adults_d")
+
+tm_shape(min_ttm_d) + 
+  tm_fill("wph_seniors_d")
 ```
