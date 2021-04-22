@@ -48,7 +48,7 @@ header-includes:
 
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(
-  cache = TRUE, out.width = "90%", fig.width = 6, fig.height = 6
+  cache = TRUE, out.width = "100%", fig.width = 6, fig.height = 6
 )
 ```
 
@@ -59,7 +59,7 @@ if (!require("foodbanksHamilton", character.only = TRUE)) {
   }
 ```
 
-```{r load-packages, include=FALSE}
+```{r load-packages, cache=FALSE, include=FALSE}
 library(foodbanksHamilton) # Data package
 library(kableExtra)
 library(patchwork)
@@ -80,124 +80,9 @@ data(ttm_transit)
 data(ttm_walk)
 ```
 
-\newpage
-
-Introduction
-==========================
-
-Food insecurity, defined as an "inadequate or uncertain access to a sufficient quantity and/or adequate quality of food" due to a household's financial limitations [@enns2020experiences], has been associated with reductions in nutritional outcomes [@bhattacharya2004poverty; @kirkpatrick2008food; @olson1999nutrition] and physical and mental health in children and adults [@elgar2021relative; @jones2017food; @ramsey2011food; @seligman2010food; @stuff2004household]. Over at least the past four decades food banks have become an essential line of defense against food insecurity in Canadian communities [@riches2002food; @holmes2018nothing; @black2020examining; @tarasuk2020relationship]. In this respect, Canada is not unlike numerous other wealthy countries where a systematic dismantling of the welfare state took place in the intervening period [@tarasuk2014food]. 
-
-But the emergence of COVID-19, the worst public health crisis since the 1918 flu pandemic, has revealed important social and economic fault lines, and pre-existing patterns of inequality appear to have been exacerbated. Along several other dimensions of stress [e.g., accessibility to health care facilities; @pereira2021geographic], this seems to be the case for food insecurity as well [@laborde2020poverty]. In the US, for example, it has been estimated that there was an increase of more than 30\% in household food insecurity, and more than one third of households were discovered to be newly food insecure - meaning they did not experience food insecurity before the pandemic [@niles2020early]. In Canada, Men and Tarasuk [-@men2021food] report that about 25\% of individuals who experienced job insecurity (a relatively common occurrence during the pandemic), also experienced food insecurity. Similarly, according to Statistics Canada [-@statisticscanada2020food], in the early stages of the pandemic almost 15\% of individuals reported living in a household that faced food insecurity; the risk of food insecurity was substantially higher for households with children. The difference between households with and without children was significant, and 11.7\% of households with children indicated that "food didn’t last and [there was] no money to get more" sometimes or often, compared to 7.3\% of households without children); likewise, 13\% of households with children indicated that they "[c]ouldn’t afford balanced meals" sometimes or often, compared to 8.8\% of households without children.
-
-The impacts of food insecurity during the pandemic are alarming, since diet-related diseases, such as obesity, heart-disease, and diabetes, were already critical public health concerns in Canada prior to COVID-19 [@boucher2017ontario]. While food banks are not necessarily a stable solution to food insecurity and in fact may encourage a retrenchment of neoliberal policy [@wakefield2013sweet], at least they can be argued to provide a resource of last instance to households in precarious situations [@bazerghi2016role]. As recently as 2019, the Hamilton Hunger Report^[https://www.hamiltonfoodshare.org/wp-content/uploads/Hamilton-Food-Share-Hunger-Report-2019.pdf] noted that food banks in Hamilton, Ontario, recorded the highest number of visitors in the past 29 years; the number of children visiting food banks (minors up to 18 years old) was 9,125 in March 2019, up from 8,278 the year before. 
-
-It is known that the urban food environment, within which people make their daily food choices, is essential in influencing eating behaviours and health outcomes, based on factors such as food availability, ease of geographic accessibility and socio-demographic variations [@paez2010relative; @vanderlee2017food; @widener2018spatial]. However, while there is a wealth of literature that has examined the topic of geographic accessibility to healthy food through the "food desert" concept, there has been little research into accessibility to food banks. Although previous work has explored differences in _accessing_ food banks, such as how some households utilize food banks over short periods of time while others regularly utilize food banks as longer-term resource [e.g., @enns2020experiences], we are not aware of any research that has focused on the geographic component of accessibility.
-
-The study of place-based geographic accessibility is concerned with capturing the potential to reach destinations of value using the transportation network [@paez2012measuring]. Indeed, the Government of Canada's recent Food Policy has made "access" to healthy food a priority for Canadian communities^[https://www.agr.gc.ca/eng/about-our-department/key-departmental-initiatives/food-policy/the-food-policy-for-canada/?id=1597863791042] and previous survey research has suggested that such accessibility plays a key role in user satisfaction with food bank service delivery in Vancouver [@holmes2018nothing]. However, as with research into the prevalence of food deserts, accessibility to food banks is likely not evenly distributed throughout a city with variations in access attributable to transportation network characteristics and the spatial distribution of food bank locations - as well as the population that likely needs them. Furthermore, policy responses to the COVID-19 pandemic add to the distress of vulnerable households. Non-pharmaceutical interventions during the pandemic involving restrictions in mobility increased the friction of travel, in particular by transit on which low income populations are more likely to be reliant [e.g., @deweese2020tale]. At the same time, the pandemic has created additional stress for the operators of foodbanks through disruptions in the supply chain [e.g., @mckay2021exploring] as well as concerns surrounding the delivery of service in safe conditions and possible cancellation of food service programs.
-
-For this study, we aim to look at how the landscape of food banks and related services (e.g. low-cost or free meal service providers) available in Hamilton, Ontario, has changed before and during the pandemic. Have the number of open food bank services diminished? If so, what was the accessibility to foodbanks before and during the pandemic, from the perspective of low income households? And finally, who are most likely to have been impacted by changes to the accessibility landscape? This paper will first look at the distribution of food banks and related services before and during the pandemic. Then, we use the balanced floating catchment area approach of Paez et al. [@paez2019demand] to investigate the accessibility situation. We use a fully disaggregated approach based on parcel-level data. Socio-economic and demographic data are drawn from the latest Census of Canada (2016), whereas travel information is from the most recent regional travel survey from 2016. This paper follows reproducible research recommendations [see @brunsdon2020opening], and the research was conducted using open source tools for transportation analysis [@lovelace2021open]. The code and data necessary to reproduce the analysis are available in a public repository^[add repository]. 
-
-Food Insecurity and Food Bank Use in Canada
-============
-
-Food insecurity is the inability to acquire and consume an adequate amount or good quality food, leading to inadequate nutrient intake [@enns2020experiences; @kirkpatrick2008food; @tarasuk2009household]. This nutrient deficiency is associated with major health concerns in Canadians, and particularly those who are at a socioeconomic disadvantage [@bazerghi2016role]. Data on food insecurity in Canada is collected in several ways. Quantitatively, official government surveys such as the Household Food Security Survey Module (HFSSM), the Canadian Community Health Surveys (CCHS), the International Study of Adults (LISA), and official classifications determined by Health Canada in relation to sociodemographic variables offer some insight into food insecurity [@kirkpatrick2008food; @tarasuk2009household; @gundersen2018food]. Nationally, it has been found that food insecurity impacts approximately 12.3% of Canadian households [@tarasuk2014food]
-
-Food banks - sometimes also referred to as ‘food pantries’ and ‘food shelves’ - originated as a community response to aid those with inadequate food by voluntarily offering them meals and ingredients [@riches2002food; @loopstra2012relationship]. The scope and objectives of foodbanks can vary by region and by country, and these organizations can include not only prepared meals and aliments, but also shared spaces to connect in community gardens and community kitchens [@wakefield2013sweet]. Although in their origin foodbanks were meant to be provide a temporary solution to accommodate those in hunger due to job retrenchments and economic downfalls since the 1980s, over time they evolved into a community practice to secure emergency food supplies for those in need [@loopstra2012relationship; @wakefield2013sweet]. 
-
-In Canada, the number of food banks has steadily increased in the past few decades [@wakefield2013sweet]. The largest database of food banks and their use comes from the non-profit association Food Banks Canada, which conducts an annual assessment through its affiliated members. Food Banks Canada's 2018 Hunger Count report^[https://foodbankscanada.ca/getmedia/241fb659-05f5-44a2-9cef-56f5f51db523/HungerCount-2018_FINAL_EN.pdf.aspx?ext=.pdf] (the most recent available) listed 1,830 member food banks across the country found that Canadians visited food banks 1.1 million times in March of 2018. Of those accessing food banks, certain population characteristics tend to be over-represented compared to national totals from the 2016 Canadian Census of Population. According to Food Banks Canada's 2018 data, single-adult households represent 45% of those utilizing food banks despite making up 28% of Canada's population, 19% are single-parent households (compared to 10% nationally), and 35% of those accessing food bank services are children aged 0-18 even though their share of Canada's national population is approximately 20%. In addition, 59% of households accessing food banks list social or disability assistance as their primary source of income. Moreover, children aged 0-18 are over-represented as food bank users, making up 35% of those accessing food bank services despite representing 20% of the country's population. Likewise, using data from the 2011-2012 CCHS, Tarasuk et al. [-@tarasuk2019geographic] found higher odds of food insecurity amongst households relying on social assistance, those without a university degree or with children under the age of 18, and individuals that lived alone, renters, and those identifying as Aboriginal. While surveys revealed that only 20 to 30 percent of those experiencing food insecurity were found to frequent food banks in Canada [@tarasuk2014food], research from Ottawa [@enns2020experiences] and Vancouver [@black2020examining] suggests that long-term users tend to be older, have health or mobility challenges, live in large households, and less likely to have employment income.
-
-Currently with the COVID-19 pandemic, disrupted economies, rising unemployment rates, and changes in poverty levels have disrupted the food environment and led to higher rates of food insecurity [@niles2020early]. Pandemic-related food security studies in the US have found a substantial increase in households experiencing food insecurity for the first time, and also in households experiencing more severe food insecurity than before [@niles2020early; @wolfson2020food]. Most recently in May 2020, Canada recorded 14.7% of its population living in food insecurity in the past 30 days [@statisticscanada2020food]. Considering the negative mental and physical health effects associated with food insecurity, increases in food insecurity rates due to the pandemic, signal a change in the food environment with potential damages to population health during the course of the pandemic and beyond [@niles2020early]. Recent data^[https://www.foodbankscanada.ca/FoodBanks/MediaLibrary/COVID-Report_2020/A-Snapshot-of-Food-Banks-in-Canada-and-the-COVID-19-Crisis_Exec-Sum_EN.pdf] from Food Banks Canada showed that 52% of member food banks reported an increase in usage in March of 2020 when initial lockdown restrictions were put in place across much of Canada. The pandemic also created significant staffiing issues with 42% of food banks reporting a reduction in volunteers. However, 53% of food banks reported a decrease in use into the summer of 2020 which food banks attributed to emergency financial support programs from the federal government were. Nevertheless, some of these benefit programs were temporary, suggesting many households may again turn to food bank services to meet their needs.
-
-In terms of geography, previous research conducted at the provincial scale using data from the 2011-2012 CCHS found that the prevalence of food insecurity ranged across the country from 11.8% of households in Ontario to 41% of households in Nunavut [@tarasuk2019geographic]. However, although previous research has examined the characteristics of individuals and households accessing food banks, the locational or transportation accessibility aspect of food bank access is not well understood. A wealth of literature examining the food desert concept suggests that, in addition to socioeconomic and demographic factors, location and transportation networks play a key role in a household's accessibility to healthy foods [@paez2010relative; @vanderlee2017food; @widener2018spatial]. For food banks specifically, previous qualitative research in Ontario has noted difficulties associated with transportation for trips to the food bank [@smith2017food]. For example, Smith et al. [-@smith2017food] note that participants access food banks using a variety of modes of transportation with respondent stating "I wish it [the food bank] was a little more centrally located. Because if I didn’t have a bike I’d have to walk it all the way out there and back. I wonder about people who don’t." From this, the authors conclude that "transportation can be challenging, particularly if the food bank is situated in a remote location." To offer greater insight into the role of transportation and location in food bank accessibility, this research examines how geographic access to food banks and food services changed in Hamilton before and during the COVID-19 pandemic.
-
-Methods and Materials
-===================
-
-## Methods
-
-For the research in this paper we adopt the balanced floating catchment area approach of Paez et al. [-@paez2019demand]. This method for estimating accessibility is a form of the common two-stage floating catchment area method [@radke2000spatial; @luo2003measures]. Floating catchment areas are used to estimate accessibility when there are potential congestion effects, and operate by calculating first the _demand_ for spatially distributed services. The demand (usually the number of people who require a service) is used to calculate a level of service. In a second step, the level of service is allocated back to the population. Demand and level of service are allocated using some form of distance-decay to embody the geographical principle that, given a choice, people prefer to travel less than more when reaching destinations.
-
-More formally, the first step of this method is as follows:
-$$
-L_j = \frac{S_j}{\sum_{i=1}^nP_iw_{ij}}
-$$
-
-\noindent where $S_j$ is the level of supply at location $j$, in simplest terms whether a service point is present (i.e., $S_j=1$) or not (i.e., $S_j=0$); $P_i$ is the population at location $i$ that demands the service; and $w_{ij}$ is a weight, typically a function of the distance between locations $i$ and $j$. $L_j$ is the level of service at location $j$ and it is the inverse of the number of people that need to be serviced.
-
-The second step in this process is then summing the level of service that each population unit can reach, according to the distance-decay weight:
-$$
-A_i = \sum_{j=1}^JL_jw_{ji}
-$$
-
-\noindent where $A_i$ is the accessibility to the service, which is in the same units as the level of service: as the inverse of the population being serviced. When the population being serviced is low accessibility is high (i.e., there is little competition for the service), and viceversa. 
-
-Floating catchment area methods are prone to overestimation of the population and the level of service due to multiple-counting. The population at $P_i$ is allocated to _every_ service point $j$ for which $w_{ij}>0$. Similarly, the level of service at $LOS_j$ is allocated to _every_ population point for which $w_{ji}>0$. This inflation effect has been known for several years, and several modifications have been proposed to mitigate it [e.g., @wan2012three; @delamater2013spatial]. A definitive solution to this issue was presented by Paez et al. [-@paez2019demand]. In order to avoid the multiple-counting in the summations, the population and the level of service need to be allocated _proportionally_. This is achieved by standardizing the weights as follows:
-$$
-w_{ij}^\text{st} = \frac{w_{ij}}{\sum_{i=1}^nw_{ij}}
-$$
-\noindent and:
-$$
-w_{ji}^\text{st} = \frac{w_{ji}}{\sum_{j=1}^Jw_{ji}}
-$$
-
-The standardized weights satisfy the following conditions:
-$$
-\sum_{i=1}^nw_{ij}^\text{st}=1
-$$
-
-\noindent and:
-$$
-\sum_{j=1}^Jw_{ji}^\text{st}=1
-$$
-
-As a result, the total population (and consequently, the level of service) are preserved system-wide:
-$$
-\sum_{i=1}^nP_iw_{ij}^\text{st}=P_i
-$$
-
-\noindent and also:
-$$
-\sum_{j=1}^JL_jw_{ji}^\text{st}=L_j
-$$
-
-## Data
-
-Data have been prepared for sharing as a data package^[add repository]. 
-
-### Statistics Canada
-
-Population and income statistics at the level of Dissemination Areas (DAs) were retrieved using the package `cancensus` [@vonBergmann2021cancensus]. Dissemination Areas are the smallest publicly available census geography in Canada. We use data from the 2016 Population Census.
-
-### Origins: Residential parcels
-
-We converted all recorded residential parcels in the City of Hamilton to points on the road network. Each point includes information about the number of residential units in the parcel. Each residential unit is "populated" with the probability of being a "low income household", which we define as having a total household income of less than CAD 40,000. This is approximately the mid-point of the low income cut-off (LICOs) for families in Canadian cities with populations greater than 500,000 in 2016, to match other Census data [@statisticscanada2020licos].
-
-### Destinations: Foodbanks
-
-The locations of foodbanks were obtained from public records and geocoded. Three urban sites not in the program were also identified and geocoded for comparison purposes.
-
-### Routing and travel time tables
-
-Travel time tables for three modes (car, transit, walking) were computed using the parcels as the origins and the locations of the foodbanks as the destinations. For routing, the package `r5r` [@pereira2021r5r] was used, with a network extract for the City of Hamilton from OpenStreetMaps and the General Transit Feed Specification from Hamilton Street Railway, the local transit operator. For routing purposes we used maximum values of 180 min and 10,000 m walking distance: any destination that exceeded these thresholds was ignored. The departure time used for routing was **TIME**.
-
-### Transportation Tomorrow Survey
-
-We used the Data Retrieval System of the Transportation Tomorrow Survey (TTS)\footnote{\url{http://dmg.utoronto.ca/}} to download cross-tabulations of: 1) primary mode of travel per trip by income by place of residence; and 2) age by income by place of residence. These data are from the 2016 Survey (the most recent available), and data are geocoded at the level of Traffic Analysis Zones (TAZ) using the most recent zoning system from 2006. Each parcel point is populated with the proportion of trips by three modes of travel: car (as driver or passenger), transit, and walk.
-
-### Expected Travel Times
-
-Once we obtained travel time tables with population (number of households) and proportion of trips by mode, we calculated the expected travel time $ett$ from each parcel $i$ to a foodbank $j$ as follows:
-$$
-ett_i = p^c_i\cdot tt^c_{ij} + p^t_i\cdot tt^t_{ij} + p^w_i\cdot tt^w_{ij}
-$$
-
-\noindent where $p^k_i$ is the proportion of trips by mode $k$ in the TAZ of parcel $i$, and $tt^k_{ij}$ is the travel time from parcel $i$ to the foodbank. In other words, the expected travel time is the weighted sum of travel times to the foodbank, with the weights given by the expected modal split in the TAZ.
-
-Results and Discussion
-===================
-
 ```{r remove-irrelevant-destinations, include=FALSE}
-## Remove entries in travel time matrices for inapplicable destinations
+## Data preparation
+# Remove entries in travel time matrices for inapplicable destinations
 # As a first step, we will remove the computed travel times to the three Community Kitchen locations (IDs 1-3):
 ttm_car <- ttm_car %>%
   filter(!between(OBJECTID, left = 1, right = 3))
@@ -209,9 +94,9 @@ ttm_walk <- ttm_walk %>%
   filter(!between(OBJECTID, left = 1, right = 3))
 ```
 
-
 ```{r join-low-income-households, include=FALSE}
-## Join proportion of low income households per DA to dwellings and total number of residential units:
+## Data preparation
+# Join proportion of low income households per DA to dwellings and total number of residential units:
 dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
   left_join(data_da_2016 %>%
               st_drop_geometry() %>%
@@ -221,7 +106,8 @@ dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
 ```
 
 ```{r probability-of-low-income-per-parcel, include=FALSE}
-## Calculate probability that a point on the network will have low income households. This is the proportion of low income households in the DA multiplied by the total number of residential units at the point:
+## Data preparation
+# Calculate probability that a point on the network will have low income households. This is the proportion of low income households in the DA multiplied by the total number of residential units at the point:
 dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
   mutate(income_less40k = p_inc_less40k * Dwellings)
 ```
@@ -259,7 +145,6 @@ dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
          adults = (adults/residential_units) * Dwellings,
          seniors = (seniors/residential_units) * Dwellings)
 ```
-
 
 ```{r join-household-data-to-travel-time-tables, include=FALSE}
 ## Data preparation
@@ -303,7 +188,7 @@ ttm_walk <- ttm_walk %>%
 
 ```{r join-foodbank-data-to-travel-time-tables, include=FALSE}
 ## Data preparation
-# Join the food bank data to the travel time tables:
+# Join the foodbank data to the travel time tables:
 ttm_car <- ttm_car %>%
   left_join(foodbank_locations %>%
               st_drop_geometry() %>%
@@ -344,7 +229,6 @@ ttm_walk <- ttm_walk %>%
   drop_na(TAZUID,
           income_less40k)
 ```
-
 
 ```{r proportion-of-trips-by-mode-by-taz, include=FALSE}
 ## Data preparation
@@ -412,7 +296,6 @@ ttm <- ttm_car %>%
             by = c("UID", "OBJECTID"))
 ```
 
-
 ```{r travel-time-tables-data-check, include=FALSE}
 ## Data preparation
 # Check the NAs in travel time table:
@@ -465,8 +348,209 @@ ttm <- ttm %>%
          e_travel_time = e_travel_time_car + e_travel_time_transit + e_travel_time_walk)
 ```
 
-Words go here.
+\newpage
 
+Introduction
+==========================
+
+Food insecurity is defined as an "inadequate or uncertain access to a sufficient quantity and/or adequate quality of food" due to a household's financial limitations [@enns2020experiences]. This is a condition that has been associated with reductions in nutritional outcomes [@bhattacharya2004poverty; @kirkpatrick2008food; @olson1999nutrition] and physical and mental health in children and adults [@elgar2021relative; @jones2017food; @ramsey2011food; @seligman2010food; @stuff2004household]. Over at least the past four decades foodbanks have become an essential line of defense against food insecurity in Canadian communities [@riches2002food; @holmes2018nothing; @black2020examining; @tarasuk2020relationship]. In this respect, Canada is not unlike numerous other wealthy countries where a systematic dismantling of the welfare state took place in the intervening period [@tarasuk2014food]. 
+
+But the emergence of COVID-19, the worst public health crisis since the 1918 flu pandemic, has revealed important social and economic fault lines, and pre-existing patterns of inequality appear to have been exacerbated. Along several other dimensions of stress [such as accessibility to health care facilities, see @pereira2021geographic], this seems to be the case for food insecurity as well [@laborde2020poverty]. In the US, for example, it has been estimated that there was an increase of more than 30\% in household food insecurity, and more than one third of households were discovered to be newly food insecure - meaning they did not experience food insecurity before the pandemic [@niles2020early]. In Canada, Men and Tarasuk [-@men2021food] report that about 25\% of individuals who experienced job insecurity (a relatively common occurrence during the pandemic), also experienced food insecurity. Similarly, according to Statistics Canada [-@statisticscanada2020food], in the early stages of the pandemic almost 15\% of individuals reported living in a household that faced food insecurity; the risk of food insecurity was substantially higher for households with children. The difference between households with and without children was significant, and 11.7\% of households with children indicated that "food didn’t last and [there was] no money to get more" sometimes or often, compared to 7.3\% of households without children; likewise, 13\% of households with children indicated that they "[c]ouldn’t afford balanced meals" sometimes or often, compared to 8.8\% of households without children.
+
+The impacts of food insecurity during the pandemic are alarming, since diet-related diseases, such as obesity, heart-disease, and diabetes, were already critical public health concerns in Canada prior to COVID-19 [@boucher2017ontario]. While foodbanks are not necessarily a stable solution to food insecurity and in fact may encourage a retrenchment of neoliberal policy [@wakefield2013sweet], at least they can be argued to provide a resource of last instance to households in precarious situations [@bazerghi2016role]. As recently as 2019, the Hamilton Hunger Report^[https://www.hamiltonfoodshare.org/wp-content/uploads/Hamilton-Food-Share-Hunger-Report-2019.pdf] noted that foodbanks in Hamilton, Ontario, recorded the highest number of visitors in the past 29 years; the number of children visiting foodbanks (minors up to 18 years old) was 9,125 in March 2019, up from 8,278 the year before. 
+
+It is known that the urban food environment, within which people make their daily food choices, is essential in influencing eating behaviours and health outcomes, based on factors such as food availability, ease of geographic accessibility and socio-demographic variations [@paez2010relative; @vanderlee2017food; @widener2018spatial]. However, while there is a wealth of literature that has examined the topic of geographic accessibility to healthy food through the "food desert" concept, there has been little research into accessibility to foodbanks. Although previous work has explored differences in _accessing_ foodbanks, such as how some households utilize foodbanks over short periods of time while others regularly utilize foodbanks as longer-term resource [e.g., @enns2020experiences], we are not aware of any research that has focused on the geographic component of accessibility.
+
+The study of place-based geographic accessibility is concerned with capturing the potential to reach destinations of value using the transportation network [@paez2012measuring]. Indeed, the Government of Canada's recent Food Policy has made "access" to healthy food a priority for Canadian communities^[https://www.agr.gc.ca/eng/about-our-department/key-departmental-initiatives/food-policy/the-food-policy-for-canada/?id=1597863791042] and previous survey research has suggested that such accessibility plays a key role in user satisfaction with foodbank service delivery in Vancouver [@holmes2018nothing]. However, as with research into the prevalence of food deserts, accessibility to foodbanks is unlikely to be evenly distributed throughout a city due to variations in the characteristics of the transportation network characteristics, and the spatial distribution of foodbank locations and the population they serve. Furthermore, policy responses to the COVID-19 pandemic may well add to the distress of vulnerable households. Non-pharmaceutical interventions during the pandemic involving restrictions in mobility have increased the friction of travel, in particular by transit on which low income populations are more likely to be reliant [e.g., @deweese2020tale]. At the same time, the pandemic has created additional stress for the operators of foodbanks through disruptions in the supply chain [e.g., @mckay2021exploring] as well as concerns surrounding the delivery of service in safe conditions and possible cancellation of food service programs.
+
+For this study, we aim to look at how the landscape of foodbanks and related services (e.g. low-cost or free meal service providers) available in Hamilton, Ontario, changed during the pandemic. Have the number of open foodbank services diminished? If so, what were the levels of accessibility to foodbanks before the pandemic from the perspective of low income households, and how did they change during the pandemic? And finally, who are most likely to have been impacted by changes to the accessibility landscape? This paper will first look at the distribution of foodbanks and related services before and during the pandemic. Then, we use the balanced floating catchment area approach of Paez et al. [-@paez2019demand] to investigate the accessibility situation. We use a fully disaggregated approach based on parcel-level data. Socio-economic and demographic data are drawn from the latest Census of Canada (2016), whereas travel information is from the most recent regional travel survey from 2016. This paper follows reproducible research recommendations [see @brunsdon2020opening], and the research was conducted using open source tools for transportation analysis [@lovelace2021open]. The code and data necessary to reproduce the analysis are available in a public repository^[add repository]. 
+
+Food Insecurity and foodbank Use in Canada
+============
+
+Food insecurity is the inability to acquire and consume an adequate amount or good quality food, leading to insufficient nutrient intake [@enns2020experiences; @kirkpatrick2008food; @tarasuk2009household]. Nutrient deficiency, in turn, is associated with major population health concerns, and particularly among those who are at a socio-economic disadvantage [@bazerghi2016role]. Data on food insecurity in Canada is collected in several ways. Quantitatively, official government surveys such as the Household Food Security Survey Module (HFSSM), the Canadian Community Health Surveys (CCHS), the International Study of Adults (LISA), and official classifications determined by Health Canada in relation to socio-demographic variables offer some insight into food insecurity [@kirkpatrick2008food; @tarasuk2009household; @gundersen2018food]. Nationally, it has been found that food insecurity impacts approximately 12.3% of Canadian households [@tarasuk2014food]
+
+Foodbanks - sometimes also referred to as ‘food pantries’ and ‘food shelves’ - originated as a community response to aid those with inadequate food by voluntarily offering them meals and ingredients [@riches2002food; @loopstra2012relationship]. The scope and objectives of foodbanks can vary by region and by country, and these organizations can include not only prepared meals and aliments, but also shared spaces to connect in community gardens and community kitchens [@wakefield2013sweet]. Although in their origin foodbanks were meant to be provide a temporary solution to accommodate those in hunger due to job retrenchments and economic downfalls since the 1980s, over time they evolved into a community practice to secure emergency food supplies for those in need [@loopstra2012relationship; @wakefield2013sweet]. 
+
+In Canada, the number of foodbanks has steadily increased in the past few decades [@wakefield2013sweet]. The largest database of foodbanks and their use comes from the non-profit association foodbanks Canada, which conducts an annual assessment through its affiliated members. foodbanks Canada's 2018 Hunger Count report^[https://foodbankscanada.ca/getmedia/241fb659-05f5-44a2-9cef-56f5f51db523/HungerCount-2018_FINAL_EN.pdf.aspx?ext=.pdf] (the most recent available) listed 1,830 member foodbanks across the country found that Canadians visited foodbanks 1.1 million times in March of 2018. Of those accessing foodbanks, certain population characteristics tend to be over-represented compared to national totals from the 2016 Canadian Census of Population. According to foodbanks Canada's 2018 data, single-adult households represent 45% of those utilizing foodbanks despite making up 28% of Canada's population, 19% are single-parent households (compared to 10% nationally), and 35% of those accessing foodbank services are children aged 0-18 even though their share of Canada's national population is approximately 20%. In addition, 59% of households accessing foodbanks list social or disability assistance as their primary source of income. Moreover, children aged 0-18 are over-represented as foodbank users, making up 35% of those accessing foodbank services despite representing 20% of the country's population. Likewise, using data from the 2011-2012 CCHS, Tarasuk et al. [-@tarasuk2019geographic] found higher odds of food insecurity amongst households relying on social assistance, those without a university degree or with children under the age of 18, and individuals that lived alone, renters, and those identifying as Aboriginal. While surveys revealed that only 20 to 30 percent of those experiencing food insecurity were found to frequent foodbanks in Canada [@tarasuk2014food], research from Ottawa [@enns2020experiences] and Vancouver [@black2020examining] suggests that long-term users tend to be older, have health or mobility challenges, live in large households, and are less likely to have employment income.
+
+Currently with the COVID-19 pandemic, disrupted economies, rising unemployment rates, and changes in poverty levels have disrupted the food environment and led to higher rates of food insecurity [@niles2020early]. Pandemic-related food security studies in the US have found a substantial increase in households experiencing food insecurity for the first time, and also in households experiencing more severe food insecurity than before [@niles2020early; @wolfson2020food]. Most recently in May 2020, Canada recorded 14.7% of its population living in food insecurity in the past 30 days [@statisticscanada2020food]. Considering the negative mental and physical health effects associated with food insecurity, increases in food insecurity rates due to the pandemic, signal a change in the food environment with potential damages to population health during the course of the pandemic and beyond [@niles2020early]. Recent data^[https://www.foodbankscanada.ca/FoodBanks/MediaLibrary/COVID-Report_2020/A-Snapshot-of-Food-Banks-in-Canada-and-the-COVID-19-Crisis_Exec-Sum_EN.pdf] from Foodbanks Canada showed that 52% of member foodbanks reported an increase in usage in March of 2020 when initial lockdown restrictions were put in place across much of Canada. The pandemic also created significant staffing issues with 42% of foodbanks reporting a reduction in volunteers. However, 53% of foodbanks reported a decrease in use into the summer of 2020 which foodbanks attributed to emergency financial support programs from the federal government were. Nevertheless, some of these benefit programs were temporary, suggesting many households may again turn to foodbank services to meet their needs.
+
+In terms of geography, previous research conducted at the provincial scale using data from the 2011-2012 CCHS found that the prevalence of food insecurity ranged across the country from 11.8% of households in Ontario to 41% of households in Nunavut [@tarasuk2019geographic]. However, although previous research has examined the characteristics of individuals and households accessing foodbanks, the locational or transportation accessibility aspect of foodbank access is not well understood. A wealth of literature examining the food desert concept suggests that, in addition to socio-economic and demographic factors, location and transportation networks play a key role in a household's accessibility to healthy foods [@paez2010relative; @vanderlee2017food; @widener2018spatial]. For foodbanks specifically, previous qualitative research in Ontario has noted difficulties associated with transportation for trips to the foodbank [@smith2017food]. For example, Smith et al. [-@smith2017food] found that participants access foodbanks using a variety of modes of transportation with a respondent stating "I wish it [the foodbank] was a little more centrally located. Because if I didn’t have a bike I’d have to walk it all the way out there and back. I wonder about people who don’t." From this, the authors conclude that "transportation can be challenging, particularly if the foodbank is situated in a remote location." To offer greater insight into the role of transportation and location in foodbank accessibility, this research examines how geographic access to foodbanks and food services changed in Hamilton before and during the COVID-19 pandemic.
+
+Methods and Materials
+===================
+
+## Methods
+
+For the research in this paper we adopt the balanced floating catchment area approach of Paez et al. [-@paez2019demand]. This method for estimating accessibility is a form of the common two-stage floating catchment area method [@radke2000spatial; @luo2003measures]. Floating catchment areas are used to estimate accessibility when there are potential congestion effects, and operate by calculating first the _demand_ for spatially distributed services. The demand (e.g., the number of people who require a service) is used to calculate a level of service. In a second step, the level of service is allocated back to the population. Demand and level of service are allocated using some form of distance-decay to embody the geographical principle that, given a choice, people prefer to travel less than more when reaching destinations.
+
+More formally, the first step of this method is as follows:
+$$
+L_j = \frac{S_j}{\sum_{i=1}^nP_iw_{ij}}
+$$
+
+\noindent where $S_j$ is the level of supply at location $j$, in simplest terms whether a service point is present (i.e., $S_j=1$) or not (i.e., $S_j=0$); $P_i$ is the population at location $i$ that demands the service; and $w_{ij}$ is a weight, typically a function of the distance between locations $i$ and $j$. $L_j$ is the level of service at location $j$ and it is the inverse of the number of people that need to be serviced.
+
+The second step in this process is then summing the level of service that each population unit can reach, according to the distance-decay weight:
+$$
+A_i = \sum_{j=1}^JL_jw_{ji}
+$$
+
+\noindent where $A_i$ is the accessibility to the service, which is in the same units as the level of service: as the inverse of the population being serviced. When the population being serviced is low accessibility is high (i.e., there is little competition for the service), and viceversa. 
+
+Floating catchment area methods are prone to overestimation of the population and the level of service due to multiple-counting. The population at $P_i$ is allocated to _every_ service point $j$ for which $w_{ij}>0$. Similarly, the level of service at $L_j$ is allocated to _every_ population point for which $w_{ji}>0$. This inflation effect has been known for several years, and several modifications have been proposed to mitigate it [e.g., @wan2012three; @delamater2013spatial]. A definitive solution to this issue was presented by Paez et al. [-@paez2019demand]. In order to avoid the multiple-counting in the summations, the population and the level of service need to be allocated _proportionally_. This is achieved by standardizing the weights as follows:
+$$
+w_{ij}^\text{st} = \frac{w_{ij}}{\sum_{i=1}^nw_{ij}}
+$$
+\noindent and:
+$$
+w_{ji}^\text{st} = \frac{w_{ji}}{\sum_{j=1}^Jw_{ji}}
+$$
+
+The standardized weights satisfy the following conditions:
+$$
+\sum_{i=1}^nw_{ij}^\text{st}=1
+$$
+
+\noindent and:
+$$
+\sum_{j=1}^Jw_{ji}^\text{st}=1
+$$
+
+As a result, the total population (and consequently, the level of service) are preserved system-wide:
+$$
+\sum_{i=1}^nP_iw_{ij}^\text{st}=P_i
+$$
+
+\noindent and also:
+$$
+\sum_{j=1}^JL_jw_{ji}^\text{st}=L_j
+$$
+
+## Data
+
+Data have been prepared for sharing as a data package^[add repository]. 
+
+### Statistics Canada
+
+Population and income statistics at the level of Dissemination Areas (DAs) were retrieved using the package `cancensus` [@vonBergmann2021cancensus]. Dissemination Areas are the smallest publicly available census geography in Canada. We use data from the 2016 Population Census.
+
+### Origins: Residential parcels
+
+We converted all recorded residential parcels in the City of Hamilton to points on the road network. Each point includes information about the number of residential units in the parcel. Each residential unit is "populated" with the probability of being a "low income household", which we define as having a total household income of less than CAD 40,000. This is approximately the mid-point of the low income cut-off (LICOs) for families in Canadian cities with populations greater than 500,000 in 2016, to match other Census data [@statisticscanada2020licos].
+
+### Destinations: Foodbanks
+
+The locations of foodbanks were obtained from public records and geocoded. Three urban sites not in the program were also identified and geocoded for comparison purposes.
+
+### Routing and travel time tables
+
+Travel time tables for three modes (car, transit, walking) were computed using the parcels as the origins and the locations of the foodbanks as the destinations. For routing, the package `r5r` [@pereira2021r5r] was used, with a network extract for the City of Hamilton from OpenStreetMaps and the General Transit Feed Specification from Hamilton Street Railway, the local transit operator. For routing purposes we used maximum values of 180 min and 10,000 m walking distance: any destination that exceeded these thresholds was ignored. The departure time used for routing was **TIME**.
+
+### Transportation Tomorrow Survey
+
+We used the Data Retrieval System of the Transportation Tomorrow Survey (TTS)\footnote{\url{http://dmg.utoronto.ca/}} to download cross-tabulations of: 1) primary mode of travel per trip by income by place of residence; and 2) age by income by place of residence. These data are from the 2016 Survey (the most recent available), and data are geocoded at the level of Traffic Analysis Zones (TAZ) using the most recent zoning system from 2006. Each parcel point is populated with the proportion of trips by three modes of travel: car (as driver or passenger), transit, and walk.
+
+### Expected Travel Times
+
+Once we obtained travel time tables with population (number of households) and proportion of trips by mode, we calculated the expected travel time $ett$ from each parcel $i$ to a foodbank $j$ as follows:
+$$
+ett_i = p^c_i\cdot tt^c_{ij} + p^t_i\cdot tt^t_{ij} + p^w_i\cdot tt^w_{ij}
+$$
+
+\noindent where $p^k_i$ is the proportion of trips by mode $k$ in the TAZ of parcel $i$, and $tt^k_{ij}$ is the travel time from parcel $i$ to the foodbank. In other words, the expected travel time is the weighted sum of travel times to the foodbank, with the weights given by the expected modal split in the TAZ.
+
+Results and Discussion
+===================
+
+Figure \ref{fig:foodbanks} shows the location of the foodbanks in the City of Hamilton and their status. Before the pandemic there were `r nrow(foodbank_locations)` of which `r nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))` closed during the pandemic. As seen in the figure, foodbanks tend to be predominantly located in the central parts of the city. This is not surprising: population density is high there, and it is also the part of the city where lower income households are more numerous in absolute and relative terms (see Figure \ref{fig:low-income-households}). Alas, this is also where most of the closures during the pandemic happened.
+
+```{r plot-location-foodbanks, echo=FALSE, fig.cap="\\label{fig:foodbanks}Location of foodbanks and operation status; the dotted box is an inset of the central part of the City of Hamilton"}
+## Analysis
+# Plot location of foodbanks
+
+# Create a bounding box for an inset
+inset_box <- st_bbox(c(xmin = -79.975,
+          xmax = -79.775, 
+          ymax = 43.2, 
+          ymin = 43.3), 
+        crs = st_crs(4326)) %>%
+  st_as_sfc()
+  
+fb <- ggplot() +
+  geom_sf(data = hamilton_cma,
+          fill = "lightgray") +
+  geom_sf(data = foodbank_locations,
+          aes(size = COVIDClose,
+              shape = COVIDClose)) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_shape_manual(name = "Closed during COVID-19",
+                     values = c("Yes" = 4, "No" = 1)) +
+  scale_size_manual(values = c("Yes" = 3, "No" = 2)) +
+  guides(size = FALSE) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = "none")
+
+fb_inset <- ggplot() +
+  geom_sf(data = hamilton_cma,
+          fill = "lightgray") +
+  geom_sf(data = foodbank_locations,
+          aes(size = COVIDClose,
+              shape = COVIDClose)) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_shape_manual(name = "Closed during COVID-19",
+                     values = c("Yes" = 4, "No" = 1)) +
+  scale_size_manual(values = c("Yes" = 3, "No" = 2)) +
+  xlim(-79.975, -79.775) +
+  ylim(43.2, 43.3) +
+  guides(size = FALSE) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = "bottom")
+
+fb / fb_inset
+```
+```{r plot-low-income-households, echo=FALSE, fig.cap="\\label{fig:low-income-households}Number and proportion of households with incomes less than CAD 40,000."}
+lih <- ggplot() +
+  geom_sf(data = data_da_2016,
+          aes(fill = income_less40k),
+          color = NA) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Number of households", 
+                       option = "A",
+                       direction = -1) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+
+p_lih <- ggplot() +
+  geom_sf(data = data_da_2016,
+          aes(fill = p_inc_less40k),
+          color = NA) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Proportion of households", 
+                       option = "A",
+                       direction = -1) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+
+lih / p_lih
+```
 ```{r accessibility-threshold-sensitivity, include=FALSE}
 ## Analysis
 # Testing different thresholds to check how accessibility changes. Here, the thresholds are varied from 2 min to 30 min in 2 min step increments
@@ -667,7 +751,7 @@ los <- los %>%
   st_as_sf()
 ```
 
-```{r plot-levels-of-service, echo=FALSE, fig.cap="\\label{fig:levels-of-service}Levels of service at each facility pre-COVID-19 (top panel) and during COVID-19 (middle panel). The bottom panel shows the change in level of service."}
+```{r plot-levels-of-service, echo=FALSE, fig.cap="\\label{fig:levels-of-service}Levels of service at each facility pre-COVID-19 (top panel) and during COVID-19 (bottom panel)."}
 ## Analysis
 # Plot levels of service before and during covid
 
@@ -680,10 +764,15 @@ los_pre <- ggplot() +
               size = los)) +
   geom_sf(data = foodbank_locations,
           aes(shape = COVIDClose)) +
-  scale_color_distiller(palette = "OrRd", 
-                        direction = 1) +
+  scale_color_viridis_c(name = "Level of service pre-COVID-19",
+                        option =  "A", 
+                        direction = -1) +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
-  theme_minimal()
+  guides(size = FALSE, shape = FALSE) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
+  
 
 # During covid
 los_covid <- ggplot() +
@@ -694,11 +783,19 @@ los_covid <- ggplot() +
               size = los)) +
   geom_sf(data = foodbank_locations,
           aes(shape = COVIDClose)) +
-  scale_color_distiller(palette = "OrRd", 
-                        direction = 1) +
+  scale_color_viridis_c(name = "Level of service during COVID-19",
+                        option =  "A", 
+                        direction = -1) +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
-  theme_minimal()
+  guides(size = FALSE, shape = FALSE) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
 
+los_pre / los_covid
+```
+
+```{r plot-levels-of-service-changes, echo=FALSE, fig.cap="\\label{fig:levels-of-service-changes}Changes in levels of service at each facility from pre-COVID-19 to during COVID-19."}
 # This figure shows the places where the level of service deteriorated most (excluding the places that closed, where it vanished).
 los_change <- los %>%
   st_drop_geometry() %>%
@@ -706,7 +803,7 @@ los_change <- los %>%
               values_from = los, 
               values_fill = 0) %>%
   filter(`During covid` > 0) %>%
-  mutate(los_d = `During covid` / `Pre-covid` - 1) %>%
+  mutate(los_d = `During covid` - `Pre-covid`) %>%
   left_join(foodbank_locations %>%
             transmute(OBJECTID = ID,
                       geometry),
@@ -718,12 +815,17 @@ los_change <- los %>%
               size = los_d)) +
   geom_sf(data = foodbank_locations,
           aes(shape = COVIDClose)) +
-  scale_color_distiller(palette = "OrRd", 
+  scale_color_viridis_c(name = "Change in level of service",
+                        option =  "A", 
                         direction = -1) +
+  scale_size(trans = 'reverse') +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
-  theme_minimal()
+  guides(size = FALSE, shape = FALSE) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
 
-los_pre / los_covid / los_change
+los_change
 ```
 
 ```{r aggregate-accessibility-by-taz, include=FALSE}  
@@ -744,28 +846,58 @@ accessibility_taz <- accessibility %>%
   st_as_sf()
 ```
 
-```{r plot-accessibility, echo=FALSE, fig.align = 'center', out.width = "90%", fig.cap="\\label{fig:accessibility}Accessibility by traffic analysis zone pre-COVID-19 (top panel) and during COVID-19 (middle panel). The bottom panel shows the change in accessibility."}
+```{r plot-accessibility, echo=FALSE, fig.align = 'center', out.width = "90%", fig.cap="\\label{fig:accessibility}Accessibility by traffic analysis zone pre-COVID-19 (top panel) and during COVID-19 (bottom panel)."}
 ## Analysis
 # Plot accessibility before and during covid:
 acc_pre <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  #geom_sf(data = hamilton_cma) +
   geom_sf(data = accessibility_taz %>%
             filter(timing == "Pre-covid"),
           aes(fill = accessibility)) +
-  scale_fill_distiller(palette = "OrRd", 
-                        direction = 1) +
-  theme_minimal()
+  scale_fill_viridis_c(name = "Accessibility pre-COVID-19",
+                        option =  "A", 
+                        direction = -1,
+                       breaks = c(0.001,
+                                  0.0008,
+                                  0.0006,
+                                  0.0004,
+                                  0.0002),
+                       labels = c("0.0010",
+                                  "0.0008",
+                                  "0.0006",
+                                  "0.0004",
+                                  "0.0002")) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
 
 acc_covid <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  #geom_sf(data = hamilton_cma) +
   geom_sf(data = accessibility_taz %>%
             filter(timing == "During covid"),
           aes(fill = accessibility)) +
-  scale_fill_distiller(palette = "OrRd", 
-                        direction = 1) +
-  theme_minimal()
+  scale_fill_viridis_c(name = "Accessibility during COVID-19",
+                        option =  "A", 
+                        direction = -1,
+                       breaks = c(0.0005,
+                                  0.0004,
+                                  0.0003,
+                                  0.0002,
+                                  0.0001),
+                       labels = c("0.0005",
+                                  "0.0004",
+                                  "0.0003",
+                                  "0.0002",
+                                  "0.0001")) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
 
+acc_pre / acc_covid
+```
 
+```{r plot-accessibility-changes, echo=FALSE, fig.align = 'center', fig.cap="\\label{fig:accessibility-changes}Changes in accessibility from pre-COVID-19 to during COVID-19."}
+## Analysis
 # Calculate accessibility change by TAZ:
 accessibilty_taz_change <- accessibility_taz %>%
   st_drop_geometry() %>%
@@ -783,18 +915,30 @@ accessibilty_taz_change <- accessibility_taz %>%
 
 # Plot
 acc_change <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  #geom_sf(data = hamilton_cma) +
   geom_sf(data = accessibilty_taz_change,
           aes(fill = acc_d),
           color = NA) +
   geom_sf(data = population_age_income,
           fill = NA) +
-  scale_fill_fermenter(palette = "OrRd", 
-                       direction = -1) +
-  theme_minimal()
+  scale_fill_viridis_c(name = "Change in accessibility",
+                        option =  "A", 
+                        direction = 1,
+                       breaks = c(-0.0005,
+                                  -0.0004,
+                                  -0.0003,
+                                  -0.0002,
+                                  -0.0001),
+                       labels = c("-0.0005",
+                                  "-0.0004",
+                                  "-0.0003",
+                                  "-0.0002",
+                                  "-0.0001")) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
 
-
-acc_pre / acc_covid / acc_change
+acc_change
 ```
 
 Conclusions

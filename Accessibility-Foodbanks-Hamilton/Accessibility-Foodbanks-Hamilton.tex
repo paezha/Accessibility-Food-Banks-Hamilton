@@ -83,6 +83,20 @@
 
 % Pandoc header
 \usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 
 
 
@@ -130,57 +144,58 @@ Supervision
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Food insecurity, defined as an ``inadequate or uncertain access to a
+Food insecurity is defined as an ``inadequate or uncertain access to a
 sufficient quantity and/or adequate quality of food'' due to a
-household's financial limitations (Enns et al., 2020), has been
-associated with reductions in nutritional outcomes (Bhattacharya et al.,
-2004; Kirkpatrick and Tarasuk, 2008; Olson, 1999) and physical and
-mental health in children and adults (Elgar et al., 2021; Jones, 2017;
-Ramsey et al., 2011; Seligman et al., 2010; Stuff et al., 2004). Over at
-least the past four decades food banks have become an essential line of
-defense against food insecurity in Canadian communities (Black and Seto,
-2020; Holmes et al., 2018; Riches, 2002; Tarasuk et al., 2020). In this
-respect, Canada is not unlike numerous other wealthy countries where a
-systematic dismantling of the welfare state took place in the
-intervening period (Tarasuk et al., 2014).
+household's financial limitations (Enns et al., 2020). This is a
+condition that has been associated with reductions in nutritional
+outcomes (Bhattacharya et al., 2004; Kirkpatrick and Tarasuk, 2008;
+Olson, 1999) and physical and mental health in children and adults
+(Elgar et al., 2021; Jones, 2017; Ramsey et al., 2011; Seligman et al.,
+2010; Stuff et al., 2004). Over at least the past four decades foodbanks
+have become an essential line of defense against food insecurity in
+Canadian communities (Black and Seto, 2020; Holmes et al., 2018; Riches,
+2002; Tarasuk et al., 2020). In this respect, Canada is not unlike
+numerous other wealthy countries where a systematic dismantling of the
+welfare state took place in the intervening period (Tarasuk et al.,
+2014).
 
 But the emergence of COVID-19, the worst public health crisis since the
 1918 flu pandemic, has revealed important social and economic fault
 lines, and pre-existing patterns of inequality appear to have been
-exacerbated. Along several other dimensions of stress {[}e.g.,
-accessibility to health care facilities; Pereira et al. (2021a){]}, this
-seems to be the case for food insecurity as well (Laborde et al., 2020).
-In the US, for example, it has been estimated that there was an increase
-of more than 30\% in household food insecurity, and more than one third
-of households were discovered to be newly food insecure - meaning they
-did not experience food insecurity before the pandemic (Niles et al.,
-2020). In Canada, Men and Tarasuk (2021) report that about 25\% of
-individuals who experienced job insecurity (a relatively common
-occurrence during the pandemic), also experienced food insecurity.
-Similarly, according to Statistics Canada (2020a), in the early stages
-of the pandemic almost 15\% of individuals reported living in a
-household that faced food insecurity; the risk of food insecurity was
-substantially higher for households with children. The difference
+exacerbated. Along several other dimensions of stress (such as
+accessibility to health care facilities, see Pereira et al., 2021a),
+this seems to be the case for food insecurity as well (Laborde et al.,
+2020). In the US, for example, it has been estimated that there was an
+increase of more than 30\% in household food insecurity, and more than
+one third of households were discovered to be newly food insecure -
+meaning they did not experience food insecurity before the pandemic
+(Niles et al., 2020). In Canada, Men and Tarasuk (2021) report that
+about 25\% of individuals who experienced job insecurity (a relatively
+common occurrence during the pandemic), also experienced food
+insecurity. Similarly, according to Statistics Canada (2020a), in the
+early stages of the pandemic almost 15\% of individuals reported living
+in a household that faced food insecurity; the risk of food insecurity
+was substantially higher for households with children. The difference
 between households with and without children was significant, and 11.7\%
 of households with children indicated that ``food didn't last and
 {[}there was{]} no money to get more'' sometimes or often, compared to
-7.3\% of households without children); likewise, 13\% of households with
+7.3\% of households without children; likewise, 13\% of households with
 children indicated that they ``{[}c{]}ouldn't afford balanced meals''
 sometimes or often, compared to 8.8\% of households without children.
 
 The impacts of food insecurity during the pandemic are alarming, since
 diet-related diseases, such as obesity, heart-disease, and diabetes,
 were already critical public health concerns in Canada prior to COVID-19
-(Boucher et al., 2017). While food banks are not necessarily a stable
+(Boucher et al., 2017). While foodbanks are not necessarily a stable
 solution to food insecurity and in fact may encourage a retrenchment of
 neoliberal policy (Wakefield et al., 2013), at least they can be argued
 to provide a resource of last instance to households in precarious
 situations (Bazerghi et al., 2016). As recently as 2019, the Hamilton
 Hunger Report\footnote{https://www.hamiltonfoodshare.org/wp-content/uploads/Hamilton-Food-Share-Hunger-Report-2019.pdf}
-noted that food banks in Hamilton, Ontario, recorded the highest number
-of visitors in the past 29 years; the number of children visiting food
-banks (minors up to 18 years old) was 9,125 in March 2019, up from 8,278
-the year before.
+noted that foodbanks in Hamilton, Ontario, recorded the highest number
+of visitors in the past 29 years; the number of children visiting
+foodbanks (minors up to 18 years old) was 9,125 in March 2019, up from
+8,278 the year before.
 
 It is known that the urban food environment, within which people make
 their daily food choices, is essential in influencing eating behaviours
@@ -189,12 +204,12 @@ geographic accessibility and socio-demographic variations (Paez et al.,
 2010; Vanderlee and L'Abbé, 2017; Widener, 2018). However, while there
 is a wealth of literature that has examined the topic of geographic
 accessibility to healthy food through the ``food desert'' concept, there
-has been little research into accessibility to food banks. Although
-previous work has explored differences in \emph{accessing} food banks,
-such as how some households utilize food banks over short periods of
-time while others regularly utilize food banks as longer-term resource
-(e.g., Enns et al., 2020), we are not aware of any research that has
-focused on the geographic component of accessibility.
+has been little research into accessibility to foodbanks. Although
+previous work has explored differences in \emph{accessing} foodbanks,
+such as how some households utilize foodbanks over short periods of time
+while others regularly utilize foodbanks as longer-term resource (e.g.,
+Enns et al., 2020), we are not aware of any research that has focused on
+the geographic component of accessibility.
 
 The study of place-based geographic accessibility is concerned with
 capturing the potential to reach destinations of value using the
@@ -202,64 +217,64 @@ transportation network (Páez et al., 2012). Indeed, the Government of
 Canada's recent Food Policy has made ``access'' to healthy food a
 priority for Canadian communities\footnote{https://www.agr.gc.ca/eng/about-our-department/key-departmental-initiatives/food-policy/the-food-policy-for-canada/?id=1597863791042}
 and previous survey research has suggested that such accessibility plays
-a key role in user satisfaction with food bank service delivery in
+a key role in user satisfaction with foodbank service delivery in
 Vancouver (Holmes et al., 2018). However, as with research into the
-prevalence of food deserts, accessibility to food banks is likely not
-evenly distributed throughout a city with variations in access
-attributable to transportation network characteristics and the spatial
-distribution of food bank locations - as well as the population that
-likely needs them. Furthermore, policy responses to the COVID-19
-pandemic add to the distress of vulnerable households.
-Non-pharmaceutical interventions during the pandemic involving
-restrictions in mobility increased the friction of travel, in particular
-by transit on which low income populations are more likely to be reliant
-(e.g., DeWeese et al., 2020). At the same time, the pandemic has created
-additional stress for the operators of foodbanks through disruptions in
-the supply chain (e.g., McKay et al., 2021) as well as concerns
-surrounding the delivery of service in safe conditions and possible
-cancellation of food service programs.
+prevalence of food deserts, accessibility to foodbanks is unlikely to be
+evenly distributed throughout a city due to variations in the
+characteristics of the transportation network characteristics, and the
+spatial distribution of foodbank locations and the population they
+serve. Furthermore, policy responses to the COVID-19 pandemic may well
+add to the distress of vulnerable households. Non-pharmaceutical
+interventions during the pandemic involving restrictions in mobility
+have increased the friction of travel, in particular by transit on which
+low income populations are more likely to be reliant (e.g., DeWeese et
+al., 2020). At the same time, the pandemic has created additional stress
+for the operators of foodbanks through disruptions in the supply chain
+(e.g., McKay et al., 2021) as well as concerns surrounding the delivery
+of service in safe conditions and possible cancellation of food service
+programs.
 
-For this study, we aim to look at how the landscape of food banks and
+For this study, we aim to look at how the landscape of foodbanks and
 related services (e.g.~low-cost or free meal service providers)
-available in Hamilton, Ontario, has changed before and during the
-pandemic. Have the number of open food bank services diminished? If so,
-what was the accessibility to foodbanks before and during the pandemic,
-from the perspective of low income households? And finally, who are most
-likely to have been impacted by changes to the accessibility landscape?
-This paper will first look at the distribution of food banks and related
-services before and during the pandemic. Then, we use the balanced
-floating catchment area approach of Paez et al. (Paez et al., 2019) to
-investigate the accessibility situation. We use a fully disaggregated
-approach based on parcel-level data. Socio-economic and demographic data
-are drawn from the latest Census of Canada (2016), whereas travel
-information is from the most recent regional travel survey from 2016.
-This paper follows reproducible research recommendations (see Brunsdon
-and Comber, 2020), and the research was conducted using open source
-tools for transportation analysis (Lovelace, 2021). The code and data
-necessary to reproduce the analysis are available in a public
-repository\footnote{add repository}.
+available in Hamilton, Ontario, changed during the pandemic. Have the
+number of open foodbank services diminished? If so, what were the levels
+of accessibility to foodbanks before the pandemic from the perspective
+of low income households, and how did they change during the pandemic?
+And finally, who are most likely to have been impacted by changes to the
+accessibility landscape? This paper will first look at the distribution
+of foodbanks and related services before and during the pandemic. Then,
+we use the balanced floating catchment area approach of Paez et al.
+(2019) to investigate the accessibility situation. We use a fully
+disaggregated approach based on parcel-level data. Socio-economic and
+demographic data are drawn from the latest Census of Canada (2016),
+whereas travel information is from the most recent regional travel
+survey from 2016. This paper follows reproducible research
+recommendations (see Brunsdon and Comber, 2020), and the research was
+conducted using open source tools for transportation analysis (Lovelace,
+2021). The code and data necessary to reproduce the analysis are
+available in a public repository\footnote{add repository}.
 
-\hypertarget{food-insecurity-and-food-bank-use-in-canada}{%
-\section{Food Insecurity and Food Bank Use in
-Canada}\label{food-insecurity-and-food-bank-use-in-canada}}
+\hypertarget{food-insecurity-and-foodbank-use-in-canada}{%
+\section{Food Insecurity and foodbank Use in
+Canada}\label{food-insecurity-and-foodbank-use-in-canada}}
 
 Food insecurity is the inability to acquire and consume an adequate
-amount or good quality food, leading to inadequate nutrient intake (Enns
-et al., 2020; Kirkpatrick and Tarasuk, 2008; Tarasuk and Vogt, 2009).
-This nutrient deficiency is associated with major health concerns in
-Canadians, and particularly those who are at a socioeconomic
-disadvantage (Bazerghi et al., 2016). Data on food insecurity in Canada
-is collected in several ways. Quantitatively, official government
-surveys such as the Household Food Security Survey Module (HFSSM), the
-Canadian Community Health Surveys (CCHS), the International Study of
-Adults (LISA), and official classifications determined by Health Canada
-in relation to sociodemographic variables offer some insight into food
-insecurity (Gundersen et al., 2018; Kirkpatrick and Tarasuk, 2008;
-Tarasuk and Vogt, 2009). Nationally, it has been found that food
-insecurity impacts approximately 12.3\% of Canadian households (Tarasuk
-et al., 2014)
+amount or good quality food, leading to insufficient nutrient intake
+(Enns et al., 2020; Kirkpatrick and Tarasuk, 2008; Tarasuk and Vogt,
+2009). Nutrient deficiency, in turn, is associated with major population
+health concerns, and particularly among those who are at a
+socio-economic disadvantage (Bazerghi et al., 2016). Data on food
+insecurity in Canada is collected in several ways. Quantitatively,
+official government surveys such as the Household Food Security Survey
+Module (HFSSM), the Canadian Community Health Surveys (CCHS), the
+International Study of Adults (LISA), and official classifications
+determined by Health Canada in relation to socio-demographic variables
+offer some insight into food insecurity (Gundersen et al., 2018;
+Kirkpatrick and Tarasuk, 2008; Tarasuk and Vogt, 2009). Nationally, it
+has been found that food insecurity impacts approximately 12.3\% of
+Canadian households (Tarasuk et al., 2014)
 
-Food banks - sometimes also referred to as `food pantries' and `food
+Foodbanks - sometimes also referred to as `food pantries' and `food
 shelves' - originated as a community response to aid those with
 inadequate food by voluntarily offering them meals and ingredients
 (Loopstra and Tarasuk, 2012; Riches, 2002). The scope and objectives of
@@ -272,35 +287,35 @@ retrenchments and economic downfalls since the 1980s, over time they
 evolved into a community practice to secure emergency food supplies for
 those in need (Loopstra and Tarasuk, 2012; Wakefield et al., 2013).
 
-In Canada, the number of food banks has steadily increased in the past
-few decades (Wakefield et al., 2013). The largest database of food banks
-and their use comes from the non-profit association Food Banks Canada,
-which conducts an annual assessment through its affiliated members. Food
-Banks Canada's 2018 Hunger Count report\footnote{https://foodbankscanada.ca/getmedia/241fb659-05f5-44a2-9cef-56f5f51db523/HungerCount-2018\_FINAL\_EN.pdf.aspx?ext=.pdf}
-(the most recent available) listed 1,830 member food banks across the
-country found that Canadians visited food banks 1.1 million times in
-March of 2018. Of those accessing food banks, certain population
+In Canada, the number of foodbanks has steadily increased in the past
+few decades (Wakefield et al., 2013). The largest database of foodbanks
+and their use comes from the non-profit association foodbanks Canada,
+which conducts an annual assessment through its affiliated members.
+foodbanks Canada's 2018 Hunger Count report\footnote{https://foodbankscanada.ca/getmedia/241fb659-05f5-44a2-9cef-56f5f51db523/HungerCount-2018\_FINAL\_EN.pdf.aspx?ext=.pdf}
+(the most recent available) listed 1,830 member foodbanks across the
+country found that Canadians visited foodbanks 1.1 million times in
+March of 2018. Of those accessing foodbanks, certain population
 characteristics tend to be over-represented compared to national totals
-from the 2016 Canadian Census of Population. According to Food Banks
+from the 2016 Canadian Census of Population. According to foodbanks
 Canada's 2018 data, single-adult households represent 45\% of those
-utilizing food banks despite making up 28\% of Canada's population, 19\%
+utilizing foodbanks despite making up 28\% of Canada's population, 19\%
 are single-parent households (compared to 10\% nationally), and 35\% of
-those accessing food bank services are children aged 0-18 even though
+those accessing foodbank services are children aged 0-18 even though
 their share of Canada's national population is approximately 20\%. In
-addition, 59\% of households accessing food banks list social or
+addition, 59\% of households accessing foodbanks list social or
 disability assistance as their primary source of income. Moreover,
-children aged 0-18 are over-represented as food bank users, making up
-35\% of those accessing food bank services despite representing 20\% of
+children aged 0-18 are over-represented as foodbank users, making up
+35\% of those accessing foodbank services despite representing 20\% of
 the country's population. Likewise, using data from the 2011-2012 CCHS,
 Tarasuk et al. (2019) found higher odds of food insecurity amongst
 households relying on social assistance, those without a university
 degree or with children under the age of 18, and individuals that lived
 alone, renters, and those identifying as Aboriginal. While surveys
 revealed that only 20 to 30 percent of those experiencing food
-insecurity were found to frequent food banks in Canada (Tarasuk et al.,
+insecurity were found to frequent foodbanks in Canada (Tarasuk et al.,
 2014), research from Ottawa (Enns et al., 2020) and Vancouver (Black and
 Seto, 2020) suggests that long-term users tend to be older, have health
-or mobility challenges, live in large households, and less likely to
+or mobility challenges, live in large households, and are less likely to
 have employment income.
 
 Currently with the COVID-19 pandemic, disrupted economies, rising
@@ -317,42 +332,41 @@ associated with food insecurity, increases in food insecurity rates due
 to the pandemic, signal a change in the food environment with potential
 damages to population health during the course of the pandemic and
 beyond (Niles et al., 2020). Recent data\footnote{https://www.foodbankscanada.ca/FoodBanks/MediaLibrary/COVID-Report\_2020/A-Snapshot-of-Food-Banks-in-Canada-and-the-COVID-19-Crisis\_Exec-Sum\_EN.pdf}
-from Food Banks Canada showed that 52\% of member food banks reported an
+from Foodbanks Canada showed that 52\% of member foodbanks reported an
 increase in usage in March of 2020 when initial lockdown restrictions
 were put in place across much of Canada. The pandemic also created
-significant staffiing issues with 42\% of food banks reporting a
-reduction in volunteers. However, 53\% of food banks reported a decrease
-in use into the summer of 2020 which food banks attributed to emergency
+significant staffing issues with 42\% of foodbanks reporting a reduction
+in volunteers. However, 53\% of foodbanks reported a decrease in use
+into the summer of 2020 which foodbanks attributed to emergency
 financial support programs from the federal government were.
 Nevertheless, some of these benefit programs were temporary, suggesting
-many households may again turn to food bank services to meet their
-needs.
+many households may again turn to foodbank services to meet their needs.
 
 In terms of geography, previous research conducted at the provincial
 scale using data from the 2011-2012 CCHS found that the prevalence of
 food insecurity ranged across the country from 11.8\% of households in
 Ontario to 41\% of households in Nunavut (Tarasuk et al., 2019).
 However, although previous research has examined the characteristics of
-individuals and households accessing food banks, the locational or
-transportation accessibility aspect of food bank access is not well
+individuals and households accessing foodbanks, the locational or
+transportation accessibility aspect of foodbank access is not well
 understood. A wealth of literature examining the food desert concept
-suggests that, in addition to socioeconomic and demographic factors,
+suggests that, in addition to socio-economic and demographic factors,
 location and transportation networks play a key role in a household's
 accessibility to healthy foods (Paez et al., 2010; Vanderlee and L'Abbé,
-2017; Widener, 2018). For food banks specifically, previous qualitative
+2017; Widener, 2018). For foodbanks specifically, previous qualitative
 research in Ontario has noted difficulties associated with
-transportation for trips to the food bank (Smith-Carrier et al., 2017).
-For example, Smith et al. (2017) note that participants access food
-banks using a variety of modes of transportation with respondent stating
-``I wish it {[}the food bank{]} was a little more centrally located.
-Because if I didn't have a bike I'd have to walk it all the way out
-there and back. I wonder about people who don't.'' From this, the
+transportation for trips to the foodbank (Smith-Carrier et al., 2017).
+For example, Smith et al. (2017) found that participants access
+foodbanks using a variety of modes of transportation with a respondent
+stating ``I wish it {[}the foodbank{]} was a little more centrally
+located. Because if I didn't have a bike I'd have to walk it all the way
+out there and back. I wonder about people who don't.'' From this, the
 authors conclude that ``transportation can be challenging, particularly
-if the food bank is situated in a remote location.'' To offer greater
-insight into the role of transportation and location in food bank
-accessibility, this research examines how geographic access to food
-banks and food services changed in Hamilton before and during the
-COVID-19 pandemic.
+if the foodbank is situated in a remote location.'' To offer greater
+insight into the role of transportation and location in foodbank
+accessibility, this research examines how geographic access to foodbanks
+and food services changed in Hamilton before and during the COVID-19
+pandemic.
 
 \hypertarget{methods-and-materials}{%
 \section{Methods and Materials}\label{methods-and-materials}}
@@ -366,7 +380,7 @@ accessibility is a form of the common two-stage floating catchment area
 method (Luo and Wang, 2003; Radke and Mu, 2000). Floating catchment
 areas are used to estimate accessibility when there are potential
 congestion effects, and operate by calculating first the \emph{demand}
-for spatially distributed services. The demand (usually the number of
+for spatially distributed services. The demand (e.g., the number of
 people who require a service) is used to calculate a level of service.
 In a second step, the level of service is allocated back to the
 population. Demand and level of service are allocated using some form of
@@ -401,7 +415,7 @@ viceversa.
 Floating catchment area methods are prone to overestimation of the
 population and the level of service due to multiple-counting. The
 population at \(P_i\) is allocated to \emph{every} service point \(j\)
-for which \(w_{ij}>0\). Similarly, the level of service at \(LOS_j\) is
+for which \(w_{ij}>0\). Similarly, the level of service at \(L_j\) is
 allocated to \emph{every} population point for which \(w_{ji}>0\). This
 inflation effect has been known for several years, and several
 modifications have been proposed to mitigate it (Delamater, 2013; e.g.,
@@ -513,10 +527,25 @@ given by the expected modal split in the TAZ.
 \hypertarget{results-and-discussion}{%
 \section{Results and Discussion}\label{results-and-discussion}}
 
-Words go here.
+Figure \ref{fig:foodbanks} shows the location of the foodbanks in the
+City of Hamilton and their status. Before the pandemic there were 58 of
+which 14 closed during the pandemic. As seen in the figure, foodbanks
+tend to be predominantly located in the central parts of the city. This
+is not surprising: population density is high there, and it is also the
+part of the city where lower income households are more numerous in
+absolute and relative terms (see Figure
+\ref{fig:low-income-households}). Alas, this is also where most of the
+closures during the pandemic happened.
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-results-sensitivity-analysis-1} \caption{\label{fig:sensitivity-analysis}Accessibility as a function of threshold}\label{fig:plot-results-sensitivity-analysis}
+\includegraphics[width=1\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-location-foodbanks-1} \caption{\label{fig:foodbanks}Location of foodbanks and operation status; the dotted box is an inset of the central part of the City of Hamilton}\label{fig:plot-location-foodbanks}
+\end{figure}
+\begin{figure}
+\includegraphics[width=1\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-low-income-households-1} \caption{\label{fig:low-income-households}Number and proportion of households with incomes less than CAD 40,000.}\label{fig:plot-low-income-households}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-results-sensitivity-analysis-1} \caption{\label{fig:sensitivity-analysis}Accessibility as a function of threshold}\label{fig:plot-results-sensitivity-analysis}
 \end{figure}
 
 \begin{table}
@@ -541,7 +570,11 @@ Children (age $\le$ 18) & Adults (19-64) & Seniors (age $\ge$ 65) & Before COVID
 \end{table}
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-service-1} \caption{\label{fig:levels-of-service}Levels of service at each facility pre-COVID-19 (top panel) and during COVID-19 (middle panel). The bottom panel shows the change in level of service.}\label{fig:plot-levels-of-service}
+\includegraphics[width=1\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-service-1} \caption{\label{fig:levels-of-service}Levels of service at each facility pre-COVID-19 (top panel) and during COVID-19 (bottom panel).}\label{fig:plot-levels-of-service}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-service-changes-1} \caption{\label{fig:levels-of-service-changes}Changes in levels of service at each facility from pre-COVID-19 to during COVID-19.}\label{fig:plot-levels-of-service-changes}
 \end{figure}
 
 \begin{figure}
@@ -550,7 +583,16 @@ Children (age $\le$ 18) & Adults (19-64) & Seniors (age $\ge$ 65) & Before COVID
 
 }
 
-\caption{\label{fig:accessibility}Accessibility by traffic analysis zone pre-COVID-19 (top panel) and during COVID-19 (middle panel). The bottom panel shows the change in accessibility.}\label{fig:plot-accessibility}
+\caption{\label{fig:accessibility}Accessibility by traffic analysis zone pre-COVID-19 (top panel) and during COVID-19 (bottom panel).}\label{fig:plot-accessibility}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibility-changes-1} 
+
+}
+
+\caption{\label{fig:accessibility-changes}Changes in accessibility from pre-COVID-19 to during COVID-19.}\label{fig:plot-accessibility-changes}
 \end{figure}
 
 \hypertarget{conclusions}{%
