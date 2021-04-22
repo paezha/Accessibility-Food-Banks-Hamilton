@@ -42,7 +42,34 @@ output: rticles::elsevier_article
 
 # CRediT author statement
 
-**Author 1:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization, Supervision; **Author 2:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization; **Author 3:** Conceptualization, Investigation, Data Curation, Writing - Original Draft; **Author 4:** Resources - Writing: Review & Editing - Supervision  
+**Author 1:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization, Supervision; **Author 2:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization; **Author 3:** Conceptualization, Investigation, Data Curation, Writing - Original Draft; **Author 4:** Resources - Writing: Review & Editing - Supervision 
+
+```{r install-data-package, include = FALSE}
+# Run only once if needed to install data package `sobiEquity`
+if (!require("foodbanksHamilton", character.only = TRUE)) {
+      devtools::install_github("https://github.com/paezha/Accessibility-Food-Banks-Hamilton", subdir = "foodbanksHamilton")
+  }
+```
+
+```{r load-packages, include=FALSE}
+library(foodbanksHamilton) # Data package
+library(patchwork)
+library(sf)
+library(tidyverse)
+#library(tmap)
+```
+
+```{r invoke-data, include=FALSE}
+data(data_da_2016)
+data(dwelling_network_points_2016)
+#data(hamilton_boundary)
+data(population_age_income)
+data(foodbank_locations)
+data(modes_less40k)
+data(ttm_car)
+data(ttm_transit)
+data(ttm_walk.RData)
+```
 
 \newpage
 
