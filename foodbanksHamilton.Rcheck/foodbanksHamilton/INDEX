@@ -1,0 +1,14 @@
+data_da_2016            Hamilton CMA Dissemination Areas with Selected
+                        Census Information.
+dwelling_network_points_2016
+                        Hamilton Residential Parcels.
+foodbank_locations      Location of foodbanks in Hamilton.
+hamilton_cma            Hamilton CMA.
+modes_less40k           Transportation for low income population by
+                        Traffic Analysis Zone.
+population_age_income   Population by age by income by Traffic Analysis
+                        Zone.
+ttm_car                 Travel Time Matrix Car
+ttm_transit             Travel Time Matrix Transit
+ttm_walk                Travel Time Matrix Walking
+vaccHamilton            foodbanksHamilton
