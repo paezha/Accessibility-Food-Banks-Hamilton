@@ -10,6 +10,7 @@ Load packages:
 library(patchwork)
 library(sf)
 library(tidyverse)
+library(tmap)
 #library(vaccHamilton)
 ```
 
@@ -511,9 +512,12 @@ for(i in 1:length(threshold_seq)){
   accessibility_test$accessibility[i] <- sum(results_test$accessibility$accessibility)
 }
 
-ggplot(accessibility_test, 
+acc_sensitivity <- ggplot(accessibility_test, 
        aes(x = threshold, y = accessibility)) +
-  geom_line()
+  geom_line() +
+  ylab("Accessibility")
+
+acc_sensitivity
 ```
 
 30-min accessibility pre-covid:
@@ -578,17 +582,11 @@ accessibility <- rbind(data.frame(results_30min_pre$accessibility,
 ```
 
 Join geometry:
-```{r, add-geometry-to-results, include=FALSE}
+```{r, add-geometry-to-level-of-service, include=FALSE}
 los <- los %>%
   left_join(foodbank_locations %>%
               dplyr::select(ID),
             by = c("OBJECTID" = "ID")) %>%
-  st_as_sf()
-
-accessibility <- accessibility %>%
-  left_join(dwelling_network_points_2016 %>%
-              dplyr::select(ID),
-            by = c("UID" = "ID")) %>%
   st_as_sf()
 ```
 
@@ -649,72 +647,204 @@ los %>%
 
 Here we can see the places where the level of service deteriorated most (excluding the places that closed, where it vanished).
 
+Join zonal identifiers to accessibility results:
+```{r}
+accessibility <- accessibility %>%
+  left_join(dwelling_network_points_2016 %>%
+            st_drop_geometry() %>%
+              dplyr::select(ID,
+                            DAUID,
+                            TAZUID,
+                            children,
+                            adults,
+                            seniors),
+            by = c("UID" = "ID")) %>%
+  left_join(population_age_income %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID),
+            by = "TAZUID") 
+```  
+
+Accessibility by TAZ:
+```{r}  
+accessibility_taz <- accessibility %>%
+  group_by(TAZUID, 
+           timing) %>%
+  summarize(accessibility = sum(accessibility),
+            timing = first(timing),
+            .groups = "drop") %>%
+  left_join(population_age_income %>%
+              transmute(TAZUID,
+                        children,
+                        adults,
+                        seniors),
+            by = "TAZUID") %>%
+  st_as_sf()
+```
+
 Plot accessibility before and during covid:
 ```{r}
 acc_pre <- ggplot() +
   geom_sf(data = hamilton_boundary) +
-  geom_sf(data = accessibility %>%
+  geom_sf(data = accessibility_taz %>%
             filter(timing == "Pre-covid"),
-          aes(color = accessibility)) +
-  scale_color_distiller(palette = "OrRd", 
+          aes(fill = accessibility)) +
+  scale_fill_distiller(palette = "OrRd", 
                         direction = 1)
 
 acc_covid <- ggplot() +
   geom_sf(data = hamilton_boundary) +
-  geom_sf(data = accessibility %>%
+  geom_sf(data = accessibility_taz %>%
             filter(timing == "During covid"),
-          aes(color = accessibility)) +
-  scale_color_distiller(palette = "OrRd", 
+          aes(fill = accessibility)) +
+  scale_fill_distiller(palette = "OrRd", 
                         direction = 1)
 
 acc_pre / acc_covid
 ```
 
-Plot the change in accessibility by DA:
+Calculate accessibility change by TAZ:
 ```{r}
-accessibility %>%
+accessibilty_taz_change <- accessibility_taz %>%
   st_drop_geometry() %>%
-  # Copy the DA identifier to the accessibility table
-  left_join(dwelling_network_points_2016 %>%
-              st_drop_geometry() %>%
-              transmute(UID = ID, DAUID),
-            by = "UID") %>%
-  # Group by DA and time
-  group_by(DAUID, timing) %>%
-  # Calculate the accessibility by DA before and during covid
-  summarize(accessibility = sum(accessibility),
-            timing = first(timing),
-            .groups = "drop") %>%
-  # Pivot wider to calculate the differences in accessibility from pre-covid to covid
   pivot_wider(names_from = timing, 
               values_from = accessibility) %>%
   # Calculate changes in accessibility
-  mutate(acc_d = `During covid` / `Pre-covid` - 1) %>%
-  # Join DA geometry
-  left_join(data_da_2016 %>%
-            transmute(DAUID = GeoUID,
+  #mutate(acc_d = `During covid` / `Pre-covid` - 1) %>% # Percentage change is rather flat and not as easy to interpret as the difference
+  mutate(acc_d = `During covid` - `Pre-covid`) %>%
+  # Join TAZ geometry
+  left_join(population_age_income %>%
+            transmute(TAZUID,
                       geometry),
-          by = "DAUID") %>%
+          by = "TAZUID") %>%
   # Convert to simple features
-  st_as_sf() %>%
+  st_as_sf()
+```
+
+Plot the change in accessibility by TAZ:
+```{r}
   # Plot
   ggplot() +
-  geom_sf(data = hamilton_boundary) +
-  geom_sf(aes(fill = acc_d),
+  geom_sf(data = accessibilty_taz_change,
+          aes(fill = acc_d),
           color = NA) +
-  scale_fill_distiller(palette = "OrRd", 
+  geom_sf(data = population_age_income,
+          fill = NA) +
+  scale_fill_fermenter(palette = "OrRd", 
                         direction = -1)
-  
 ```
 
 ## Further Breakdown by Population Characteristics
 
+Calculate accessibility change by parcel:
+```{r}
+accessibility_change <- accessibility %>%
+  select(UID, timing, accessibility) %>%
+  pivot_wider(names_from = timing, 
+              values_from = accessibility,
+              values_fill = 0) %>%
+  # Calculate changes in accessibility
+  #mutate(acc_d = `During covid` / `Pre-covid` - 1) %>% # Percentage change is rather flat and not as easy to interpret as the difference
+  mutate(acc_d = `During covid` - `Pre-covid`)
+```
+
+Join accessibility change to accessibility table:
+```{r}
+accessibility <- accessibility %>%
+  left_join(accessibility_change %>%
+              select(UID, acc_d),
+            by = "UID")
+```
+
+
+Quartiles of accessibility:
+```{r}
+# acc_quintiles_pre <- quantile(accessibility %>%
+#                                 filter(timing == "Pre-covid") %>%
+#                                 pull(accessibility),
+#                               c(0, 0.25, 0.5, 0.75, 1))
+# acc_quintiles_covid <- quantile(accessibility %>%
+#                                 filter(timing == "During covid") %>%
+#                                 pull(accessibility),
+#                               c(0, 0.25, 0.5, 0.75, 1))
+```
+
+Quartiles of accessibility change:
+```{r}
+acc_quintiles_change <- quantile(accessibilty_change$acc_d,
+                              c(0, 0.25, 0.5, 0.75, 1))
+```
+
+Add labels of accessibility levels to table:
+```{r}
+# accessibility <- accessibility %>%
+#   mutate(accessibility_level = case_when(timing == "Pre-covid" & accessibility <= acc_quintiles_pre[2] ~ "Bottom 25%",
+#                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[2] & accessibility <= acc_quintiles_pre[3] ~ "Third 25%",
+#                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[3] & accessibility <= acc_quintiles_pre[4] ~ "Second 25%",
+#                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[4] ~ "Top 25%",
+#                                          timing == "During covid" & accessibility <= acc_quintiles_covid[2] ~ "Bottom 25%",
+#                                          timing == "During covid" & accessibility > acc_quintiles_covid[2] & accessibility <= acc_quintiles_covid[3] ~ "Third 25%",
+#                                          timing == "During covid" & accessibility > acc_quintiles_covid[3] & accessibility <= acc_quintiles_covid[4] ~ "Second 25%",
+#                                          timing == "During covid" & accessibility > acc_quintiles_covid[4] ~ "Top 25%"),
+#            accessibility_level = factor(accessibility_level,
+#                                         levels = c("Top 25%", "Second 25%", "Third 25%", "Bottom 25%"),
+#                                         ordered = TRUE))
+```
+
+Add labels of accessibility loss to table:
+```{r}
+accessibility <- accessibility %>%
+  mutate(accessibility_level = case_when(acc_d <= acc_quintiles_change[2] ~ "Bottom 25%",
+                                         acc_d > acc_quintiles_change[2] & acc_d <= acc_quintiles_change[3] ~ "Third 25%",
+                                         acc_d > acc_quintiles_change[3] & acc_d <= acc_quintiles_change[4] ~ "Second 25%",
+                                         acc_d > acc_quintiles_change[4] ~ "Top 25%",
+                                         accessibility <= acc_quintiles_covid[2] ~ "Bottom 25%"),
+           accessibility_level = factor(accessibility_level,
+                                        levels = c("Top 25%", "Second 25%", "Third 25%", "Bottom 25%"),
+                                        ordered = TRUE))
+```
+
+Calculate accessibility by age group and accessibility level:
+```{r}
+accessibility_by_age <- accessibility %>%
+  group_by(timing, 
+           accessibility_level) %>%
+  summarize(children = sum(children),
+            adults = sum(adults),
+            seniors = sum(seniors),
+            accessibility = sum(accessibility),
+            .groups = "drop")
+
+accessibility_by_age
+```
+
+The accessibility level is the magnitude of the accessibility loss: the top 25% faced the smallest losses in accessibility, and the bottom 25% faced the greatest losses in accessibility. 
+
+```{r}
+cbind(accessibility_by_age %>% 
+        filter(timing == "Pre-covid") %>% 
+        select(children:accessibility) %>% 
+        rename(accessibility_pre = accessibility),
+      accessibility_by_age %>% 
+        filter(timing == "During covid") %>% 
+        transmute(accessibility_covid = accessibility)) %>%
+  mutate(change = accessibility_covid - accessibility_pre)
+```
+
+Sanity check:
+```{r}
+accessibility_by_age %>%
+  group_by(timing) %>%
+  summarize(children = sum(children),
+            adults = sum(adults),
+            seniors = sum(seniors),
+            accessibility = sum(accessibility))
+```
 
 
 ### Pre-COVID Scenario to Meal Services
 
-Get minimum travel times in the pre-covid scenario:
-
+Get weighted minimum travel times in the pre-covid scenario:
 ```{r minimum-travel-time-baseline, include=FALSE}
 # retrieve minimum travel time for pre-covid locations
 min_ttm_car_baseline <- ttm_car %>%
@@ -773,7 +903,6 @@ min_ttm_walk_baseline <- ttm_walk %>%
 ```
 
 Bind the tables and label by mode:
-
 ```{r weighted-travel-time-by-mode-baseline, include=FALSE}
 # Baseline analysis (pre-COVID)
 ## Bind the three tables and label them by mode:
@@ -782,6 +911,7 @@ min_ttm_mode_baseline <- rbind(data.frame(min_ttm_car_baseline, Mode = "Car"),
                                data.frame(min_ttm_walk_baseline, Mode = "Walking"))
 ```
 
+Calculate the weighted person hours of travel by age group:
 ```{r aggregate-weighted-travel-times-baseline, include=FALSE}
 # Baseline analysis (pre-COVID)
 ## Aggregate weighted travel times by mode:
@@ -792,6 +922,7 @@ min_ttm_mode_baseline <- min_ttm_mode_baseline %>%
             children = first(children),
             adults = first(adults),
             seniors = first(seniors),
+            # Weighted travel time is the sum of the travel times weighted by the proportion of trips by mode
             weighted_travel_time = sum(weighted_travel_time)) %>%
 
   # add geometry
@@ -805,6 +936,7 @@ min_ttm_mode_baseline <- min_ttm_mode_baseline %>%
          wph_seniors = seniors*weighted_travel_time/60)
 ```
 
+Calculate the weighted person hours of travel by TAZ by population group:
 ```{r summarize-results-by-taz-baseline, include=FALSE}
 # Baseline analysis (pre-COVID)
 ## Summarize by TAZ and join geometry:
@@ -822,6 +954,22 @@ min_ttm_baseline_taz <- min_ttm_mode_baseline %>%
   st_as_sf()
 ```
 
+Plot weighted travel time to nearest facility:
+```{r weighted-travel-time-map-baseline}
+# Baseline analysis (pre-COVID)
+## Map weighted travel time:
+ttm_map_baseline <- ggplot() +
+  geom_sf(data = min_ttm_baseline_taz,
+          aes(fill = weighted_travel_time),
+          color = NA) +
+  scale_fill_fermenter(name = "Expected travel time (min)",
+                       palette = "OrRd", 
+                       direction = 1)
+
+ttm_map_baseline
+```
+
+Plot the weighted person hours of travel for the population groups in low income households (travel times in minutes):
 ```{r}
 tm_shape(min_ttm_baseline_taz) +
   tm_fill("wph_children")
@@ -833,25 +981,11 @@ tm_shape(min_ttm_baseline_taz) +
   tm_fill("wph_seniors")
 ```
 
-```{r weighted-travel-time-map-baseline}
-# Baseline analysis (pre-COVID)
-## Map weighted travel time:
-ttm_map_baseline <- ggplot() +
-  geom_sf(data = min_ttm_baseline_taz,
-          aes(fill = weighted_travel_time),
-          color = NA) +
-  scale_fill_distiller(name = "Expected travel time (min)",
-                       palette = "OrRd", 
-                       direction = 1)
-
-ttm_map_baseline
-```
-
-
 ### Do it again for the during-COVID scenario:
 
+Calculate weighted travel time to the nearest facilty by mode:
 ```{r minimum-travel-time-covid, include=FALSE}
-# retrieve minimum travel time during covid to sites that didnt close
+# retrieve minimum travel time during covid to sites that didn't close
 min_ttm_car_covid <- ttm_car %>%
   dplyr::filter(COVIDClose == "No", TYPE != "Food Banks") %>%
   group_by(UID) %>%
@@ -905,7 +1039,6 @@ min_ttm_walk_covid <- ttm_walk %>%
 ```
 
 Bind the tables and label by mode:
-
 ```{r weighted-travel-time-by-mode-covid, include=FALSE}
 # Baseline analysis (pre-COVID)
 ## Bind the three tables and label them by mode:
@@ -914,6 +1047,7 @@ min_ttm_mode_covid <- rbind(data.frame(min_ttm_car_covid, Mode = "Car"),
                                data.frame(min_ttm_walk_covid, Mode = "Walking"))
 ```
 
+Calculate the weighted person hours of travel by age group:
 ```{r aggregate-weighted-travel-times-covid, include=FALSE}
 # Baseline analysis (pre-COVID)
 ## Aggregate weighted travel times by mode:
@@ -937,6 +1071,7 @@ min_ttm_mode_covid <- min_ttm_mode_covid %>%
          wph_seniors = seniors*weighted_travel_time/60)
 ```
 
+Aggregate the number of weighted person hours of travel by age for each TAZ:
 ```{r summarize-results-by-taz-covid, include=FALSE}
 # Baseline analysis (PILOT LOCATIONS ONLY)
 ## Summarize by TAZ and join geometry:
@@ -954,17 +1089,7 @@ min_ttm_covid_taz <- min_ttm_mode_covid %>%
   st_as_sf()
 ```
 
-```{r}
-tm_shape(min_ttm_covid_taz) +
-  tm_fill("wph_children")
-
-tm_shape(min_ttm_covid_taz) +
-  tm_fill("wph_adults")
-
-tm_shape(min_ttm_covid_taz) +
-  tm_fill("wph_seniors")
-```
-
+Map weighted travel time to nearest facility:
 ```{r weighted-travel-time-map-covid}
 # Baseline analysis (PILOT LOCATIONS ONLY)
 ## Map weighted travel time:
@@ -979,10 +1104,21 @@ ttm_map_covid <- ggplot() +
 ttm_map_covid
 ```
 
+
+```{r}
+tm_shape(min_ttm_covid_taz) +
+  tm_fill("wph_children")
+
+tm_shape(min_ttm_covid_taz) +
+  tm_fill("wph_adults")
+
+tm_shape(min_ttm_covid_taz) +
+  tm_fill("wph_seniors")
+```
+
 ### Map Differences
 
-Join the min travel time tables together
-
+Join the min travel time tables together:
 ```{r}
 min_ttm_d <- min_ttm_baseline_taz %>% 
   left_join(min_ttm_covid_taz %>%
