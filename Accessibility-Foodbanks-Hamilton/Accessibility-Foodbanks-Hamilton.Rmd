@@ -68,7 +68,7 @@ data(foodbank_locations)
 data(modes_less40k)
 data(ttm_car)
 data(ttm_transit)
-data(ttm_walk.RData)
+data(ttm_walk)
 ```
 
 \newpage
