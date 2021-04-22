@@ -82,6 +82,20 @@
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 % Pandoc header
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 
 
 
@@ -484,6 +498,44 @@ given by the expected modal split in the TAZ.
 \section{Results and Discussion}\label{results-and-discussion}}
 
 Words go here.
+
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-results-sensitivity-analysis-1} \caption{\label{fig:sensitivity-analysis}Accessibility as a function of threshold}\label{fig:plot-results-sensitivity-analysis}
+\end{figure}
+
+\begin{table}
+
+\caption{\label{tab:table-accessibility-by-age-group}\label{tab:accessibility-by-age}Accessibility by age group among members of low income households.}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{cccccc}
+\toprule
+\multicolumn{3}{c}{Population} & \multicolumn{3}{c}{Accessibility} \\
+\cmidrule(l{3pt}r{3pt}){1-3} \cmidrule(l{3pt}r{3pt}){4-6}
+Children (age $\le$ 18) & Adults (19-64) & Seniors (age $\ge$ 65) & Before COVID-19 & During COVID-19 & Difference\\
+\midrule
+\cellcolor{gray!6}{7,015} & \cellcolor{gray!6}{21,586} & \cellcolor{gray!6}{9,158} & \cellcolor{gray!6}{0.00734} & \cellcolor{gray!6}{0.00438} & \cellcolor{gray!6}{-0.00296}\\
+3,490 & 13,598 & 6,618 & 0.01386 & 0.00812 & -0.00575\\
+\cellcolor{gray!6}{966} & \cellcolor{gray!6}{5,180} & \cellcolor{gray!6}{4,310} & \cellcolor{gray!6}{0.01475} & \cellcolor{gray!6}{0.00849} & \cellcolor{gray!6}{-0.00625}\\
+2,384 & 7,725 & 5,595 & 0.01853 & 0.01079 & -0.00775\\
+\bottomrule
+\multicolumn{6}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{6}{l}{\rule{0pt}{1em}Population values have been rounded}\\
+\end{tabular}}
+\end{table}
+
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-service-1} \caption{\label{fig:levels-of-service}Levels of service at each facility pre-COVID-19 (top panel) and during COVID-19 (middle panel). The bottom panel shows the change in level of service.}\label{fig:plot-levels-of-service}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibility-1} 
+
+}
+
+\caption{\label{fig:accessibility}Accessibility by traffic analysis zone pre-COVID-19 (top panel) and during COVID-19 (middle panel). The bottom panel shows the change in accessibility.}\label{fig:plot-accessibility}
+\end{figure}
 
 \hypertarget{conclusions}{%
 \section{Conclusions}\label{conclusions}}
