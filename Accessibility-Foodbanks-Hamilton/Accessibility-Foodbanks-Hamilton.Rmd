@@ -162,23 +162,37 @@ $$
 
 ## Data
 
-Data have been prepared for sharing as a data package^[add repository]. 
+Data have been prepared for sharing as a data package^[add repository]. This data package consists of the following:
 
 ### Statistics Canada
 
-Population and income statistics at the level of Dissemination Areas (DAs) were retrieved using the package `cancensus` [@vonBergmann2021cancensus]. Dissemination Areas are the smallest publicly available census geography in Canada. We use data from the 2016 Population Census.
+Population and income statistics for 2016 were retrieved at the level of Dissemination Areas (DAs) using the package `cancensus` [@vonBergmann2021cancensus]. DAs are the smallest publicly available census geography in Canada. Income data corresponds to the count of households by different total income groupings.
 
 ### Origins: Residential parcels
 
-We converted all recorded residential parcels in the City of Hamilton to points on the road network. Each point includes information about the number of residential units in the parcel. Each residential unit is "populated" with the probability of being a "low income household", which we define as having a total household income of less than CAD 40,000. This is approximately the mid-point of the low income cut-off (LICOs) for families in Canadian cities with populations greater than 500,000 in 2016, to match other Census data [@statisticscanada2020licos].
+We converted all recorded residential land parcels in the City of Hamilton to points on the road network. Each point includes information about the number of residential units in the parcel. Next, we define low-income households as those having a total income of less than CAD\$40,000, which is approximately the mid-point of the low income cut-off (LICOs) for families in Canadian cities with populations greater than 500,000 in 2016, to match other Census data [@statisticscanada2020licos]. We then "populate" each residential unit with the probability of being a low-income household based on the counts of households by income groups in the DA in which the parcel is located. While this method assumes a constant probability of low-income household status for all residential units in a DA, the parcel-level analysis affords a high level of spatial disaggregation for the accessibility analysis.
 
-### Destinations: Foodbanks
+### Destinations: Food Banks and Food Service Locations
 
-The locations of foodbanks were obtained from public records and geocoded. Three urban sites not in the program were also identified and geocoded for comparison purposes.
+The locations of food banks and related food services were obtained from the Hamilton Public Library's Food Access Guide^[http://foodaccessguide.ca/sites/default/files/partnersites/pdf/foodaccessguide.pdf]. The guide was updated in April of 2021 to indicate any change affected on the services due to the pandemic. This includes modified business hours, a need to make reservations before frequenting, and locations that have completely shut down in consequence. While some food bank services have a specific a target population, such as prioritizing family with young children aged between 0 and 3 or accepting only those providing proof of low-income status through housing and utility statements, all the food bank services indicated below are designed to accommodate those in need of food at zero to low cost. With our focus on food banks and food services that offer free or low-cost meals at particular locations, we first removed services such as Meals on Wheels and other food access services such as food box, community kitchens, student nutrition programs, and shopping and transportation. In addition, two free meal services held on different days at the same location were collapsed into a single service point for the accessibility analysis. 
+
+```{r table-food-bank-info, echo=FALSE, results='asis'}
+foodbank_table %>% kable("latex",
+        booktabs = TRUE,
+        align = ("cccccc"),
+        col.names = c("Type", 
+                      "Description", 
+                      "Locations Pre-COVID", 
+                      "Locations During COVID", 
+                      "Additional Notes"),
+        caption = "\\label{tab:food-bank-info}Food Bank and Food Service Information.",
+        escape = FALSE) %>%
+  kable_styling(latex_options = c("striped", "scale_down")) 
+```
 
 ### Routing and travel time tables
 
-Travel time tables for three modes (car, transit, walking) were computed using the parcels as the origins and the locations of the foodbanks as the destinations. For routing, the package `r5r` [@pereira2021r5r] was used, with a network extract for the City of Hamilton from OpenStreetMaps and the General Transit Feed Specification from Hamilton Street Railway, the local transit operator. For routing purposes we used maximum values of 180 min and 10,000 m walking distance: any destination that exceeded these thresholds was ignored. The departure time used for routing was **TIME**.
+Travel time tables for three modes (car, transit, walking) were computed using the parcels as the origins and the locations of the foodbanks as the destinations. For routing, the package `r5r` [@pereira2021r5r] was used with a network extract for the City of Hamilton from OpenStreetMaps and the General Transit Feed Specification from Hamilton Street Railway, the local transit operator. For routing purposes we used maximum values of 180 min and 10,000 m walking distance: any destination that exceeded these thresholds was ignored. The departure time used for routing was **TIME**.
 
 ### Transportation Tomorrow Survey
 
@@ -186,12 +200,12 @@ We used the Data Retrieval System of the Transportation Tomorrow Survey (TTS)\fo
 
 ### Expected Travel Times
 
-Once we obtained travel time tables with population (number of households) and proportion of trips by mode, we calculated the expected travel time $ett$ from each parcel $i$ to a foodbank $j$ as follows:
+Once we obtained travel time tables with population (number of households) and proportion of trips by mode, we calculated the expected travel time $ett$ from each parcel $i$ to a food bank or food service location $j$ as follows:
 $$
 ett_i = p^c_i\cdot tt^c_{ij} + p^t_i\cdot tt^t_{ij} + p^w_i\cdot tt^w_{ij}
 $$
 
-\noindent where $p^k_i$ is the proportion of trips by mode $k$ in the TAZ of parcel $i$, and $tt^k_{ij}$ is the travel time from parcel $i$ to the foodbank. In other words, the expected travel time is the weighted sum of travel times to the foodbank, with the weights given by the expected modal split in the TAZ.
+\noindent where $p^k_i$ is the proportion of trips by mode $k$ in the TAZ of parcel $i$, and $tt^k_{ij}$ is the travel time from parcel $i$ to the food bank. In other words, the expected travel time is the weighted sum of travel times to the foodbank, with the weights given by the expected modal split in the TAZ.
 
 Results and Discussion
 ===================
