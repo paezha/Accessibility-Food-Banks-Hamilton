@@ -92,6 +92,40 @@ dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
   mutate(income_less40k = p_inc_less40k * Dwellings)
 ```
 
+Prepare and join population data from TTS:
+```{r number-of-residential-units-per-DA, include=FALSE}
+# Data preparation
+## Find number of residential units in each DA. This is needed to assign the population to parcels
+residential_units <- dwelling_network_points_2016 %>%
+  st_drop_geometry() %>%
+  group_by(TAZUID) %>%
+  summarize(residential_units = sum(Dwellings))
+```
+
+```{r join-population-to-parcels, include=FALSE}
+# Data preparation
+## Join number of people age 55+ per DA to dwellings and total number of residential units:
+dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
+  left_join(population_age_income %>%
+              st_drop_geometry() %>%
+              dplyr::transmute(TAZUID,
+                               children,
+                               adults,
+                               seniors),
+            by = "TAZUID") %>%
+  left_join(residential_units,
+            by = "TAZUID")
+```
+
+```{r calculate-population-per-parcel, include=FALSE}
+# Data preparation
+##Calculate population per point on the network. This is the population in the DA divided by the total number of residential units. This gives the average number of people per residential unit. Then, multiply by the number of dwellings (residential units) at the point:
+dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
+  mutate(children = (children/residential_units) * Dwellings,
+         adults = (adults/residential_units) * Dwellings,
+         seniors = (seniors/residential_units) * Dwellings)
+```
+
 Join the household data to the travel time matrices:
 ```{r}
 ttm_car <- ttm_car %>%
@@ -99,6 +133,9 @@ ttm_car <- ttm_car %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
+                            children,
+                            adults,
+                            seniors,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
@@ -108,6 +145,9 @@ ttm_transit <- ttm_transit %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
+                            children,
+                            adults,
+                            seniors,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
@@ -117,6 +157,9 @@ ttm_walk <- ttm_walk %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
                             income_less40k,
+                            children,
+                            adults,
+                            seniors,
                             DAUID, 
                             TAZUID),
             by = c("UID" = "ID"))
@@ -210,71 +253,7 @@ ttm_walk <- ttm_walk %>%
             by = "TAZUID")
 ```
 
-Prepare and join population data:
-```{r number-of-residential-units-per-DA, include=FALSE}
-# Data preparation
-## Find number of residential units in each DA. This is needed to assign the population to parcels
-residential_units <- dwelling_network_points_2016 %>%
-  st_drop_geometry() %>%
-  group_by(TAZUID) %>%
-  summarize(residential_units = sum(Dwellings))
-```
-
-```{r join-population-to-parcels, include=FALSE}
-# Data preparation
-## Join number of people age 55+ per DA to dwellings and total number of residential units:
-dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
-  left_join(population_age_income %>%
-              st_drop_geometry() %>%
-              dplyr::transmute(TAZUID,
-                               children,
-                               adults,
-                               seniors),
-            by = "TAZUID") %>%
-  left_join(residential_units,
-            by = "TAZUID")
-```
-
-```{r calculate-population-per-parcel, include=FALSE}
-# Data preparation
-##Calculate population per point on the network. This is the population in the DA divided by the total number of residential units. This gives the average number of people per residential unit. Then, multiply by the number of dwellings (residential units) at the point:
-dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
-  mutate(children = (children/residential_units) * Dwellings,
-         adults = (adults/residential_units) * Dwellings,
-         seniors = (seniors/residential_units) * Dwellings)
-```
-
-```{r join-population-data-to-travel-time-tables, include=FALSE}
-# Data preparation
-## Join the population data to the travel time matrices:
-ttm_car <- ttm_car %>%
-  left_join(dwelling_network_points_2016 %>%
-              st_drop_geometry() %>%
-              dplyr::transmute(ID, 
-                            children,
-                            adults,
-                            seniors),
-            by = c("UID" = "ID"))
-
-ttm_transit <- ttm_transit %>%
-  left_join(dwelling_network_points_2016 %>%
-              st_drop_geometry() %>%
-              dplyr::transmute(ID, 
-                            children,
-                            adults,
-                            seniors),
-            by = c("UID" = "ID"))
-
-ttm_walk <- ttm_walk %>%
-  left_join(dwelling_network_points_2016 %>%
-              st_drop_geometry() %>%
-              dplyr::transmute(ID, 
-                            children,
-                            adults,
-                            seniors),
-            by = c("UID" = "ID"))
-```
-
+### Join Tables into Single TTM
 Join all tables:
 ```{r}
 ttm <- ttm_car %>%
@@ -759,36 +738,36 @@ accessibility <- accessibility %>%
 
 Quartiles of accessibility:
 ```{r}
-# acc_quintiles_pre <- quantile(accessibility %>%
-#                                 filter(timing == "Pre-covid") %>%
-#                                 pull(accessibility),
-#                               c(0, 0.25, 0.5, 0.75, 1))
-# acc_quintiles_covid <- quantile(accessibility %>%
-#                                 filter(timing == "During covid") %>%
-#                                 pull(accessibility),
-#                               c(0, 0.25, 0.5, 0.75, 1))
+ acc_quintiles_pre <- quantile(accessibility %>%
+                                 filter(timing == "Pre-covid") %>%
+                                 pull(accessibility),
+                               c(0, 0.25, 0.5, 0.75, 1))
+ acc_quintiles_covid <- quantile(accessibility %>%
+                                 filter(timing == "During covid") %>%
+                                 pull(accessibility),
+                               c(0, 0.25, 0.5, 0.75, 1))
 ```
 
 Quartiles of accessibility change:
 ```{r}
-acc_quintiles_change <- quantile(accessibilty_change$acc_d,
+acc_quintiles_change <- quantile(accessibility_change$acc_d,
                               c(0, 0.25, 0.5, 0.75, 1))
 ```
 
 Add labels of accessibility levels to table:
 ```{r}
-# accessibility <- accessibility %>%
-#   mutate(accessibility_level = case_when(timing == "Pre-covid" & accessibility <= acc_quintiles_pre[2] ~ "Bottom 25%",
-#                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[2] & accessibility <= acc_quintiles_pre[3] ~ "Third 25%",
-#                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[3] & accessibility <= acc_quintiles_pre[4] ~ "Second 25%",
-#                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[4] ~ "Top 25%",
-#                                          timing == "During covid" & accessibility <= acc_quintiles_covid[2] ~ "Bottom 25%",
-#                                          timing == "During covid" & accessibility > acc_quintiles_covid[2] & accessibility <= acc_quintiles_covid[3] ~ "Third 25%",
-#                                          timing == "During covid" & accessibility > acc_quintiles_covid[3] & accessibility <= acc_quintiles_covid[4] ~ "Second 25%",
-#                                          timing == "During covid" & accessibility > acc_quintiles_covid[4] ~ "Top 25%"),
-#            accessibility_level = factor(accessibility_level,
-#                                         levels = c("Top 25%", "Second 25%", "Third 25%", "Bottom 25%"),
-#                                         ordered = TRUE))
+ accessibility <- accessibility %>%
+   mutate(accessibility_level = case_when(timing == "Pre-covid" & accessibility <= acc_quintiles_pre[2] ~ "Bottom 25%",
+                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[2] & accessibility <= acc_quintiles_pre[3] ~ "Third 25%",
+                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[3] & accessibility <= acc_quintiles_pre[4] ~ "Second 25%",
+                                          timing == "Pre-covid" & accessibility > acc_quintiles_pre[4] ~ "Top 25%",
+                                          timing == "During covid" & accessibility <= acc_quintiles_covid[2] ~ "Bottom 25%",
+                                          timing == "During covid" & accessibility > acc_quintiles_covid[2] & accessibility <= acc_quintiles_covid[3] ~ "Third 25%",
+                                          timing == "During covid" & accessibility > acc_quintiles_covid[3] & accessibility <= acc_quintiles_covid[4] ~ "Second 25%",
+                                          timing == "During covid" & accessibility > acc_quintiles_covid[4] ~ "Top 25%"),
+            accessibility_level = factor(accessibility_level,
+                                         levels = c("Top 25%", "Second 25%", "Third 25%", "Bottom 25%"),
+                                         ordered = TRUE))
 ```
 
 Add labels of accessibility loss to table:
