@@ -38,6 +38,8 @@ bibliography: references.bib
 #numbersections: true
 csl: elsevier-harvard.csl
 output: rticles::elsevier_article
+header-includes:
+    - \usepackage[table]{xcolor}
 ---
 
 # CRediT author statement
@@ -172,15 +174,11 @@ We converted all recorded residential parcels in the City of Hamilton to points 
 
 ### Destinations: Foodbanks
 
-**The locations of foodbanks were obtained from public records and geocoded. Three urban sites not in the program were also identified and geocoded for comparison purposes.**
+The locations of foodbanks were obtained from public records and geocoded. Three urban sites not in the program were also identified and geocoded for comparison purposes.
 
 ### Routing and travel time tables
 
 Travel time tables for three modes (car, transit, walking) were computed using the parcels as the origins and the locations of the foodbanks as the destinations. For routing, the package `r5r` [@pereira2021r5r] was used, with a network extract for the City of Hamilton from OpenStreetMaps and the General Transit Feed Specification from Hamilton Street Railway, the local transit operator. For routing purposes we used maximum values of 180 min and 10,000 m walking distance: any destination that exceeded these thresholds was ignored. The departure time used for routing was **TIME**.
-
-### Open Hamilton **???**
-
-We used the open data portal of the City of Hamilton\footnote{\url{https://open.hamilton.ca/}} we obtained boundaries for the city's various regions (the definition of urban, suburban, and rural regions follows the classification of development applications).
 
 ### Transportation Tomorrow Survey
 
@@ -192,6 +190,7 @@ Once we obtained travel time tables with population (number of households) and p
 $$
 ett_i = p^c_i\cdot tt^c_{ij} + p^t_i\cdot tt^t_{ij} + p^w_i\cdot tt^w_{ij}
 $$
+
 \noindent where $p^k_i$ is the proportion of trips by mode $k$ in the TAZ of parcel $i$, and $tt^k_{ij}$ is the travel time from parcel $i$ to the foodbank. In other words, the expected travel time is the weighted sum of travel times to the foodbank, with the weights given by the expected modal split in the TAZ.
 
 Results and Discussion
