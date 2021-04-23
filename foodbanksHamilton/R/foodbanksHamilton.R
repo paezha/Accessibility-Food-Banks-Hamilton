@@ -118,6 +118,27 @@ NULL
 #' @source Statistics Canada
 "foodbank_locations"
 
+#' Description of foodbanks in Hamilton.
+#'
+#' Description of foodbanks and related meal services in the City of Hamilton.
+#'
+#' @format A simple features data frame with 5 rows and 5 variables:
+#' \describe{
+#'   \item{Type}{Type of facility}
+#'   \item{Description}{Address of facility}
+#'   \item{Locations Pre-COVID}{Status of facility}
+#'   \item{Locations During COVID}{Address of facility}
+#'   \item{Notes}{Explanatory notes}
+#' }
+#'
+#' @docType data
+#' @keywords datasets
+#' @keywords transportation
+#' @keywords land use
+#' @name foodbank_table
+#' @usage data(foodbank_table)
+"foodbank_table"
+
 #' Hamilton CMA.
 #'
 #' Boundary of the Hamilton CMA, in Ontario, Canada.
