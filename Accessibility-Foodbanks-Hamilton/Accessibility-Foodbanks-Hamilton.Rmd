@@ -64,6 +64,7 @@ library(foodbanksHamilton) # Data package
 library(kableExtra)
 library(patchwork)
 library(sf)
+library(spdep)
 library(tidyverse)
 #library(tmap)
 ```
@@ -73,7 +74,7 @@ data(data_da_2016)
 data(dwelling_network_points_2016)
 data(foodbank_locations)
 data(foodbank_table)
-data(hamilton_cma)
+data(hamilton_boundary)
 data(modes_less40k)
 data(population_age_income)
 data(ttm_car)
@@ -567,7 +568,7 @@ inset_box <- st_bbox(c(xmin = -79.975,
   st_as_sfc()
   
 fb <- ggplot() +
-  geom_sf(data = hamilton_cma,
+  geom_sf(data = hamilton_boundary,
           fill = "lightgray") +
   geom_sf(data = foodbank_locations,
           aes(size = COVIDClose,
@@ -585,7 +586,8 @@ fb <- ggplot() +
         legend.position = "none")
 
 fb_inset <- ggplot() +
-  geom_sf(data = hamilton_cma,
+  geom_sf(data = hamilton_boundary %>% 
+            st_transform(4326),
           fill = "lightgray") +
   geom_sf(data = foodbank_locations,
           aes(size = COVIDClose,
@@ -705,7 +707,7 @@ The general pattern of the levels of service is similar before and during the pa
 
 # Pre-covid
 los_pre <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = los %>%
             filter(timing == "Pre-covid"),
           aes(color = los,
@@ -734,7 +736,7 @@ los_pre <- ggplot() +
 
 # During covid
 los_covid <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = los %>%
             filter(timing == "During covid"),
           aes(color = los,
@@ -780,7 +782,7 @@ los_change <- los %>%
   st_as_sf()
 
 lc <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary) +
   geom_sf(data = los_change, 
           aes(color = los_d,
               size = los_d),
@@ -812,7 +814,8 @@ lc <- ggplot() +
         legend.position = "none")
 
 lc_inset <- ggplot() +
-  geom_sf(data = hamilton_cma) +
+  geom_sf(data = hamilton_boundary %>% 
+            st_transform(4326)) +
   geom_sf(data = los_change, 
           aes(color = los_d,
               size = los_d),
@@ -885,7 +888,7 @@ accessibility_taz <- accessibility %>%
 ## Analysis
 # Plot accessibility before and during covid:
 acc_pre <- ggplot() +
-  #geom_sf(data = hamilton_cma) +
+  #geom_sf(data = hamilton_boundary) +
   geom_sf(data = accessibility_taz %>%
             filter(timing == "Pre-covid"),
           aes(fill = accessibility)) +
@@ -907,7 +910,7 @@ acc_pre <- ggplot() +
         legend.position = "right")
 
 acc_covid <- ggplot() +
-  #geom_sf(data = hamilton_cma) +
+  #geom_sf(data = hamilton_boundary) +
   geom_sf(data = accessibility_taz %>%
             filter(timing == "During covid"),
           aes(fill = accessibility)) +
@@ -950,7 +953,7 @@ accessibilty_taz_change <- accessibility_taz %>%
 
 # Plot
 acc_change <- ggplot() +
-  #geom_sf(data = hamilton_cma) +
+  #geom_sf(data = hamilton_boundary) +
   geom_sf(data = accessibilty_taz_change,
           aes(fill = acc_d),
           color = NA) +
@@ -1003,6 +1006,70 @@ acc_change_inset <- ggplot() +
 
 acc_change / acc_change_inset
 ```
+```{r weights-matrix, include=FALSE}
+taz_nb <- poly2nb(accessibilty_taz_change, queen = TRUE)
+taz_w <- nb2listw(taz_nb)
+```
+
+```{r moran-test-accessibility-changes, include=FALSE}
+moran.test(accessibilty_taz_change$acc_d, taz_w)
+```
+
+```{r local-moran-i, include=FALSE}
+local_i <- localmoran(accessibilty_taz_change$acc_d,
+                      taz_w, 
+                      alternative = "two.sided",
+                      p.adjust.method = "none") %>% 
+  data.frame() %>%
+  rename(p_val = Pr.z....0.) %>%
+  mutate(significance = ifelse(p_val <= 0.05, "sig", "n.s."),
+         significance = factor(significance,
+                               levels = c("n.s.", "sig")))
+
+summary(local_i)
+```
+
+```{r join-local-i-to-table, include=FALSE}
+accessibilty_taz_change$significance <- local_i$significance
+```
+
+```{r plot-local-i, echo=FALSE, fig.cap="\\label{fig:plot-local-i}Areas with significantly large changes in accessibility from pre-COVID-19 to during COVID-19 according to Local Moran's I." }
+ggplot() +
+  geom_sf(data = accessibilty_taz_change,
+          aes(fill = acc_d,
+              color = significance,
+              alpha = significance),
+          size = 1) +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Change in accessibility",
+                        option =  "A", 
+                        direction = 1,
+                       breaks = c(-0.0008,
+                                  -0.0006,
+                                  -0.0004,
+                                  -0.0002),
+                       labels = c("-0.0008",
+                                  "-0.0006",
+                                  "-0.0004",
+                                  "-0.0002")) +
+  scale_color_manual(values = c("n.s." = NA, 
+                                "sig" = "black")) +
+  scale_alpha_manual(values = c("n.s." = 0.5, 
+                                "sig" = 1)) +
+  guides(color = FALSE, 
+         alpha = FALSE,
+         fill = guide_legend(title.position = "top")) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+```
+
+
 ```{r accessibility-change-by-parcel, include=FALSE}
 ## Analysis
 # Calculate accessibility change by parcel:

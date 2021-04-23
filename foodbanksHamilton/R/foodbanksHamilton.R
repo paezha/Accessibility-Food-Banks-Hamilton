@@ -141,16 +141,16 @@ NULL
 
 #' Hamilton CMA.
 #'
-#' Boundary of the Hamilton CMA, in Ontario, Canada.
+#' Boundary of the City of Hamilton, in Ontario, Canada.
 #'
 #' @docType data
 #' @keywords datasets
 #' @keywords Census
 #' @keywords Canada
-#' @name hamilton_cma
-#' @usage data(hamilton_cma)
+#' @name hamilton_boundary
+#' @usage data(hamilton_boundary)
 #' @source Statistics Canada
-"hamilton_cma"
+"hamilton_boundary"
 
 #' Transportation for low income population by Traffic Analysis Zone.
 #'
