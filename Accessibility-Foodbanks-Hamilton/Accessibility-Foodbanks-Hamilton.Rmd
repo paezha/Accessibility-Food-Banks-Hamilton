@@ -551,7 +551,7 @@ accessibility <- rbind(data.frame(results_pre$accessibility,
                          ordered = TRUE))
 ```
 
-Figure \ref{fig:foodbanks} shows the location of foodbanks in the City of Hamilton and their status. Before the pandemic there were `r nrow(foodbank_locations)` of which `r nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))` (`r round(nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations) * 100, 2)`\%) closed during the pandemic. As seen in the figure, foodbanks tend to be predominantly located in the central parts of the city. This is not surprising: population density is high there, and it is also the part of the city where lower income households are more numerous in absolute and relative terms (see Figure \ref{fig:low-income-households}). Alas, this is also the part of the city where most of the closures during the pandemic happened.
+Figure \ref{fig:foodbanks} shows the location of foodbanks in the City of Hamilton and their status. Before the pandemic there were `r nrow(foodbank_locations)` of which `r nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))` (`r round(nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations) * 100, 2)`\%) closed during the pandemic. As shown in the figure, foodbanks tend to be predominantly located in the central parts of the city. This is not surprising: population density is high there, and it is also the part of the city where lower income households are more numerous in absolute and relative terms (see Figure \ref{fig:low-income-households}). Alas, this is also the part of the city where most of the closures during the pandemic happened.
 
 ```{r plot-location-foodbanks, echo=FALSE, fig.cap="\\label{fig:foodbanks}Location of foodbanks and operation status; the dotted box is an inset of the central part of the City of Hamilton"}
 ## Analysis
@@ -692,7 +692,7 @@ los <- los %>%
   st_as_sf()
 ```
 
-The level of service by foodbank before and during the pandemic are shown in Figure \ref{fig:levels-of-service}. Since the level of service is the inverse of the number of households in the catchment area of the foodbanks, higher values mean that a facility is expected to service fewer households. Conversely, lower values indicate grater congestion. The general pattern of the levels of service is similar before and during the pandemic, with lower values in the center of the city. Three more peripheral facilities towards the south of the city also have lower levels of service, presumably because they are meant to service a relatively large suburban/exurban population. During the pandemic, however, the levels of service dropped, in some cases quite substantially. The pattern of the losses in level of service, moreover, is not uniform. As seen in Figure \ref{fig:levels-of-service-changes} ... words.
+The levels of service by foodbank before and during the pandemic are shown in Figure \ref{fig:levels-of-service}. Since the level of service is the inverse of the number of households in the catchment area of the foodbanks, higher values mean that a facility is expected to service fewer households. Conversely, lower values indicate grater congestion. The general pattern of the levels of service is similar before and during the pandemic, with lower values in the center of the city. Three more peripheral facilities towards the south of the city also have lower levels of service, presumably because they are meant to service a relatively large suburban/exurban population. During the pandemic, however, the levels of service dropped, in some cases quite substantially. The pattern of the losses in level of service, moreover, is not uniform. Figure \ref{fig:levels-of-service-changes} shows that the three peripheral facilities in the southern suburban/exurban part of the city had low levels of service to begin with, but did not see major declines during the pandemic. Level of service deteriorated more in the central part of the city, but the loss of level of service was not as large in the core (where most of the foodbanks are), but more marked in the inner ring around the core, where facilities may have faced greater demand from both central city and suburban populations after the closure of foodbanks during the pandemic. To further elucidate this issue, we now turn to the results of the accessibility analysis.
 
 ```{r plot-levels-of-service, echo=FALSE, fig.cap="\\label{fig:levels-of-service}Levels of service at each facility pre-COVID-19 (top panel) and during COVID-19 (bottom panel)."}
 ## Analysis
@@ -855,7 +855,6 @@ lc_inset <- ggplot() +
 
 lc / lc_inset
 ```
-
 ```{r aggregate-accessibility-by-taz, include=FALSE}  
 ## Analysis
 # Accessibility by TAZ:
@@ -874,6 +873,8 @@ accessibility_taz <- accessibility %>%
   st_as_sf()
 ```
 
+Discuss the results of accessibility.
+
 ```{r plot-accessibility, echo=FALSE, fig.align = 'center', fig.cap="\\label{fig:accessibility}Accessibility by traffic analysis zone pre-COVID-19 (top panel) and during COVID-19 (bottom panel)."}
 ## Analysis
 # Plot accessibility before and during covid:
@@ -885,16 +886,16 @@ acc_pre <- ggplot() +
   scale_fill_viridis_c(name = "Accessibility pre-COVID-19",
                         option =  "A", 
                         direction = -1,
-                       breaks = c(0.001,
+                       breaks = c(0.002,
+                                  0.0016,
+                                  0.0012,
                                   0.0008,
-                                  0.0006,
-                                  0.0004,
-                                  0.0002),
-                       labels = c("0.0010",
+                                  0.0004),
+                       labels = c("0.0020",
+                                  "0.0016",
+                                  "0.0012",
                                   "0.0008",
-                                  "0.0006",
-                                  "0.0004",
-                                  "0.0002")) +
+                                  "0.0004")) +
   theme_minimal() +
   theme(axis.text = element_blank(),
         legend.position = "right")
@@ -907,16 +908,16 @@ acc_covid <- ggplot() +
   scale_fill_viridis_c(name = "Accessibility during COVID-19",
                         option =  "A", 
                         direction = -1,
-                       breaks = c(0.0005,
+                       breaks = c(0.0010,
+                                  0.0008,
+                                  0.0006,
                                   0.0004,
-                                  0.0003,
-                                  0.0002,
-                                  0.0001),
-                       labels = c("0.0005",
+                                  0.0002),
+                       labels = c("0.0010",
+                                  "0.0008",
+                                  "0.0006",
                                   "0.0004",
-                                  "0.0003",
-                                  "0.0002",
-                                  "0.0001")) +
+                                  "0.0002")) +
   theme_minimal() +
   theme(axis.text = element_blank(),
         legend.position = "right")
@@ -949,26 +950,53 @@ acc_change <- ggplot() +
           color = NA) +
   geom_sf(data = population_age_income,
           fill = NA) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
   scale_fill_viridis_c(name = "Change in accessibility",
                         option =  "A", 
                         direction = 1,
-                       breaks = c(-0.0005,
+                       breaks = c(-0.0008,
+                                  -0.0006,
                                   -0.0004,
-                                  -0.0003,
-                                  -0.0002,
-                                  -0.0001),
-                       labels = c("-0.0005",
+                                  -0.0002),
+                       labels = c("-0.0008",
+                                  "-0.0006",
                                   "-0.0004",
-                                  "-0.0003",
-                                  "-0.0002",
-                                  "-0.0001")) +
+                                  "-0.0002")) +
   theme_minimal() +
   theme(axis.text = element_blank(),
-        legend.position = "right")
+        legend.position = "none")
 
-acc_change
+acc_change_inset <- ggplot() +
+  geom_sf(data = accessibilty_taz_change %>%
+            st_transform(crs = 4326),
+          aes(fill = acc_d)) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Change in accessibility",
+                        option =  "A", 
+                        direction = 1,
+                       breaks = c(-0.0008,
+                                  -0.0006,
+                                  -0.0004,
+                                  -0.0002),
+                       labels = c("-0.0008",
+                                  "-0.0006",
+                                  "-0.0004",
+                                  "-0.0002")) +
+  guides(fill = guide_legend(title.position = "top")) +
+  xlim(-79.975, -79.775) +
+  ylim(43.2, 43.3) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+
+acc_change / acc_change_inset
 ```
-
 ```{r accessibility-change-by-parcel, include=FALSE}
 ## Analysis
 # Calculate accessibility change by parcel:
@@ -1023,6 +1051,8 @@ accessibility_by_age <- accessibility %>%
             .groups = "drop")
 # The accessibility level is the magnitude of the accessibility loss: the top 25% faced the smallest losses in accessibility, and the bottom 25% faced the greatest losses in accessibility. 
 ```
+
+Discuss the results of aggregating the accessibility by age group (see Table \ref{tab:accessibility-by-age}). Follow with the analysis of hours of travel?
 
 ```{r table-accessibility-by-age-group, echo=FALSE, results='asis'}
 cbind(accessibility_by_age %>% 
