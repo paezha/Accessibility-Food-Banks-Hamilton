@@ -1,5 +1,5 @@
 ---
-title: "Changes in accessibility to food banks during COVID-19 and implications for the food security of vulnerable populations in Hamilton, Ontario"
+title: "Changes in accessibility to food banks and food services during COVID-19 and implications for the food security of vulnerable populations in Hamilton, Ontario"
 author:
   - name: Author One
     email: author1@example.com
@@ -355,7 +355,7 @@ ttm <- ttm %>%
 Introduction
 ==========================
 
-Food insecurity is defined as an "inadequate or uncertain access to a sufficient quantity and/or adequate quality of food" due to a household's financial limitations [@enns2020experiences]. This condition has been associated with reductions in nutritional outcomes [@bhattacharya2004poverty; @kirkpatrick2008food; @olson1999nutrition] and physical and mental health in children and adults [@elgar2021relative; @jones2017food; @ramsey2011food; @seligman2010food; @stuff2004household]. Over at least the past four decades food banks have become an essential line of defense against food insecurity in Canadian communities [@riches2002food; @holmes2018nothing; @black2020examining; @tarasuk2020relationship]. In this respect, Canada is not unlike numerous other wealthy countries where a systematic dismantling of the welfare state took place in the intervening period [@tarasuk2014food]. 
+Food insecurity is defined as an "inadequate or uncertain access to a sufficient quantity and/or adequate quality of food" due to a household's financial limitations [@enns2020experiences]. This condition has been associated with reductions in nutritional outcomes [@bhattacharya2004poverty; @kirkpatrick2008food; @olson1999nutrition] and physical and mental health in children and adults [@elgar2021relative; @jones2017food; @ramsey2011food; @seligman2010food; @stuff2004household]. Over at least the past four decades food banks and related services have become an essential line of defense against food insecurity in Canadian communities [@riches2002food; @holmes2018nothing; @black2020examining; @tarasuk2020relationship]. In this respect, Canada is not unlike numerous other wealthy countries where a systematic dismantling of the welfare state took place in the intervening period [@tarasuk2014food]. 
 
 The emergence of COVID-19, the worst public health crisis since the 1918 flu pandemic, has revealed important social and economic fault lines, and pre-existing patterns of inequality appear to have been exacerbated. Along several other dimensions of stress [e.g., accessibility to health care facilities, @pereira2021geographic], this seems to be the case for food insecurity as well [@laborde2020poverty]. In the US, for example, it has been estimated that there was an increase of more than 30\% in household food insecurity, and more than one third of households were discovered to be newly food insecure - meaning they did not experience food insecurity before the pandemic [@niles2020early]. In Canada, Men and Tarasuk [-@men2021food] report that about 25\% of individuals who experienced job insecurity (a relatively common occurrence during the pandemic), also experienced food insecurity. Similarly, according to Statistics Canada [-@statisticscanada2020food], in the early stages of the pandemic almost 15\% of individuals reported living in a household that faced food insecurity; the risk of food insecurity was substantially higher for households with children. The difference between households with and without children was significant, and 11.7\% of households with children indicated that "food didn’t last and [there was] no money to get more" sometimes or often, compared to 7.3\% of households without children; likewise, 13\% of households with children indicated that they "[c]ouldn’t afford balanced meals" sometimes or often, compared to 8.8\% of households without children.
 
@@ -378,7 +378,9 @@ In Canada, the number of food banks has steadily increased in the past few decad
 
 Economic stress caused by the COVID-19 pandemic, rising unemployment rates, and changes in poverty levels have disrupted the food environment and led to higher rates of food insecurity [@niles2020early]. Pandemic-related food security studies in the US have found a substantial increase in households experiencing food insecurity for the first time, and also in households experiencing more severe food insecurity than before [@niles2020early; @wolfson2020food]. Most recently in May 2020, Canada recorded 14.7% of its population living in food insecurity in the past 30 days [@statisticscanada2020food]. Considering the negative mental and physical health effects associated with food insecurity, increases in food insecurity rates due to the pandemic, signal a change in the food environment with potential damages to population health during the course of the pandemic and beyond [@niles2020early]. Recent data^[https://www.foodbankscanada.ca/FoodBanks/MediaLibrary/COVID-Report_2020/A-Snapshot-of-Food-Banks-in-Canada-and-the-COVID-19-Crisis_Exec-Sum_EN.pdf] from FBC showed that 52% of member food banks reported an increase in usage in March of 2020 when initial lockdown restrictions were put in place across much of the country. The pandemic also created significant staffing issues with 42% of food banks reporting a reduction in volunteers. However, 53% of food banks later reported a decrease in use into the summer of 2020 which FBC members attributed to emergency financial support programs from the federal government. Nevertheless, some of these benefit programs were temporary, which suggests that many households may again turn to food bank services to meet their needs.
 
-In terms of geography, previous research conducted at the provincial scale using data from the 2011-2012 CCHS found that the prevalence of food insecurity ranged across the country from 11.8% of households in Ontario to 41% of households in Nunavut [@tarasuk2019geographic]. However, although previous research has examined the characteristics of individuals and households accessing food banks, the locational or transportation accessibility aspect of food bank access is not well understood. A wealth of literature examining the food desert concept suggests that, in addition to socio-economic and demographic factors, location and transportation networks play a key role in a household's accessibility to healthy foods [@paez2010relative; @vanderlee2017food; @widener2018spatial]. For food banks specifically, previous qualitative research by Smith et al. [-@smith2017food] in Ontario has noted that participants access food banks using a variety of modes of transportation and that some food bank users have expressed difficulties with transportation for trips to food bank locations, with one respondent stating "I wish it [the food bank] was a little more centrally located. Because if I didn’t have a bike I’d have to walk it all the way out there and back. I wonder about people who don’t." From this, the authors conclude that "transportation can be challenging, particularly if the food bank is situated in a remote location." To offer greater insight into the role of transportation and location in food bank accessibility, this research examines how geographic accessibility to food banks and food services changed in Hamilton during the COVID-19 pandemic.
+In terms of geography, previous research conducted at the provincial scale using data from the 2011-2012 CCHS found that the prevalence of food insecurity ranged across the country from 11.8% of households in Ontario to 41% of households in Nunavut [@tarasuk2019geographic]. However, although previous research has examined the characteristics of individuals and households accessing food banks, the locational or transportation accessibility aspect of food bank access is not well understood. A wealth of literature examining the food desert concept suggests that, in addition to socio-economic and demographic factors, location and transportation networks play a key role in a household's accessibility to healthy foods [@paez2010relative; @vanderlee2017food; @widener2018spatial]. For food banks specifically, previous qualitative research in Ontario by Smith-Carrier et al. [-@smith2017food] has noted that "transportation can be challenging, particularly if the food bank is situated in a remote location" (p. 32). Particularly, it appears that participants experience challenges with the "inordinate amount of time necessary to obtain food, and difficulties associated with transportation" (p. 39). Users of food banks, according to this research, rely on a variety of modes of transportation to access services. Consequently, the location of facilities matters; in the words of an interviewee: "I wish it [the food bank] was a little more centrally located. Because if I didn’t have a bike I’d have to walk it all the way out there and back. I wonder about people who don’t" (p. 39).  
+
+To offer greater insight into the role of transportation and location in food bank accessibility, this research examines how geographic accessibility to food banks and food services changed in Hamilton during the COVID-19 pandemic.
 
 Methods and Materials
 ===================
@@ -429,6 +431,9 @@ $$
 $$
 \sum_{j=1}^JL_jw_{ji}^\text{st}=L_j
 $$
+## Study Area
+
+**Need to provide some context here: the geography which makes transportation challenging, i.e., due to the escarpment; the main parts of the city: city core, inner suburbs, industrial north, suburban, exurban; and the industrial background of the city maybe, with poverty rates compared to other Canadian cities?**
 
 ## Data
 
@@ -444,7 +449,7 @@ We converted all recorded residential land parcels in the City of Hamilton to po
 
 ### Destinations: Food Banks and Food Service Locations
 
-The locations of food banks and related food services were obtained from the Hamilton Public Library's Food Access Guide^[http://foodaccessguide.ca/sites/default/files/partnersites/pdf/foodaccessguide.pdf]. The guide was updated in April of 2021 to indicate any change affected on the services due to the pandemic. This includes modified business hours, a need to make reservations before frequenting, and locations that have completely shut down in consequence. While some food bank services have a specific a target population, such as prioritizing family with young children aged between 0 and 3 or accepting only those providing proof of low-income status through housing and utility statements, all the food bank services indicated below are designed to accommodate those in need of food at zero to low cost. With our focus on food banks and food services that offer free or low-cost meals at particular locations, we first removed services such as Meals on Wheels and other food access services such as food box, community kitchens, student nutrition programs, and shopping and transportation. In addition, two free meal services held on different days at the same location were collapsed into a single service point for the accessibility analysis. 
+The locations of food banks and related food services were obtained from the Hamilton Public Library's Food Access Guide^[http://foodaccessguide.ca/sites/default/files/partnersites/pdf/foodaccessguide.pdf]. The guide was updated in April of 2021 to indicate any change affected on the services due to the pandemic. This includes modified business hours, a need to make reservations before frequenting, and locations that have completely shut down in consequence. While some food bank services have a specific a target population, such as prioritizing family with young children aged between 0 and 3 or accepting only those providing proof of low-income status through housing and utility statements, all the food bank services indicated below are designed to accommodate those in need of food at zero to low cost. With our focus on food banks and food services that offer free or low-cost meals at particular locations, we first removed services such as Meals on Wheels and other food access services such as food box, community kitchens, student nutrition programs, and shopping and transportation. In addition, two free meal services held on different days at the same location were collapsed into a single service point for the accessibility analysis. Additional details on the operations of individual facilities is not publicly available, and with the changes in operations it proved unfeasible to collect it. For this reason, the analysis to follow is of accessibility to the location of food banks and services, but not to specific services (e.g., breakfasts vs. food boxes).
 
 ```{r table-food-bank-info, echo=FALSE, results='asis'}
 foodbank_table %>% kable("latex",
@@ -485,7 +490,7 @@ Results and Discussion
 ```{r accessibility-threshold-sensitivity, include=FALSE}
 ## Analysis
 # Testing different thresholds to check how accessibility changes. Here, the thresholds are varied from 2 min to 30 min in 2 min step increments
-threshold_seq <- seq(from = 2, to = 30, by = 2)
+threshold_seq <- seq(from = 2, to = 30, by = 1)
 
 # Initialize a data frame to store results
 accessibility_test <- data.frame(threshold = threshold_seq, 
@@ -553,9 +558,9 @@ accessibility <- rbind(data.frame(results_pre$accessibility,
                          ordered = TRUE))
 ```
 
-Figure \ref{fig:foodbanks} shows the location of food banks in the City of Hamilton and their status. Before the pandemic there were `r nrow(foodbank_locations)` of which `r nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))` (`r round(nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations) * 100, 2)`\%) closed during the pandemic. As shown in the figure, food banks tend to be predominantly located in the central parts of the city. This is not surprising: population density is high there, and it is also the part of the city where lower income households are more numerous in absolute and relative terms (see Figure \ref{fig:low-income-households}). Alas, this is also the part of the city where most of the closures during the pandemic happened.
+Figure \ref{fig:foodbanks} shows the location of food banks and services in the City of Hamilton and their status. Before the pandemic there were `r nrow(foodbank_locations)` of which `r nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))` (`r round(nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations) * 100, 2)`\%) closed during the pandemic. As shown in the figure, food services tend to be predominantly located in the central parts of the city. This is not surprising: population density is high there, and it is also the part of the city where lower income households are more numerous in absolute and relative terms (see Figure \ref{fig:low-income-households}). Alas, this is also the part of the city where most of the closures during the pandemic happened.
 
-```{r plot-location-foodbanks, echo=FALSE, fig.cap="\\label{fig:foodbanks}Location of foodbanks and operation status; the dotted box is an inset of the central part of the City of Hamilton"}
+```{r plot-location-foodbanks, echo=FALSE, fig.cap="\\label{fig:foodbanks}Location of food banks/services and operation status; the dotted box is an inset of the central part of the City of Hamilton"}
 ## Analysis
 # Plot location of foodbanks
 
@@ -657,9 +662,9 @@ w_{ij}=w_{ji}=
 0 & \text{ otherwise}
 \end{cases}
 $$
-\noindent where $ett_{ij}$ is the multimodal expected travel time as described previously, and $\delta$ is a travel threshold. When the expected travel time exceeds this threshold, a facility is no longer considered accessible. Further, the weights are standardized for the balanced floating catchment area approach. 
+\noindent where $ett_{ij}$ is the multimodal expected travel time as described previously, and $\delta$ is a travel threshold. When the expected travel time exceeds this threshold, a facility is no longer considered accessible. Moreover, the weights are standardized for the balanced floating catchment area approach. 
 
-Figure \ref{fig:sensitivity-analysis} shows the results of conducting sensitivity analysis of the system-wide accessibility as we vary the threshold (considering the situation before the pandemic). There is a clear pattern whereby more strict values of $\delta$ are associated with higher levels of system-wide accessibility: while increases in accessibility that result from decreases in the travel time window might seem counter-intuitive, this is a result of lower _congestion_, since fewer households are serviced and are thus competing for the same resources. System-wide accessibility declines with higher values of $\delta$: as more households are serviced, congestion grows and the level of service declines, although this happens at a declining rate. We are not aware of any standards that explain how long people are expected to travel for food banks, but we note that in developing countries, access to drinking water is defined as a source that takes less than 30 minutes to reach [round trip, see @world2019progress]. There is no reason why people in affluent countries should be expected to travel more for a basic need such as food. Accordingly, we adopt a threshold of 15 minutes for the analysis (representing a one-way trip). 
+Figure \ref{fig:sensitivity-analysis} shows the results of conducting sensitivity analysis of the system-wide accessibility as we vary the threshold (considering the situation before the pandemic). There is a clear pattern whereby more strict values of $\delta$ are associated with higher levels of system-wide accessibility: while increases in accessibility that result from decreases in the travel time window might seem counter-intuitive, this is a result of lower _congestion_, since fewer households are serviced and thus competition for the same resources is more limited. System-wide accessibility declines with higher values of $\delta$: as more households are serviced, congestion grows and the level of service declines, although this happens at a declining rate. We are not aware of any research that explain how long people are expected to travel for food banks, but we note that in developing countries, access to drinking water is defined as a source that takes less than 30 minutes to reach [round trip, see @world2019progress]. There is no reason why people in affluent countries should be expected to travel more for a basic need such as food. Accordingly, we adopt a 15-minute threshold for the analysis (representing a one-way trip). This threshold is also approximately where the rate of change in accessibility slows down.
 
 ```{r plot-results-sensitivity-analysis, out.width="60%", echo=FALSE, fig.cap="\\label{fig:sensitivity-analysis}Accessibility as a function of threshold"}
 acc_sensitivity <- ggplot(accessibility_test, 
@@ -672,7 +677,7 @@ acc_sensitivity <- ggplot(accessibility_test,
 acc_sensitivity
 ```
 
-Using this threshold, we find that the system-wide accessibility (interpreted as a provider-to-population ratio) was `r round(sum(results_pre$accessibility$accessibility), 3)` (food banks and food service locations per low income household in the city) before COVID-19, but declined to `r round(sum(results_covid$accessibility$accessibility), 3)` during the pandemic. It is striking that although almost `r round((1 - nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations)) * 100)`\% of food banks remained in operation during the pandemic, there was a loss of accessibility greater than `r abs(round((sum(results_covid$accessibility$accessibility) - sum(results_pre$accessibility$accessibility))/sum(results_pre$accessibility$accessibility) * 100))`\%, suggesting the location of food banks and food services plays an important role in serving those in need.
+Using the 15-minute threshold, we find that the system-wide accessibility (interpreted as a provider-to-population ratio) was `r round(sum(results_pre$accessibility$accessibility), 3)` (food banks/service locations per low income household in the city) before COVID-19, but declined to `r round(sum(results_covid$accessibility$accessibility), 3)` during the pandemic. It is striking that although almost `r round((1 - nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations)) * 100)`\% of food facilities remained in operation during the pandemic, there was a loss of accessibility greater than `r abs(round((sum(results_covid$accessibility$accessibility) - sum(results_pre$accessibility$accessibility))/sum(results_pre$accessibility$accessibility) * 100))`\%, suggesting the location of food banks and related services plays an important role in serving those in need.
 
 ```{r join-zonal-ids-to-accessibility-table, include=FALSE}
 ## Analysis
@@ -703,9 +708,9 @@ los <- los %>%
   st_as_sf()
 ```
 
-Turning to the individual food bank and food service locations, the levels of service offered before and during the pandemic are shown in Figure \ref{fig:levels-of-service}. The level of service is functionally the inverse (because each food bank has a "capacity" of 1) of the number of low-income households in the travel-mode weighted travel time catchment area of the food banks. Higher values mean that a facility is expected to service fewer households. Conversely, lower values indicate grater congestion. 
+Turning to the location of individual facilities, the levels of service offered before and during the pandemic are shown in Figure \ref{fig:levels-of-service}. The level of service is functionally the inverse of the number of low-income households in the travel-mode weighted travel time catchment area of the facilities (this is because $S_j=1 \forall j$, i.e., each location represents a "capacity" of 1). Higher values mean that a facility is expected to service fewer households. Conversely, lower values indicate grater congestion. 
 
-The general pattern of the levels of service is similar before and during the pandemic, with lower values in the center of the city. Three more peripheral facilities towards the south of the city also have lower levels of service, presumably because they are meant to service a relatively large suburban/exurban population. During the pandemic, however, the levels of service dropped, in some cases quite substantially. The pattern of the losses in level of service, moreover, is not uniform. The upper pane of Figure \ref{fig:levels-of-service-changes} shows that the three peripheral facilities in the southern suburban/exurban part of the city had low levels of service to begin with, but did not see major declines during the pandemic. Turning to the inset map, levels of service deteriorated more in the central part of the city. However, the loss of level of service was not as large in the core (where most of the food banks are), but more marked in the inner ring around the core where facilities may have faced greater demand from both central city and suburban populations after the closure of food banks during the pandemic.
+The general pattern of the levels of service is similar before and during the pandemic, with lower values in the center of the city. Three more peripheral facilities towards the south of the city also have lower levels of service, presumably because they are expected to service relatively large suburban/exurban populations. During the pandemic, however, the levels of service dropped, in some cases quite substantially. The pattern of the losses in level of service, moreover, is not uniform. The upper pane of Figure \ref{fig:levels-of-service-changes} shows that the three peripheral facilities in the southern suburban/exurban part of the city had low levels of service to begin with, but did not see major declines during the pandemic. Further, the inset map shows that the levels of service deteriorated more in the central part of the city. However, the loss of level of service was not as large in the core (where most of the food banks/services are found), but instead was more marked in the inner ring around the core, where facilities may have faced greater demand from both central city and suburban populations after the closure of food banks during the pandemic.
 
 ```{r plot-levels-of-service, echo=FALSE, fig.cap="\\label{fig:levels-of-service}Levels of service at each facility pre-COVID-19 (top panel) and during COVID-19 (bottom panel)."}
 ## Analysis
@@ -870,7 +875,7 @@ lc_inset <- ggplot() +
 lc / lc_inset
 ```
 
-To further elucidate this issue, we now turn to the results of the accessibility analysis. The top pane of Figure \ref{fig:accessibility} reveals that, compared with the outer rural zones, the smaller more urban zones of the city generally exhibit higher accessibility to food banks and food service locations. However, the pattern is not particularly smooth - this is largely attributable to the travel-mode weighting of travel times according to the trip patterns of low-income household respondents to the TTS. For example, in zones where low-income households make a high proportion of trips by walking, access to food bank locations by walking is afforded a concomitantly high weight in our calculations of travel time compared to transit or car travel. From this, highly-accessible locations result from a mix of characteristics: low-income households in locations where travel options that align with zonal modal split are available to connect them to food bank locations with high levels of service within 15 minutes.
+To further elucidate this issue, we now turn to the results of the accessibility analysis. As with the level of service of individual facilities, the general pattern of accessibility before and during the pandemic is similar. Figure \ref{fig:accessibility} reveals that, compared with the outer rural zones, the more urban zones of the city generally exhibit higher accessibility to food banks and food service locations. However, the pattern is not particularly smooth - this is largely attributable to the weighting of travel times by mode of transportation according to the trip patterns of low-income household respondents according to the TTS. For example, in zones where low-income households make a high proportion of trips by walking, access to food bank locations by walking is afforded a concomitantly high weight in our calculations of travel time compared to transit or car travel. From this, highly-accessible locations result from a mix of characteristics: low-income households in locations where travel options that align with zonal modal split are available to connect them to food bank locations with high levels of service within 15 minutes. This seems to track with the experience of some users of these services, as reported by Smith-Carrier et al. [-@smith2017food]. 
 
 ```{r aggregate-accessibility-by-taz, include=FALSE}  
 ## Analysis
@@ -942,10 +947,10 @@ acc_covid <- ggplot() +
 acc_pre / acc_covid
 ```
 
-```{r plot-accessibility-changes, echo=FALSE, include=FALSE, fig.align = 'center', fig.cap="\\label{fig:accessibility-changes}Changes in accessibility from pre-COVID-19 to during COVID-19."}
+```{r accessibility-changes-by-taz, include=FALSE}
 ## Analysis
 # Calculate accessibility change by TAZ:
-accessibilty_taz_change <- accessibility_taz %>%
+accessibility_taz_change <- accessibility_taz %>%
   st_drop_geometry() %>%
   pivot_wider(names_from = timing, 
               values_from = accessibility) %>%
@@ -958,11 +963,16 @@ accessibilty_taz_change <- accessibility_taz %>%
           by = "TAZUID") %>%
   # Convert to simple features
   st_as_sf()
+```
 
+We find that the accessibility landscape deteriorated substantially during the pandemic, with accessibility dropping on average by almost `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% mean() %>% abs() %>% round()`\%, but with large variations: some zones experienced changes in accessibility of only about `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% max() %>% abs() %>% round()`\%, whereas the most affected zone saw a loss of accessibility of almost `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% min() %>% abs() %>% round()`\%. Figure \ref{fig:accessibility-changes-with-local-i} shows the changes in accessibility. Every zone is worse off after the closure of facilities during the pandemic, but some parts of the city seem to have been particularly affected. We used a local indicator of spatial autocorrelation [@anselin1995local] to explore the pattern of change in accessibility. Twenty-four TAZ are flagged as having significant large losses of accessibility (at $p<=0.10$, without correcting for multiple comparisons). Those zones are highlighted in the figure, where it can be seen that they form more or less compact neighborhoods. Remarkably, the largest (and significant) drops in accessibility are not downtown, but located in two cases in the industrial north of the city, in one case in an inner suburb above the escarpment (**need to describe the study area!**), and lastly in a more suburban/exurban region in the south-west (**share other insights about these regions, maybe based on weighted travel patterns?**).
+
+```{r plot-accessibility-changes, echo=FALSE, include=FALSE, fig.align = 'center', fig.cap="\\label{fig:accessibility-changes}Changes in accessibility from pre-COVID-19 to during COVID-19."}
+## Analysis
 # Plot
 acc_change <- ggplot() +
   #geom_sf(data = hamilton_boundary) +
-  geom_sf(data = accessibilty_taz_change,
+  geom_sf(data = accessibility_taz_change,
           aes(fill = acc_d),
           color = NA) +
   geom_sf(data = population_age_income,
@@ -987,7 +997,7 @@ acc_change <- ggplot() +
         legend.position = "none")
 
 acc_change_inset <- ggplot() +
-  geom_sf(data = accessibilty_taz_change %>%
+  geom_sf(data = accessibility_taz_change %>%
             st_transform(crs = 4326),
           aes(fill = acc_d)) +
   geom_sf(data = inset_box,
@@ -1014,23 +1024,24 @@ acc_change_inset <- ggplot() +
 
 acc_change / acc_change_inset
 ```
+
 ```{r weights-matrix, include=FALSE}
-taz_nb <- poly2nb(accessibilty_taz_change, queen = TRUE)
+taz_nb <- poly2nb(accessibility_taz_change, queen = TRUE)
 taz_w <- nb2listw(taz_nb)
 ```
 
 ```{r moran-test-accessibility-changes, include=FALSE}
-moran.test(accessibilty_taz_change$acc_d, taz_w)
+moran.test(accessibility_taz_change$acc_d, taz_w)
 ```
 
 ```{r local-moran-i, include=FALSE}
-local_i <- localmoran(accessibilty_taz_change$acc_d,
+local_i <- localmoran(accessibility_taz_change$acc_d,
                       taz_w, 
                       alternative = "two.sided",
                       p.adjust.method = "none") %>% 
   data.frame() %>%
   rename(p_val = Pr.z....0.) %>%
-  mutate(significance = ifelse(p_val <= 0.05, "sig", "n.s."),
+  mutate(significance = ifelse(p_val <= 0.10, "sig", "n.s."),
          significance = factor(significance,
                                levels = c("n.s.", "sig")))
 
@@ -1038,12 +1049,12 @@ summary(local_i)
 ```
 
 ```{r join-local-i-to-table, include=FALSE}
-accessibilty_taz_change$significance <- local_i$significance
+accessibility_taz_change$significance <- local_i$significance
 ```
 
-```{r plot-local-i, echo=FALSE, fig.cap="\\label{fig:plot-local-i}Changes in accessibility from pre-COVID-19 to during COVID-19. Highlighted areas had significantly large changes in accessibility according to Local Moran's I." }
+```{r plot-local-i, echo=FALSE, fig.cap="\\label{fig:accessibility-changes-with-local-i}Changes in accessibility from pre-COVID-19 to during COVID-19. Highlighted areas had significantly large changes in accessibility according to Local Moran's I." }
 ggplot() +
-  geom_sf(data = accessibilty_taz_change,
+  geom_sf(data = accessibility_taz_change,
           aes(fill = acc_d,
               color = significance,
               alpha = significance),
@@ -1076,6 +1087,7 @@ ggplot() +
   theme(axis.text = element_blank(),
         legend.position = "bottom")
 ```
+
 ```{r accessibility-change-by-parcel, include=FALSE}
 ## Analysis
 # Calculate accessibility change by parcel:
@@ -1141,16 +1153,31 @@ cbind(accessibility_by_age %>%
       accessibility_by_age %>% 
         filter(timing == "During covid") %>% 
         transmute(accessibility_covid = accessibility)) %>%
-  mutate(children = round(children) %>% 
+  mutate(pct_children = round(children/sum(children) * 100, 1),
+         pct_children = paste0("(", pct_children, "\\%)", sep = ""),
+         pct_adults = round(adults/sum(adults) * 100, 1),
+         pct_adults = paste0("(", pct_adults, "\\%)", sep = ""),
+         pct_seniors = round(seniors/sum(seniors) * 100, 1),
+         pct_seniors = paste0("(", pct_seniors, "\\%)", sep = ""),
+         children = round(children) %>% 
            prettyNum(big.mark = ","),
          adults = round(adults) %>% 
            prettyNum(big.mark = ","),
          seniors = round(seniors) %>% 
            prettyNum(big.mark = ","),
+         children = paste0(children, " ", pct_children, sep = ""),
+         adults = paste0(adults, " ", pct_adults, sep = ""),
+         seniors = paste0(seniors, " ", pct_seniors, sep = ""),
          change = (accessibility_covid - accessibility_pre) %>% 
            round(5),
          accessibility_pre = round(accessibility_pre, 5),
          accessibility_covid = round(accessibility_covid, 5)) %>%
+  transmute(children,
+            adults,
+            seniors,
+            accessibility_pre,
+            accessibility_covid,
+            change) %>%
   kable("latex",
         booktabs = TRUE,
         align = ("cccccc"),
@@ -1169,6 +1196,8 @@ cbind(accessibility_by_age %>%
 
 Conclusions
 ===================
+
+**LIMITATIONS**
 
 Words go here.
 
