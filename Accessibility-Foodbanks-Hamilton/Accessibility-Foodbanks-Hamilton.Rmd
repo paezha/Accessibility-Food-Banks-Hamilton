@@ -47,7 +47,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r install-data-package, include = FALSE}
-# Run only once if needed to install data package `sobiEquity`
+# Run only once if needed to install data package 
 if (!require("foodbanksHamilton", character.only = TRUE)) {
   devtools::install_github("https://github.com/paezha/Accessibility-Food-Banks-Hamilton", subdir = "foodbanksHamilton")
 }
