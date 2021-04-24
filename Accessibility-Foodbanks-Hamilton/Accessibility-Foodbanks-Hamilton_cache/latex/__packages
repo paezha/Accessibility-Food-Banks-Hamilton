@@ -3,6 +3,9 @@ foodbanksHamilton
 kableExtra
 patchwork
 sf
+sp
+spData
+spdep
 tidyverse
 ggplot2
 tibble
@@ -12,6 +15,3 @@ purrr
 dplyr
 stringr
 forcats
-sp
-spData
-spdep

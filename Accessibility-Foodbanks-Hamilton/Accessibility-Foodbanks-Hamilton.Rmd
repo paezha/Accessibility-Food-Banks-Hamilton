@@ -1,21 +1,19 @@
 ---
-title: "Changes in accessibility to food banks and food services during COVID-19 and implications for the food security of vulnerable populations in Hamilton, Ontario"
+title: "Changes in accessibility to food banks and food services during COVID-19 and implications for low income populations in Hamilton, Ontario"
 author:
   - name: Author One
     email: author1@example.com
     affiliation: Some University
-    footnote: 1
   - name: Author Two
     email: author2@example.com
-    affiliation: 
+    affiliation: Another University
+    footnote: 1
   - name: Author Three
     email: author3@example.com
     affiliation: Some University
-    footnote: 2 
   - name: Author Four
     email: author4@example.com
-    affiliation: Another University
-    footnote: 2
+    affiliation: Some University
 address:
   - code: Some University
     address: Department, Street, City, State, Zip
@@ -24,14 +22,10 @@ address:
 footnote:
   - code: 1
     text: "Corresponding Author"
-  - code: 2
-    text: "Equal contribution"
 abstract: |
-  This is the abstract.
+  In this paper we analyze the changes in accessibility to food banks and related services before and during the COVID-19 pandemic in the City of Hamilton, Ontario. Food banks and services are the last line of support for households facing food insecurity; as such, they have become essential and their relevance cannot be ignored in the midst of the economic upheaval caused by the pandemic. Our analysis is based on the application of balanced floating catchment areas, and concentrates on households with lower incomes ($<CAD40,000, approximately the Low Income Cutoff Value for a city of Hamilton's size). Accessibility was low to begin with in suburban and exurban parts of the city. We find that about 14\% of locations originally available in Hamilton closed during the pandemic; the impact of those closures on the level of service and accessibility was disproportionate, with system-wide losses exceeding 40\%. Those losses were geographically and demographically uneven. While every part of the city faced a reduction in accessibility, inner suburbs fared worse in terms of loss of accessibility. As well, children (age $\le 18$) appear to have been impacted the most.
 
-  It consists of two paragraphs.
-
-journal: "An awesome journal"
+journal: "Social Science and Medicine"
 date: "`r Sys.Date()`"
 bibliography: references.bib
 #linenumbers: true
@@ -44,7 +38,7 @@ header-includes:
 
 # CRediT author statement
 
-**Author 1:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization, Supervision; **Author 2:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization; **Author 3:** Conceptualization, Investigation, Data Curation, Writing - Original Draft; **Author 4:** Resources - Writing: Review & Editing - Supervision 
+**Author 1:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization, Supervision; **Author 2:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization; **Author 3:** Conceptualization, Investigation, Data Curation, Writing - Original Draft; **Author 4:** Resources, Writing - Original Draft, Supervision 
 
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -55,8 +49,8 @@ knitr::opts_chunk$set(
 ```{r install-data-package, include = FALSE}
 # Run only once if needed to install data package `sobiEquity`
 if (!require("foodbanksHamilton", character.only = TRUE)) {
-      devtools::install_github("https://github.com/paezha/Accessibility-Food-Banks-Hamilton", subdir = "foodbanksHamilton")
-  }
+  devtools::install_github("https://github.com/paezha/Accessibility-Food-Banks-Hamilton", subdir = "foodbanksHamilton")
+}
 ```
 
 ```{r load-packages, cache=FALSE, include=FALSE}
@@ -453,15 +447,15 @@ The locations of food banks and related food services were obtained from the Ham
 
 ```{r table-food-bank-info, echo=FALSE, results='asis'}
 foodbank_table %>% kable("latex",
-        booktabs = TRUE,
-        align = ("cccccc"),
-        col.names = c("Type", 
-                      "Description", 
-                      "Locations Pre-COVID", 
-                      "Locations During COVID", 
-                      "Additional Notes"),
-        caption = "\\label{tab:food-bank-info}foodbank and Food Service Information.",
-        escape = FALSE) %>%
+                         booktabs = TRUE,
+                         align = ("cccccc"),
+                         col.names = c("Type", 
+                                       "Description", 
+                                       "Locations Pre-COVID", 
+                                       "Locations During COVID", 
+                                       "Additional Notes"),
+                         caption = "\\label{tab:food-bank-info}foodbank and Food Service Information.",
+                         escape = FALSE) %>%
   kable_styling(latex_options = c("striped", "scale_down")) %>%
   column_spec(2, width = "15em") %>%
   column_spec(5, width = "15em")
@@ -499,7 +493,7 @@ accessibility_test <- data.frame(threshold = threshold_seq,
 # Calculate the system-wide accessibility according to each threshold
 for(i in 1:length(threshold_seq)){
   results_test <-  ttm %>% 
-  transmute(UID, OBJECTID, travel_time = e_travel_time, population = income_less40k, supply = 1) %>%
+    transmute(UID, OBJECTID, travel_time = e_travel_time, population = income_less40k, supply = 1) %>%
     b2sfca(threshold = i )
   accessibility_test$accessibility[i] <- sum(results_test$accessibility$accessibility)
 }
@@ -566,12 +560,12 @@ Figure \ref{fig:foodbanks} shows the location of food banks and services in the 
 
 # Create a bounding box for an inset
 inset_box <- st_bbox(c(xmin = -79.975,
-          xmax = -79.775, 
-          ymax = 43.2, 
-          ymin = 43.3), 
-        crs = st_crs(4326)) %>%
+                       xmax = -79.775, 
+                       ymax = 43.2, 
+                       ymin = 43.3), 
+                     crs = st_crs(4326)) %>%
   st_as_sfc()
-  
+
 fb <- ggplot() +
   geom_sf(data = hamilton_boundary,
           fill = "lightgray") +
@@ -668,7 +662,7 @@ Figure \ref{fig:sensitivity-analysis} shows the results of conducting sensitivit
 
 ```{r plot-results-sensitivity-analysis, out.width="60%", echo=FALSE, fig.cap="\\label{fig:sensitivity-analysis}Accessibility as a function of threshold"}
 acc_sensitivity <- ggplot(accessibility_test, 
-       aes(x = threshold, y = accessibility)) +
+                          aes(x = threshold, y = accessibility)) +
   geom_line() +
   ylab("Accessibility") +
   xlab("Threshold (in min)") +
@@ -684,7 +678,7 @@ Using the 15-minute threshold, we find that the system-wide accessibility (inter
 # Join zonal identifiers to accessibility results:
 accessibility <- accessibility %>%
   left_join(dwelling_network_points_2016 %>%
-            st_drop_geometry() %>%
+              st_drop_geometry() %>%
               dplyr::select(ID,
                             DAUID,
                             TAZUID,
@@ -729,16 +723,16 @@ los_pre <- ggplot() +
   scale_color_viridis_c(name = "Level of service \npre-COVID-19",
                         option =  "A", 
                         direction = -1,
-                       breaks = c(0.0005,
-                                  0.0010,
-                                  0.0015,
-                                  0.0020,
-                                  0.0025),
-                       labels = c("0.00050",
-                                  "0.00100",
-                                  "0.00150",
-                                  "0.00200",
-                                  "0.00250")) +
+                        breaks = c(0.0005,
+                                   0.0010,
+                                   0.0015,
+                                   0.0020,
+                                   0.0025),
+                        labels = c("0.00050",
+                                   "0.00100",
+                                   "0.00150",
+                                   "0.00200",
+                                   "0.00250")) +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
   guides(size = FALSE, shape = FALSE) +
   theme_minimal() +
@@ -758,16 +752,16 @@ los_covid <- ggplot() +
   scale_color_viridis_c(name = "Level of service \nduring COVID-19",
                         option =  "A", 
                         direction = -1,
-                       breaks = c(0.00050,
-                                  0.00075,
-                                  0.00100,
-                                  0.00125,
-                                  0.00150),
-                       labels = c("0.00050",
-                                  "0.00075",
-                                  "0.00100",
-                                  "0.00125",
-                                  "0.00150")) +
+                        breaks = c(0.00050,
+                                   0.00075,
+                                   0.00100,
+                                   0.00125,
+                                   0.00150),
+                        labels = c("0.00050",
+                                   "0.00075",
+                                   "0.00100",
+                                   "0.00125",
+                                   "0.00150")) +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
   guides(size = FALSE, shape = FALSE) +
   theme_minimal() +
@@ -787,9 +781,9 @@ los_change <- los %>%
   filter(`During covid` > 0) %>%
   mutate(los_d = `During covid` - `Pre-covid`) %>%
   left_join(foodbank_locations %>%
-            transmute(OBJECTID = ID,
-                      geometry),
-          by = "OBJECTID") %>%
+              transmute(OBJECTID = ID,
+                        geometry),
+            by = "OBJECTID") %>%
   st_as_sf()
 
 lc <- ggplot() +
@@ -807,16 +801,16 @@ lc <- ggplot() +
   scale_color_viridis_c(name = "Change in level of service",
                         option =  "A", 
                         direction = 1,
-                       breaks = c(-0.0001,
-                                  -0.0002,
-                                  -0.0003,
-                                  -0.0004,
-                                  -0.0005),
-                       labels = c("-0.0001",
-                                  "-0.0002",
-                                  "-0.0003",
-                                  "-0.0004",
-                                  "-0.0005")) +
+                        breaks = c(-0.0001,
+                                   -0.0002,
+                                   -0.0003,
+                                   -0.0004,
+                                   -0.0005),
+                        labels = c("-0.0001",
+                                   "-0.0002",
+                                   "-0.0003",
+                                   "-0.0004",
+                                   "-0.0005")) +
   scale_size(trans = 'reverse') +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
   guides(size = FALSE, shape = FALSE) +
@@ -840,28 +834,28 @@ lc_inset <- ggplot() +
   scale_color_viridis_c(name = "Change in level of service",
                         option =  "A", 
                         direction = 1,
-                       breaks = c(-0.0001,
-                                  -0.0002,
-                                  -0.0003,
-                                  -0.0004,
-                                  -0.0005),
-                       labels = c("-0.0001",
-                                  "-0.0002",
-                                  "-0.0003",
-                                  "-0.0004",
-                                  "-0.0005")) +
+                        breaks = c(-0.0001,
+                                   -0.0002,
+                                   -0.0003,
+                                   -0.0004,
+                                   -0.0005),
+                        labels = c("-0.0001",
+                                   "-0.0002",
+                                   "-0.0003",
+                                   "-0.0004",
+                                   "-0.0005")) +
   scale_size(name = "Change in level of service",
-                        trans = 'reverse',
-                       breaks = c(-0.0001,
-                                  -0.0002,
-                                  -0.0003,
-                                  -0.0004,
-                                  -0.0005),
-                       labels = c("-0.0001",
-                                  "-0.0002",
-                                  "-0.0003",
-                                  "-0.0004",
-                                  "-0.0005")) +
+             trans = 'reverse',
+             breaks = c(-0.0001,
+                        -0.0002,
+                        -0.0003,
+                        -0.0004,
+                        -0.0005),
+             labels = c("-0.0001",
+                        "-0.0002",
+                        "-0.0003",
+                        "-0.0004",
+                        "-0.0005")) +
   scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
   xlim(-79.975, -79.775) +
   ylim(43.2, 43.3) +
@@ -905,8 +899,8 @@ acc_pre <- ggplot() +
             filter(timing == "Pre-covid"),
           aes(fill = accessibility)) +
   scale_fill_viridis_c(name = "Accessibility \npre-COVID-19",
-                        option =  "A", 
-                        direction = -1,
+                       option =  "A", 
+                       direction = -1,
                        breaks = c(0.002,
                                   0.0016,
                                   0.0012,
@@ -928,8 +922,8 @@ acc_covid <- ggplot() +
             filter(timing == "During covid"),
           aes(fill = accessibility)) +
   scale_fill_viridis_c(name = "Accessibility \nduring COVID-19",
-                        option =  "A", 
-                        direction = -1,
+                       option =  "A", 
+                       direction = -1,
                        breaks = c(0.0010,
                                   0.0008,
                                   0.0006,
@@ -958,14 +952,14 @@ accessibility_taz_change <- accessibility_taz %>%
   mutate(acc_d = `During covid` - `Pre-covid`) %>%
   # Join TAZ geometry
   left_join(population_age_income %>%
-            transmute(TAZUID,
-                      geometry),
-          by = "TAZUID") %>%
+              transmute(TAZUID,
+                        geometry),
+            by = "TAZUID") %>%
   # Convert to simple features
   st_as_sf()
 ```
 
-We find that the accessibility landscape deteriorated substantially during the pandemic, with accessibility dropping on average by almost `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% mean() %>% abs() %>% round()`\%, but with large variations: some zones experienced changes in accessibility of only about `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% max() %>% abs() %>% round()`\%, whereas the most affected zone saw a loss of accessibility of almost `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% min() %>% abs() %>% round()`\%. Figure \ref{fig:accessibility-changes-with-local-i} shows the changes in accessibility. Every zone is worse off after the closure of facilities during the pandemic, but some parts of the city seem to have been particularly affected. To better highlight these changes, we used a local indicator of spatial autocorrelation [@anselin1995local] to explore the pattern of change in accessibility. Twenty-four TAZ are flagged as having significant large losses of accessibility (at $p<=0.10$, without correcting for multiple comparisons). Those zones are highlighted in the figure, where it can be seen that they form more or less compact neighborhoods. Remarkably, the largest (and significant) drops in accessibility are not downtown, but located in two cases in the industrial north of the city, in one case in an inner suburb above the escarpment, and lastly in a more suburban/exurban region in the south-west (**share other insights about these regions, maybe based on weighted travel patterns?**).
+We find that the accessibility landscape deteriorated substantially during the pandemic, with accessibility dropping on average by almost `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% mean() %>% abs() %>% round()`\%, but with large variations: some zones experienced changes in accessibility of only about `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% max() %>% abs() %>% round()`\%, whereas the most affected zone saw a loss of accessibility of almost `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% min() %>% abs() %>% round()`\%. Figure \ref{fig:accessibility-changes-with-local-i} shows the changes in accessibility. Every zone is worse off after the closure of facilities during the pandemic, but some parts of the city seem to have been particularly affected. To better highlight these changes, we used a local indicator of spatial autocorrelation [@anselin1995local] to explore the pattern of change in accessibility. Twenty-four TAZ are flagged as having significant large losses of accessibility (at $p<=0.10$, without correcting for multiple comparisons). Those zones are highlighted in the figure, where it can be seen that they form more or less compact neighborhoods. Remarkably, the largest (and significant) drops in accessibility are not downtown, but located in two cases in the industrial north of the city, in one case in an inner suburb above the escarpment, and lastly in a more suburban/exurban region in the south-west.
 
 ```{r plot-accessibility-changes, echo=FALSE, include=FALSE, fig.align = 'center', fig.cap="\\label{fig:accessibility-changes}Changes in accessibility from pre-COVID-19 to during COVID-19."}
 ## Analysis
@@ -982,8 +976,8 @@ acc_change <- ggplot() +
           color = "red",
           fill = NA) +
   scale_fill_viridis_c(name = "Change in accessibility",
-                        option =  "A", 
-                        direction = 1,
+                       option =  "A", 
+                       direction = 1,
                        breaks = c(-0.0008,
                                   -0.0006,
                                   -0.0004,
@@ -1005,8 +999,8 @@ acc_change_inset <- ggplot() +
           color = "red",
           fill = NA) +
   scale_fill_viridis_c(name = "Change in accessibility",
-                        option =  "A", 
-                        direction = 1,
+                       option =  "A", 
+                       direction = 1,
                        breaks = c(-0.0008,
                                   -0.0006,
                                   -0.0004,
@@ -1066,8 +1060,8 @@ ggplot() +
           color = "red",
           fill = NA) +
   scale_fill_viridis_c(name = "Change in accessibility",
-                        option =  "A", 
-                        direction = 1,
+                       option =  "A", 
+                       direction = 1,
                        breaks = c(-0.0008,
                                   -0.0006,
                                   -0.0004,
@@ -1092,6 +1086,8 @@ For the more suburban clusters of zones, the decrease in accessibility is derive
 
 In the cluster to the south-west, the decrease in accessibility is predominately driven by the closure of a high level-of-service Community Meals provider. However, like the more central suburban zones, low-income households within this cluster also between 90% to 100% auto-dependent in their tripmaking in the TTS. The story is similar for the zone located in the north-west that exhibits the greatest decrease in accessibility. Here, low-income households responding to the TTS conducted 100% of their trips by car and, as a result, parcels within this zone have access to the second-highest number of food bank and service locations within 15 minutes. However, this also means zonal accessibilities are greatly affected by the number of closures throughout the city. Finally, in the city's north end and north-east zones, low-income households exhibit a mixture of tripmaking behaviour in the TTS. Households in some zones take transit more often and one zone in particular has 100\% of its trips by walking while in others, car use makes up 100\% of trips. For these zones, the decrease in accessibility tends to be a product of the closure of several inner-city food bank and service locations.
 
+Just as the effects of the closures appear to have been uneven in space, they also seem to have differently impacted various population segments. Table \ref{tab:accessibility-by-age} shows the estimated number of people in each age group by their level of accessibility before and during the pandemic. Here, it is important to note that the quartiles are relative: people in the top 25\% of accessibility still have lower accessibility during the pandemic than before. In reality, every population group is worse off during the pandemic in terms of their accessibility to food banks and services in the City of Hamilton. However, some age groups were affected more. As seen in the table, the distribution within quartiles for adults changed only slightly, and in fact there are fewer adults in the bottom three quartiles as some found themselves in the (deteriorated) top quartile of accessibility during the pandemic. The story is different for seniors, a greater number of whom are now in the third quartile, due to a combination of seniors facing a worse accessibility situation, and just a few moving from the bottom quartile (pre-pandemic) to the third during the pandemic. Those aged 18 and less appear to have fared worse, and the largest change is in the number of children who were in the third quartile before the pandemic found themselves in the bottom accessibility class during the pandemic. These results suggest that, through a combination of the typical modes of transportation of lower income households, and the spatial distribution of the population, the food bank/service locations closed had a differential impact that more greatly affected the youngest among the population in low income households.
+
 ```{r accessibility-change-by-parcel, include=FALSE}
 ## Analysis
 # Calculate accessibility change by parcel:
@@ -1115,30 +1111,104 @@ accessibility <- accessibility %>%
 
 ```{r quartiles-of-accessibility-change, include=FALSE}
 ## Analysis
-# Quartiles of accessibility change:
-acc_quintiles_change <- quantile(accessibility_change$acc_d,
+# Quartiles of accessibility pre-covid:
+acc_quantiles_pre <- quantile(accessibility_change$`Pre-covid`,
                               c(0, 0.25, 0.5, 0.75, 1))
+# Quartiles of accessibility change:
+acc_quantiles_during <- quantile(accessibility_change$`During covid`,
+                                 c(0, 0.25, 0.5, 0.75, 1))
 ```
 
-```{r accessibility-change-labels, include=FALSE}
+```{r accessibility-labels, include=FALSE}
 ## Analysis
 # Add labels of accessibility loss to table:
 accessibility <- accessibility %>%
-  mutate(accessibility_level = case_when(acc_d <= acc_quintiles_change[2] ~ "Bottom 25%",
-                                         acc_d > acc_quintiles_change[2] & acc_d <= acc_quintiles_change[3] ~ "Third 25%",
-                                         acc_d > acc_quintiles_change[3] & acc_d <= acc_quintiles_change[4] ~ "Second 25%",
-                                         acc_d > acc_quintiles_change[4] ~ "Top 25%"),
-           accessibility_level = factor(accessibility_level,
-                                        levels = c("Top 25%", "Second 25%", "Third 25%", "Bottom 25%"),
-                                        ordered = TRUE))
+  mutate(accessibility_pre_level = case_when(accessibility <= acc_quantiles_pre[2] ~ "Bottom 25\\%",
+                                             accessibility > acc_quantiles_pre[2] & accessibility <= acc_quantiles_pre[3] ~ "Third 25\\%",
+                                             accessibility > acc_quantiles_pre[3] & accessibility <= acc_quantiles_pre[4] ~ "Second 25\\%",
+                                             accessibility > acc_quantiles_pre[4] ~ "Top 25\\%"),
+         accessibility_pre_level = factor(accessibility_pre_level,
+                                          levels = c("Top 25\\%", "Second 25\\%", "Third 25\\%", "Bottom 25\\%"),
+                                          ordered = TRUE),
+         accessibility_during_level = case_when(accessibility <= acc_quantiles_during[2] ~ "Bottom 25\\%",
+                                                accessibility > acc_quantiles_during[2] & accessibility <= acc_quantiles_during[3] ~ "Third 25\\%",
+                                                accessibility > acc_quantiles_during[3] & accessibility <= acc_quantiles_during[4] ~ "Second 25\\%",
+                                                accessibility > acc_quantiles_during[4] ~ "Top 25\\%"),
+         accessibility_during_level = factor(accessibility_during_level,
+                                             levels = c("Top 25\\%", "Second 25\\%", "Third 25\\%", "Bottom 25\\%"),
+                                             ordered = TRUE))
 ```
 
 ```{r aggregate-accessibility-by-age-group, include=FALSE}
+summary_pre <- accessibility %>%
+  filter(timing == "Pre-covid") %>%
+  group_by(accessibility_pre_level) %>%
+  summarize(children_pre = sum(children) %>% 
+              round(),
+            adults_pre = sum(adults) %>% 
+              round(),
+            seniors_pre = sum(seniors) %>% 
+              round(),
+            .groups = "drop")
+
+summary_during <- accessibility %>%
+  filter(timing == "During covid") %>%
+  group_by(accessibility_during_level) %>%
+  summarize(children_during = sum(children) %>% 
+              round(),
+            adults_during = sum(adults) %>% 
+              round(),
+            seniors_during = sum(seniors) %>% 
+              round(),
+            .groups_during = "drop")
+
+accessibility_by_age <- cbind(summary_pre, summary_during[,2:4]) %>%
+  mutate(children_change = round((children_during - children_pre)/children_pre * 100, 2),
+         adults_change = round((adults_during - adults_pre)/adults_pre * 100, 2),
+         seniors_change = round((seniors_during - seniors_pre)/seniors_pre * 100, 2),
+         children_pre = prettyNum(children_pre, big.mark = ","),
+         adults_pre = prettyNum(adults_pre, big.mark = ","),
+         seniors_pre = prettyNum(seniors_pre, big.mark = ","),
+         children_during = paste0(prettyNum(children_during, big.mark = ","), " (", children_change, "\\%)"),
+         adults_during = paste0(prettyNum(adults_during, big.mark = ","), " (", adults_change, "\\%)"),
+         seniors_during = paste0(prettyNum(seniors_during, big.mark = ","), " (", seniors_change, "\\%)")) %>%
+  transmute(accessibility_pre_level,
+            children_pre,
+            adults_pre,
+            seniors_pre,
+            children_during,
+            adults_during,
+            seniors_during)
+```
+
+```{r table-accessibility-by-age-group, echo=FALSE, results='asis'}
+accessibility_by_age %>%
+  kable("latex",
+        booktabs = TRUE,
+        align = ("lcccccc"),
+        col.names = c("Accessibility Quartile",
+                      "Children (age $\\le$ 18)", 
+                      "Adults (19-64)", 
+                      "Seniors (age $\\ge$ 65)", 
+                      "Children (age $\\le$ 18)", 
+                      "Adults (19-64)", 
+                      "Seniors (age $\\ge$ 65)"),
+        caption = "\\label{tab:accessibility-by-age}Population at each accessibility level by age group among members households with incomes less than CAD40,000.",
+        escape = FALSE) %>%
+  kable_styling(latex_options = c("striped", "scale_down", "hold_position")) %>%
+  add_header_above(c(" " = 1, "Pre-COVID-19" = 3, "During COVID-19" = 3)) %>%
+  footnote(general = c("Population values have been rounded.", 
+                       "The values in brackets for population during COVID-19 are the changes from before the pandemic."))
+```
+
+
+```{r include=FALSE, eval = FALSE}
 ## Analysis
 # Calculate accessibility by age group and accessibility level:
 accessibility_by_age <- accessibility %>%
-  group_by(timing, 
-           accessibility_level) %>%
+  filter(timing = "During covid")
+group_by(timing, 
+         accessibility_level) %>%
   summarize(children = sum(children),
             adults = sum(adults),
             seniors = sum(seniors),
@@ -1147,9 +1217,7 @@ accessibility_by_age <- accessibility %>%
 # The accessibility level is the magnitude of the accessibility loss: the top 25% faced the smallest losses in accessibility, and the bottom 25% faced the greatest losses in accessibility. 
 ```
 
-Discuss the results of aggregating the accessibility by age group (see Table \ref{tab:accessibility-by-age}). Follow with the analysis of hours of travel?
-
-```{r table-accessibility-by-age-group, echo=FALSE, results='asis'}
+```{r include=FALSE, eval = FALSE}
 cbind(accessibility_by_age %>% 
         filter(timing == "Pre-covid") %>% 
         select(children:accessibility) %>% 
