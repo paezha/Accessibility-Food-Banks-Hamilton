@@ -48,7 +48,7 @@ header-includes:
 
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(
-  cache = TRUE, out.width = "100%", align = 'center', fig.width = 6, fig.height = 6
+  cache = TRUE, out.width = "100%", align = 'center', fig.width = 7, fig.height = 7
 )
 ```
 
@@ -614,13 +614,16 @@ lih <- ggplot() +
   geom_sf(data = data_da_2016,
           aes(fill = income_less40k),
           color = NA) +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
   geom_sf(data = inset_box,
           linetype = "dotted",
           color = "red",
           fill = NA) +
   scale_fill_viridis_c(name = "Number of households", 
                        option = "A",
-                       direction = -1) +
+                       direction = -1,
+                       breaks = c(200, 400, 600)) +
   theme_minimal() +
   theme(axis.text = element_blank(),
         legend.position = "bottom")
@@ -629,13 +632,16 @@ p_lih <- ggplot() +
   geom_sf(data = data_da_2016,
           aes(fill = p_inc_less40k),
           color = NA) +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
   geom_sf(data = inset_box,
           linetype = "dotted",
           color = "red",
           fill = NA) +
   scale_fill_viridis_c(name = "Proportion of households", 
                        option = "A",
-                       direction = -1) +
+                       direction = -1,
+                       breaks = c(0.25, 0.50, 0.75)) +
   theme_minimal() +
   theme(axis.text = element_blank(),
         legend.position = "bottom")
@@ -888,7 +894,8 @@ accessibility_taz <- accessibility %>%
 ## Analysis
 # Plot accessibility before and during covid:
 acc_pre <- ggplot() +
-  #geom_sf(data = hamilton_boundary) +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
   geom_sf(data = accessibility_taz %>%
             filter(timing == "Pre-covid"),
           aes(fill = accessibility)) +
@@ -910,7 +917,8 @@ acc_pre <- ggplot() +
         legend.position = "right")
 
 acc_covid <- ggplot() +
-  #geom_sf(data = hamilton_boundary) +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
   geom_sf(data = accessibility_taz %>%
             filter(timing == "During covid"),
           aes(fill = accessibility)) +
@@ -934,7 +942,7 @@ acc_covid <- ggplot() +
 acc_pre / acc_covid
 ```
 
-```{r plot-accessibility-changes, echo=FALSE, fig.align = 'center', fig.cap="\\label{fig:accessibility-changes}Changes in accessibility from pre-COVID-19 to during COVID-19."}
+```{r plot-accessibility-changes, echo=FALSE, include=FALSE, fig.align = 'center', fig.cap="\\label{fig:accessibility-changes}Changes in accessibility from pre-COVID-19 to during COVID-19."}
 ## Analysis
 # Calculate accessibility change by TAZ:
 accessibilty_taz_change <- accessibility_taz %>%
@@ -1033,7 +1041,7 @@ summary(local_i)
 accessibilty_taz_change$significance <- local_i$significance
 ```
 
-```{r plot-local-i, echo=FALSE, fig.cap="\\label{fig:plot-local-i}Areas with significantly large changes in accessibility from pre-COVID-19 to during COVID-19 according to Local Moran's I." }
+```{r plot-local-i, echo=FALSE, fig.cap="\\label{fig:plot-local-i}Changes in accessibility from pre-COVID-19 to during COVID-19. Highlighted areas had significantly large changes in accessibility according to Local Moran's I." }
 ggplot() +
   geom_sf(data = accessibilty_taz_change,
           aes(fill = acc_d,
@@ -1057,7 +1065,7 @@ ggplot() +
                                   "-0.0006",
                                   "-0.0004",
                                   "-0.0002")) +
-  scale_color_manual(values = c("n.s." = NA, 
+  scale_color_manual(values = c("n.s." = "lightgray", 
                                 "sig" = "black")) +
   scale_alpha_manual(values = c("n.s." = 0.5, 
                                 "sig" = 1)) +
@@ -1068,8 +1076,6 @@ ggplot() +
   theme(axis.text = element_blank(),
         legend.position = "bottom")
 ```
-
-
 ```{r accessibility-change-by-parcel, include=FALSE}
 ## Analysis
 # Calculate accessibility change by parcel:

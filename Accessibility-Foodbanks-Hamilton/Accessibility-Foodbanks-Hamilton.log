@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.9)  23 APR 2021 18:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.9)  23 APR 2021 21:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -760,32 +760,32 @@ name{table.1}) has been already used, duplicate ignored
 l.560 
       ]
 <Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-location-foodbanks-1.
-pdf, id=158, 433.62pt x 433.62pt>
+pdf, id=158, 505.89pt x 505.89pt>
 File: Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-location-foodban
 ks-1.pdf Graphic file (type pdf)
 <use Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-location-foodbank
 s-1.pdf>
 Package pdftex.def Info: Accessibility-Foodbanks-Hamilton_files/figure-latex/pl
 ot-location-foodbanks-1.pdf  used on input line 575.
-(pdftex.def)             Requested size: 345.0pt x 345.01738pt.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 <Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-low-income-households
--1.pdf, id=159, 433.62pt x 433.62pt>
+-1.pdf, id=159, 505.89pt x 505.89pt>
 File: Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-low-income-house
 holds-1.pdf Graphic file (type pdf)
 <use Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-low-income-househ
 olds-1.pdf>
 Package pdftex.def Info: Accessibility-Foodbanks-Hamilton_files/figure-latex/pl
 ot-low-income-households-1.pdf  used on input line 579.
-(pdftex.def)             Requested size: 345.0pt x 345.01738pt.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 <Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-results-sensitivity-a
-nalysis-1.pdf, id=161, 433.62pt x 433.62pt>
+nalysis-1.pdf, id=161, 505.89pt x 505.89pt>
 File: Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-results-sensitiv
 ity-analysis-1.pdf Graphic file (type pdf)
 <use Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-results-sensitivi
 ty-analysis-1.pdf>
 Package pdftex.def Info: Accessibility-Foodbanks-Hamilton_files/figure-latex/pl
 ot-results-sensitivity-analysis-1.pdf  used on input line 618.
-(pdftex.def)             Requested size: 207.0021pt x 207.00381pt.
+(pdftex.def)             Requested size: 207.0021pt x 207.00711pt.
 [10] [11pdfTeX warning (ext4): destination with the same identifier (name{figur
 e.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
@@ -800,23 +800,23 @@ l.629
        <./Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-low-income-h
 ouseholds-1.pdf>]
 <Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-service-1.p
-df, id=193, 433.62pt x 433.62pt>
+df, id=193, 505.89pt x 505.89pt>
 File: Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-servic
 e-1.pdf Graphic file (type pdf)
 <use Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-service
 -1.pdf>
 Package pdftex.def Info: Accessibility-Foodbanks-Hamilton_files/figure-latex/pl
 ot-levels-of-service-1.pdf  used on input line 658.
-(pdftex.def)             Requested size: 345.0pt x 345.01738pt.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 <Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-service-cha
-nges-1.pdf, id=194, 433.62pt x 433.62pt>
+nges-1.pdf, id=194, 505.89pt x 505.89pt>
 File: Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-servic
 e-changes-1.pdf Graphic file (type pdf)
 <use Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-service
 -changes-1.pdf>
 Package pdftex.def Info: Accessibility-Foodbanks-Hamilton_files/figure-latex/pl
 ot-levels-of-service-changes-1.pdf  used on input line 662.
-(pdftex.def)             Requested size: 345.0pt x 345.01738pt.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 [13pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
@@ -837,67 +837,52 @@ l.680
        <./Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-levels-of-se
 rvice-changes-1.pdf>]
 <Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibility-1.pdf, 
-id=238, 433.62pt x 433.62pt>
+id=238, 505.89pt x 505.89pt>
 File: Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibility-1.
 pdf Graphic file (type pdf)
 <use Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibility-1.p
 df>
 Package pdftex.def Info: Accessibility-Foodbanks-Hamilton_files/figure-latex/pl
 ot-accessibility-1.pdf  used on input line 683.
-(pdftex.def)             Requested size: 345.0pt x 345.01738pt.
-<Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibility-changes
--1.pdf, id=239, 433.62pt x 433.62pt>
-File: Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibility-ch
-anges-1.pdf Graphic file (type pdf)
-<use Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibility-cha
-nges-1.pdf>
-Package pdftex.def Info: Accessibility-Foodbanks-Hamilton_files/figure-latex/pl
-ot-accessibility-changes-1.pdf  used on input line 692.
-(pdftex.def)             Requested size: 345.0pt x 345.01738pt.
-<Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-local-i-1.pdf, id=240
-, 433.62pt x 433.62pt>
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
+<Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-local-i-1.pdf, id=239
+, 505.89pt x 505.89pt>
 File: Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-local-i-1.pdf Gr
 aphic file (type pdf)
 <use Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-local-i-1.pdf>
 Package pdftex.def Info: Accessibility-Foodbanks-Hamilton_files/figure-latex/pl
-ot-local-i-1.pdf  used on input line 700.
-(pdftex.def)             Requested size: 345.0pt x 345.01738pt.
+ot-local-i-1.pdf  used on input line 691.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 [16pdfTeX warning (ext4): destination with the same identifier (name{table.2}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.763 
+l.754 
       ] [17pdfTeX warning (ext4): destination with the same identifier (name{fi
 gure.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.763 
+l.754 
        <./Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibilit
 y-1.pdf>] [18pdfTeX warning (ext4): destination with the same identifier (name{
 figure.7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.763 
-       <./Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-accessibilit
-y-changes-1.pdf>] [19pdfTeX warning (ext4): destination with the same identifie
-r (name{figure.8}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.763 
+l.754 
        <./Accessibility-Foodbanks-Hamilton_files/figure-latex/plot-local-i-1.pd
 f>]
-Overfull \hbox (50.57008pt too wide) in paragraph at lines 839--844
+Overfull \hbox (50.57008pt too wide) in paragraph at lines 830--835
 \T1/lmr/m/n/10 Jour-nal of Hunger & En-vi-ron-men-tal Nu-tri-tion 1--15. doi:[]
 10.1080/19320248.2021.1900974[] 
  []
 
-[20] [21]
-Overfull \hbox (44.13885pt too wide) in paragraph at lines 977--983
+[19] [20]
+Overfull \hbox (44.13885pt too wide) in paragraph at lines 968--974
 \T1/lmr/m/n/10 of Ge-o-graph-i-cal In-for-ma-tion Sci-ence 26, 1073--1089. doi:
 []10.1080/13658816.2011.624987[] 
  []
 
-[22] (./Accessibility-Foodbanks-Hamilton.aux)
+[21] (./Accessibility-Foodbanks-Hamilton.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -906,13 +891,13 @@ t changed.
 (rerunfilecheck)             Checksum: E2EB8AC485FA181693A8F856F5AEB6BC;2492.
  ) 
 Here is how much of TeX's memory you used:
- 12056 strings out of 480954
- 179180 string characters out of 5905755
- 483691 words of memory out of 5000000
- 28899 multiletter control sequences out of 15000+600000
+ 12045 strings out of 480954
+ 178531 string characters out of 5905755
+ 483560 words of memory out of 5000000
+ 28891 multiletter control sequences out of 15000+600000
  459635 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,12n,88p,437b,373s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 83i,12n,88p,446b,373s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/paezha/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hsy.enc}{c:/Users/paezha/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/
 lm-ec.enc}{c:/Users/paezha/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
@@ -937,11 +922,11 @@ lic/lm/lmsy6.pfb><c:/Users/paezha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
 1/public/lm/lmsy7.pfb><c:/Users/paezha/AppData/Roaming/TinyTeX/texmf-dist/fonts
 /type1/public/lm/lmtt10.pfb><c:/Users/paezha/AppData/Roaming/TinyTeX/texmf-dist
 /fonts/type1/public/lm/lmtt8.pfb>
-Output written on Accessibility-Foodbanks-Hamilton.pdf (22 pages, 1306288 bytes
+Output written on Accessibility-Foodbanks-Hamilton.pdf (21 pages, 1235035 bytes
 ).
 PDF statistics:
- 473 PDF objects out of 1000 (max. 8388607)
- 405 compressed objects within 5 object streams
- 121 named destinations out of 1000 (max. 500000)
- 161 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 460 PDF objects out of 1000 (max. 8388607)
+ 396 compressed objects within 4 object streams
+ 119 named destinations out of 1000 (max. 500000)
+ 156 words of extra memory for PDF output out of 10000 (max. 10000000)
 
