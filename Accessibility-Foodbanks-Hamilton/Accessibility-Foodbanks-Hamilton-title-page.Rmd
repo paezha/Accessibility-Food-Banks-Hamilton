@@ -1,0 +1,43 @@
+---
+title: "Changes in accessibility to food banks and food services during COVID-19 and implications for low income populations in Hamilton, Ontario"
+author:
+  - name: Christopher D. Higgins
+    email: cd.higgins@utoronto.ca
+    affiliation: University of Toronto Scarborough
+  - name: Antonio Paez
+    email: paezha@mcmaster.ca
+    affiliation: McMaster University
+    footnote: 1
+  - name: Gyoorie Kim
+    email: gyoorie.kim@mail.utoronto.ca
+    affiliation: University of Toronto Mississauga
+  - name: Jue Wang
+    email: gis.wang@utoronto.ca
+    affiliation: University of Toronto Mississauga
+address:
+  - code: University of Toronto Scarborough
+    address: Department of Geography & Planning, University of Toronto Scarborough, 1265 Military Trail, Toronto, ON M1C1A4
+  - code: McMaster University
+    address: School of Earth, Environment and Society, McMaster University, Hamilton, ON, L8S 4K1, Canada
+  - code: University of Toronto Mississauga
+    address: Department of Geography, Geomatics and Environment, University of Toronto Mississauga, 3359 Mississauga Road, Mississauga, ON, L5L 1C6 , Canada   
+footnote:
+  - code: 1
+    text: "Corresponding Author"
+abstract: |
+  In this paper we analyze the changes in accessibility to food banks and related services before and during the COVID-19 pandemic in the City of Hamilton, Ontario. Food banks and services are the last line of support for households facing food insecurity; as such, they have become essential and their relevance cannot be ignored in the midst of the economic upheaval caused by the pandemic. Our analysis is based on the application of balanced floating catchment areas, and concentrates on households with lower incomes ($<CAD40,000, approximately the Low Income Cutoff Value for a city of Hamilton's size). Accessibility was low to begin with in suburban and exurban parts of the city. We find that about 14\% of locations originally available in Hamilton closed during the pandemic; the impact of those closures on the level of service and accessibility was disproportionate, with system-wide losses exceeding 40\%. Those losses were geographically and demographically uneven. While every part of the city faced a reduction in accessibility, inner suburbs fared worse in terms of loss of accessibility. As well, children (age $\le 18$) appear to have been impacted the most.
+
+journal: "Social Science and Medicine"
+date: "`r Sys.Date()`"
+bibliography: references.bib
+#linenumbers: true
+#numbersections: true
+csl: elsevier-harvard.csl
+output: rticles::elsevier_article
+header-includes:
+    - \usepackage[table]{xcolor}
+---
+
+# CRediT author statement
+
+**Author 1:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization, Supervision; **Author 2:** Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Visualization; **Author 3:** Conceptualization, Investigation, Data Curation, Writing - Original Draft; **Author 4:** Resources, Writing - Original Draft, Supervision 

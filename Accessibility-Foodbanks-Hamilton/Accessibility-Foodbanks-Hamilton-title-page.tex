@@ -1,0 +1,125 @@
+\documentclass[]{elsarticle} %review=doublespace preprint=single 5p=2 column
+%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+\usepackage[hyphens]{url}
+
+  \journal{Social Science and Medicine} % Sets Journal name
+
+
+\usepackage{lineno} % add
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\usepackage{graphicx}
+\usepackage{booktabs} % book-quality tables
+%%%%%%%%%%%%%%%% end my additions to header
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\bibliographystyle{elsarticle-harv}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={Changes in accessibility to food banks and food services during COVID-19 and implications for low income populations in Hamilton, Ontario},
+            colorlinks=false,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+\setcounter{secnumdepth}{0}
+% Pandoc toggle for numbering sections (defaults to be off)
+\setcounter{secnumdepth}{0}
+
+% Pandoc citation processing
+
+% Pandoc header
+\usepackage[table]{xcolor}
+
+
+
+\begin{document}
+\begin{frontmatter}
+
+  \title{Changes in accessibility to food banks and food services during
+COVID-19 and implications for low income populations in Hamilton,
+Ontario}
+    \author[University of Toronto Scarborough]{Christopher D. Higgins}
+   \ead{cd.higgins@utoronto.ca} 
+    \author[McMaster University]{Antonio Paez\corref{1}}
+   \ead{paezha@mcmaster.ca} 
+    \author[University of Toronto Mississauga]{Gyoorie Kim}
+   \ead{gyoorie.kim@mail.utoronto.ca} 
+    \author[University of Toronto Mississauga]{Jue Wang}
+   \ead{gis.wang@utoronto.ca} 
+      \address[University of Toronto Scarborough]{Department of
+Geography \& Planning, University of Toronto Scarborough, 1265 Military
+Trail, Toronto, ON M1C1A4}
+    \address[McMaster University]{School of Earth, Environment and
+Society, McMaster University, Hamilton, ON, L8S 4K1, Canada}
+    \address[University of Toronto Mississauga]{Department of Geography,
+Geomatics and Environment, University of Toronto Mississauga, 3359
+Mississauga Road, Mississauga, ON, L5L 1C6 , Canada}
+      \cortext[1]{Corresponding Author}
+  
+  \begin{abstract}
+  In this paper we analyze the changes in accessibility to food banks
+  and related services before and during the COVID-19 pandemic in the
+  City of Hamilton, Ontario. Food banks and services are the last line
+  of support for households facing food insecurity; as such, they have
+  become essential and their relevance cannot be ignored in the midst of
+  the economic upheaval caused by the pandemic. Our analysis is based on
+  the application of balanced floating catchment areas, and concentrates
+  on households with lower incomes (\$\textless CAD40,000, approximately
+  the Low Income Cutoff Value for a city of Hamilton's size).
+  Accessibility was low to begin with in suburban and exurban parts of
+  the city. We find that about 14\% of locations originally available in
+  Hamilton closed during the pandemic; the impact of those closures on
+  the level of service and accessibility was disproportionate, with
+  system-wide losses exceeding 40\%. Those losses were geographically
+  and demographically uneven. While every part of the city faced a
+  reduction in accessibility, inner suburbs fared worse in terms of loss
+  of accessibility. As well, children (age \(\le 18\)) appear to have
+  been impacted the most.
+  \end{abstract}
+  
+ \end{frontmatter}
+
+\hypertarget{credit-author-statement}{%
+\section{CRediT author statement}\label{credit-author-statement}}
+
+\textbf{Author 1:} Conceptualization, Methodology, Software, Validation,
+Formal analysis, Investigation, Data Curation, Writing - Original Draft,
+Visualization, Supervision; \textbf{Author 2:} Conceptualization,
+Methodology, Software, Validation, Formal analysis, Investigation, Data
+Curation, Writing - Original Draft, Visualization; \textbf{Author 3:}
+Conceptualization, Investigation, Data Curation, Writing - Original
+Draft; \textbf{Author 4:} Resources, Writing - Original Draft,
+Supervision
+
+
+\end{document}
+
