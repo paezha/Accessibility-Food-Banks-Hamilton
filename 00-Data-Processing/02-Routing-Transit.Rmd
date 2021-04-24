@@ -127,9 +127,9 @@ for (i in 1:num_chunks){
   ttm_chunk <- travel_time_matrix(r5_hamilton_cma,
                           origins = origins_i_chunk,
                           destinations = destinations_j,
-                          mode = c("TRANSIT"),
+                          mode = c("WALK", "TRANSIT"),
                           mode_egress = c("WALK"),
-                          departure_datetime = as.POSIXct(strptime("2021-04-05 08:00:00", "%Y-%m-%d %H:%M:%S", tz = "EST5EDT")),
+                          departure_datetime = as.POSIXct(strptime("2021-03-30 08:00:00", "%Y-%m-%d %H:%M:%S", tz = "EST5EDT")),
                           max_walk_dist = 10000, # metres
                           max_trip_duration = 180)
   
