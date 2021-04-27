@@ -1,26 +1,24 @@
 ---
 title: "Changes in accessibility to food banks and food services during COVID-19 and implications for low income populations in Hamilton, Ontario"
 author:
-  - name: Christopher D. Higgins
-    email: cd.higgins@utoronto.ca
-    affiliation: University of Toronto Scarborough
-  - name: Antonio Paez
-    email: paezha@mcmaster.ca
-    affiliation: McMaster University
+  - name: Author One
+    email: author1@example.com
+    affiliation: Some University
+  - name: Author Two
+    email: author2@example.com
+    affiliation: Another University
     footnote: 1
-  - name: Gyoorie Kim
-    email: gyoorie.kim@mail.utoronto.ca
-    affiliation: University of Toronto Mississauga
-  - name: Jue Wang
-    email: gis.wang@utoronto.ca
-    affiliation: University of Toronto Mississauga
+  - name: Author Three
+    email: author3@example.com
+    affiliation: Some University
+  - name: Author Four
+    email: author4@example.com
+    affiliation: Some University
 address:
-  - code: University of Toronto Scarborough
-    address: Department of Geography & Planning, University of Toronto Scarborough, 1265 Military Trail, Toronto, ON M1C1A4
-  - code: McMaster University
-    address: School of Earth, Environment and Society, McMaster University, Hamilton, ON, L8S 4K1, Canada
-  - code: University of Toronto Mississauga
-    address: Department of Geography, Geomatics and Environment, University of Toronto Mississauga, 3359 Mississauga Road, Mississauga, ON, L5L 1C6 , Canada   
+  - code: Some University
+    address: Department, Street, City, State, Zip
+  - code: Another University
+    address: Department, Street, City, State, Zip
 footnote:
   - code: 1
     text: "Corresponding Author"
