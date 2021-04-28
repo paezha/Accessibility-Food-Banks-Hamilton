@@ -52,9 +52,9 @@ sufficient quantity and/or adequate quality of food” due to a
 household’s financial limitations (Enns et al. 2020). This condition has
 been associated with reductions in nutritional outcomes (Bhattacharya,
 Currie, and Haider 2004; Kirkpatrick and Tarasuk 2008; Olson 1999) and
-negative physical and mental health impact in children and adults (Elgar
-et al. 2021; Jones 2017; Ramsey et al. 2011; Seligman, Laraia, and
-Kushel 2010; Stuff et al. 2004). Over at least the past four decades
+negative physical and mental health impacts in children and adults
+(Elgar et al. 2021; Jones 2017; Ramsey et al. 2011; Seligman, Laraia,
+and Kushel 2010; Stuff et al. 2004). Over at least the past four decades
 food banks and related services have become an essential line of defense
 against food insecurity in Canadian communities (Riches 2002; Holmes et
 al. 2018; Black and Seto 2020; Tarasuk, Fafard St-Germain, and Loopstra
@@ -108,12 +108,15 @@ geographic accessibility and socio-demographic variations (A. Paez et
 al. 2010; Vanderlee and L’Abbé 2017; Widener 2018). However, while there
 is a wealth of literature that has examined the topic of geographic
 accessibility to healthy food through the “food desert” concept, there
-has been little research into accessibility to food banks. Although
-previous work has explored differences in *accessing* food banks, such
-as how some households utilize food banks over short periods of time
-while others regularly utilize food banks as longer-term resource (e.g.,
-Enns et al. 2020), we are not aware of any research that has focused on
-the geographic component of accessibility.
+has been little research into accessibility to food banks. Previous work
+has explored differences in *accessing* food banks, such as how some
+households utilize food banks over short periods of time while others
+regularly utilize food banks as longer-term resource (e.g., Enns et al.
+2020). In addition, transportation and locational considerations have
+been raised as key issues in food bank accessibility in previous
+qualitative research (Smith-Carrier et al. 2017). However, we are not
+aware of any research that has focused on estimating or capturing this
+geographic component of accessibility.
 
 The study of place-based geographic accessibility is concerned with
 capturing the potential to reach destinations of value using the
@@ -148,7 +151,7 @@ finally, who are most likely to have been impacted by changes in the
 accessibility landscape? This paper first looks at the distribution of
 food banks and related services before and during the pandemic. Then, we
 use the balanced floating catchment area approach of Paez et al. (2019)
-to investigate the accessibility situation. For this, we use a fully
+to investigate the accessibility situation. For this, we adopt a fully
 disaggregated approach based on parcel-level data. Socio-economic and
 demographic data are drawn from the latest Census of Canada (2016),
 whereas travel information is from the most recent regional travel
@@ -165,16 +168,15 @@ amount or good quality food, leading to inadequate nutrient intake (Enns
 et al. 2020; Kirkpatrick and Tarasuk 2008; Tarasuk and Vogt 2009). This
 nutrient deficiency is associated with major population health concerns,
 particularly among Canadians at socio-economic disadvantage (Bazerghi,
-McKay, and Dunn 2016). Data on food insecurity in Canada is collected in
-several ways. Quantitatively, official government surveys such as the
-Household Food Security Survey Module (HFSSM), the Canadian Community
-Health Surveys (CCHS), the International Study of Adults (LISA), and
-official classifications determined by Health Canada in relation to
-socio-demographic variables offer some insight into food insecurity
-(Kirkpatrick and Tarasuk 2008; Tarasuk and Vogt 2009; Gundersen et al.
-2018). Nationally, it has been found that food insecurity impacts
-approximately 12.3% of Canadian households (Tarasuk, Dachner, and
-Loopstra 2014)
+McKay, and Dunn 2016). Official government surveys such as the Household
+Food Security Survey Module (HFSSM), the Canadian Community Health
+Surveys (CCHS), the Longitudinal and International Study of Adults
+(LISA), and official classifications determined by Health Canada in
+relation to socio-demographic variables offer some insight into food
+insecurity in Canada (Kirkpatrick and Tarasuk 2008; Tarasuk and Vogt
+2009; Gundersen et al. 2018). Nationally, it has been found that food
+insecurity impacts approximately 12.3% of Canadian households (Tarasuk,
+Dachner, and Loopstra 2014)
 
 Food banks - sometimes also referred to as ‘food pantries’ and ‘food
 shelves’ - originated as a community response to aid those with
@@ -226,23 +228,23 @@ first time, and also in households experiencing more severe food
 insecurity than before (Niles et al. 2020; Wolfson and Leung 2020). Most
 recently in May 2020, Canada recorded 14.7% of its population living in
 food insecurity in the past 30 days (Statistics Canada 2020b).
-Considering the negative mental and physical health effects associated
-with food insecurity, increases in food insecurity rates due to the
-pandemic, signal a change in the food environment with potential damages
-to population health during the course of the pandemic and beyond (Niles
-et al. 2020). Recent data[5] from FBC showed that 52% of member food
-banks reported an increase in usage in March of 2020 when initial
-lockdown restrictions were put in place across much of the country. The
-pandemic also created significant staffing issues with 42% of food banks
-reporting a reduction in volunteers. However, 53% of food banks later
-reported a decrease in use into the summer of 2020 which FBC members
-attributed to emergency financial support programs from the federal
-government. Nevertheless, some of these benefit programs were temporary.
-Although more recent statistics on food bank use in Hamilton in 2020 and
-2021 are not yet available, data from the Daily Bread Food Bank in
-neighbouring Toronto for August 2020 shows visits climbing 51%
-year-over-year in that city[6], which suggests that many households in
-Hamilton are likely to turn to food bank services to meet their needs.
+Considering the negative mental and physical health effects, increases
+in food insecurity rates due to the onset of COVID-19, signal a change
+in the food environment with potential damages to population health
+during the course of the pandemic and beyond (Niles et al. 2020). Recent
+data[5] from FBC showed that 52% of member food banks reported an
+increase in usage in March of 2020 when initial lockdown restrictions
+were put in place across much of the country. The pandemic also created
+significant staffing issues with 42% of food banks reporting a reduction
+in volunteers. However, 53% of food banks later reported a decrease in
+use into the summer of 2020 which FBC members attributed to emergency
+financial support programs from the federal government. Nevertheless,
+some of these benefit programs were temporary. Although more recent
+statistics on food bank use in Hamilton in 2020 and 2021 are not yet
+available, data from the Daily Bread Food Bank in neighbouring Toronto
+for August 2020 shows visits climbing 51% year-over-year in that
+city[6], which suggests that many households in Hamilton are likely to
+turn to food bank services to meet their needs.
 
 In terms of geography, previous research conducted at the provincial
 scale using data from the 2011-2012 CCHS found that the prevalence of
@@ -418,7 +420,7 @@ province’s largest collective of hunger-relief organizations, found that
 on a per-capita basis, the level of need in the inner core of central
 Hamilton was second highest in Ontario[9].
 
-Geographically, the “old” city of Hamilton was amalgamated with several
+Geographically, the “old” City of Hamilton was amalgamated with several
 of its surrounding municipalities in 2001, with the city now featuring a
 mix of urban, suburban, exurban, and rural areas. Lower-cost housing
 proximate to the city’s industrial north end has traditionally attracted
@@ -494,6 +496,127 @@ operations it proved unfeasible to collect it. For this reason, the
 analysis to follow is of accessibility to the location of food banks and
 services, but not to specific services (e.g., breakfasts vs. food
 boxes).
+
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>
+foodbank and Food Service Information.
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Type
+</th>
+<th style="text-align:center;">
+Description
+</th>
+<th style="text-align:center;">
+Locations Pre-COVID
+</th>
+<th style="text-align:center;">
+Locations During COVID
+</th>
+<th style="text-align:center;">
+Additional Notes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Congregate Dining
+</td>
+<td style="text-align:center;width: 15em; ">
+Congregate and dining programs provide low-cost meals that are enjoyed
+in a community setting. Transportation may be provided
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;width: 15em; ">
+One remaining location reduced hours during COVID
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Community Meals
+</td>
+<td style="text-align:center;width: 15em; ">
+Programs often run by volunteers that organize suppers, lunches or other
+get-togethers that give community residents an opportunity to meet one
+another in a friendly and informal atmosphere while sharing a meal
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;width: 15em; ">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Food Banks
+</td>
+<td style="text-align:center;width: 15em; ">
+Food Banks and Emergency Food programs provide individuals and families
+with grocery items free of charge
+</td>
+<td style="text-align:center;">
+27
+</td>
+<td style="text-align:center;">
+26
+</td>
+<td style="text-align:center;width: 15em; ">
+One remaining location reduced hours during COVID while 4 others moved
+to appointment only
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Free Meals
+</td>
+<td style="text-align:center;width: 15em; ">
+Meals are provided free of charge in the community through volunteer
+labour and donations
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;width: 15em; ">
+One remaining location reduced hours during COVID
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Low-Cost Meals
+</td>
+<td style="text-align:center;width: 15em; ">
+Restaurants, cafeterias and other eating establishments operated by
+hospitals, senior centers or other organizations which provide
+reduced-cost meals for low-income people, older adults or other targeted
+individuals.
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;width: 15em; ">
+The remaining location reduced hours during COVID
+</td>
+</tr>
+</tbody>
+</table>
 
 ### Routing and travel time tables
 
@@ -606,7 +729,7 @@ travel threshold. When the expected travel time exceeds this threshold,
 a facility is no longer considered accessible. Moreover, the weights are
 standardized for the balanced floating catchment area approach.
 
-Figure shows the results of conducting sensitivity analysis of the
+Figure shows the results of conducting a sensitivity analysis of the
 system-wide accessibility as we vary the threshold (considering the
 situation before the pandemic). There is a clear pattern whereby more
 strict values of
@@ -660,23 +783,23 @@ lower values indicate greater congestion.
 
 The general pattern of the levels of service is similar before and
 during the pandemic, with lower values in the center of the city where
-low-income households exhibit multimodal trip patterns. Three more
-peripheral facilities towards the south of the city also have lower
-levels of service, presumably because they are expected to service
-relatively large suburban/exurban populations generally reliant on
-automobiles for travel. During the pandemic, however, the levels of
-service dropped, in some cases quite substantially. The pattern of the
-losses in level of service, moreover, is not uniform. The upper pane of
-Figure shows that the three peripheral facilities in the southern
-suburban/exurban part of the city had low levels of service to begin
-with, but did not see major declines during the pandemic. Further, the
-inset map shows that the levels of service deteriorated more in the
-central part of the city. However, the loss of level of service was not
-as large in the core (where most of the food banks/services are found),
-but instead was more marked in the inner ring around the core, where
-facilities may have faced greater demand from both central city and
-suburban populations after the closure of food banks during the
-pandemic.
+low-income households exhibit multimodal trip patterns that favour
+proximate service locations. Three more peripheral facilities towards
+the south of the city also have lower levels of service, presumably
+because they are expected to service relatively large suburban/exurban
+populations generally reliant on automobiles for travel. During the
+pandemic, however, the levels of service dropped, in some cases quite
+substantially. The pattern of the losses in level of service, moreover,
+is not uniform. The upper pane of Figure shows that the three peripheral
+facilities in the southern suburban/exurban part of the city had low
+levels of service to begin with, but did not see major declines during
+the pandemic. Further, the inset map shows that the levels of service
+deteriorated more in the central part of the city. However, the loss of
+level of service was not as large in the core (where most of the food
+banks/services are found), but instead was more marked in the inner ring
+around the core, where facilities may have faced greater demand from
+both central city and suburban populations after the closure of food
+banks during the pandemic.
 
 <div class="figure">
 
@@ -737,7 +860,7 @@ accessibility. Every zone is worse off after the closure of facilities
 during the pandemic, but some parts of the city seem to have been
 particularly affected. To better highlight these changes, we used a
 local indicator of spatial autocorrelation (Anselin 1995) to explore the
-pattern of change in accessibility. Twenty-four TAZ are flagged as
+pattern of change in accessibility. Twenty-four TAZs are flagged as
 having significantly large losses of accessibility (at
 ![p\\le 0.10](https://latex.codecogs.com/png.latex?p%5Cle%200.10 "p\le 0.10"),
 without correcting for multiple comparisons). Those zones are
@@ -775,7 +898,7 @@ decrease in accessibility within this cluster (-0.0009) has a high rate
 of car trips and connects to the most food bank locations in total as
 well as those that stayed open or closed. The exception to this is the
 zone in the middle of this cluster, which has a much higher proportion
-of transit use 32%. This modal split weighting results in fewer food
+of transit use (32%). This modal split weighting results in fewer food
 bank and service locations accessible from the parcels within this zone
 which, by extension, limits their access to closed locations reachable
 within 15 minutes in our calculations.
@@ -783,11 +906,11 @@ within 15 minutes in our calculations.
 In the cluster to the south-west, the decrease in accessibility is
 predominately driven by the closure of a high level-of-service Community
 Meals provider. However, like the more central suburban zones,
-low-income households within this cluster also between 90% to 100%
+low-income households within this cluster are also between 90% to 100%
 auto-dependent in their tripmaking in the TTS. The story is similar for
 the zone located in the north-west that exhibits the greatest decrease
 in accessibility. Here, low-income households responding to the TTS
-conducted 100% of their trips by car and, as a result, parcels within
+conducted 100% of their trips by car and, as a result, dwellings within
 this zone have access to the second-highest number of food bank and
 service locations within 15 minutes. However, this also means zonal
 accessibilities are greatly affected by the number of closures
@@ -801,11 +924,12 @@ food bank and service locations.
 
 Just as the effects of the closures appear to have been uneven in space,
 they also seem to have had different impacts on various population
-segments. Table shows the estimated number of people in each age group
-by their level of accessibility before and during the pandemic. Here, it
-is important to note that the quartiles are relative: people in the top
-25% of accessibility still have lower accessibility during the pandemic
-than before. In reality, every population group is worse off during the
+segments. Using data on low income individuals by age drawn from the
+TTS, Table shows the estimated number of people in each age group by
+their level of accessibility before and during the pandemic. Here, it is
+important to note that the quartiles are relative: people in the top 25%
+of accessibility still have lower accessibility during the pandemic than
+before. In reality, every population group is worse off during the
 pandemic in terms of their accessibility to food banks and services in
 the City of Hamilton. However, some age groups were affected more. As
 seen in the table, the distribution within quartiles for adults changed
@@ -824,6 +948,172 @@ income households and the spatial distribution of the population, the
 food bank/service locations closed had a differential impact that more
 greatly affected the youngest among the population in low income
 households.
+
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption>
+Population at each accessibility level by age group among members
+households with incomes less than CAD40,000.
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Pre-COVID-19
+
+</div>
+
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+During COVID-19
+
+</div>
+
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Accessibility Quartile
+</th>
+<th style="text-align:center;">
+Children (age &lt;= 18)
+</th>
+<th style="text-align:center;">
+Adults (19-64)
+</th>
+<th style="text-align:center;">
+Seniors (age &gt;= 65)
+</th>
+<th style="text-align:center;">
+Children (age &lt;= 18)
+</th>
+<th style="text-align:center;">
+Adults (19-64)
+</th>
+<th style="text-align:center;">
+Seniors (age &gt;= 65)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Top 25%
+</td>
+<td style="text-align:center;">
+2,546
+</td>
+<td style="text-align:center;">
+10,404
+</td>
+<td style="text-align:center;">
+5,008
+</td>
+<td style="text-align:center;">
+2,567 (0.82%)
+</td>
+<td style="text-align:center;">
+10,597 (1.86%)
+</td>
+<td style="text-align:center;">
+4,941 (-1.34%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Second 25%
+</td>
+<td style="text-align:center;">
+3,333
+</td>
+<td style="text-align:center;">
+12,916
+</td>
+<td style="text-align:center;">
+6,415
+</td>
+<td style="text-align:center;">
+3,375 (1.26%)
+</td>
+<td style="text-align:center;">
+12,885 (-0.24%)
+</td>
+<td style="text-align:center;">
+6,157 (-4.02%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Third 25%
+</td>
+<td style="text-align:center;">
+4,381
+</td>
+<td style="text-align:center;">
+11,559
+</td>
+<td style="text-align:center;">
+7,067
+</td>
+<td style="text-align:center;">
+4,062 (-7.28%)
+</td>
+<td style="text-align:center;">
+11,412 (-1.27%)
+</td>
+<td style="text-align:center;">
+7,678 (8.65%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bottom 25%
+</td>
+<td style="text-align:center;">
+3,546
+</td>
+<td style="text-align:center;">
+12,946
+</td>
+<td style="text-align:center;">
+6,903
+</td>
+<td style="text-align:center;">
+3,802 (7.22%)
+</td>
+<td style="text-align:center;">
+12,897 (-0.38%)
+</td>
+<td style="text-align:center;">
+6,567 (-4.87%)
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> Population values have been rounded.
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> The values in brackets for population during COVID-19 are
+the changes from before the pandemic.
+</td>
+</tr>
+</tfoot>
+</table>
 
 # Conclusions
 
@@ -875,7 +1165,7 @@ groups, with seniors and children most affected.
 
 In the absence of information regarding how food insecure households
 travel to food banks and related services, we examined accessibility to
-food banks using a 15 minutes (one way) travel time threshold. The fact
+food banks using a 15 minutes (one-way) travel time threshold. The fact
 that we must rely on a standard created for accessible drinking water in
 the developing world only serves to highlight the tragedy of food
 insecurity in an affluent country like Canada. More broadly, it points
@@ -889,7 +1179,15 @@ because there is also a dearth of information, let alone standards,
 regarding what is an *acceptable* or *sufficient* level of service when
 it comes to food banks. Whether this is one facility per 1,000
 population or three facilities per 1,000 population, or any other
-number, we know not.
+number, we know not. But like international human rights standards for
+accessibility to clean drinking water within 30 minutes (round-trip),
+this work strongly suggests that adopting better defined standards for
+access to food banks that move beyond generalized conceptualizations of
+“access” to consider the geographic component of accessibility (and its
+interactions with travel behaviour and individual/household
+socioeconomic and demographic traits) would make a meaningful
+contribution to understanding food access and “food bank deserts” for
+food insecure populations.
 
 In summary, while previous work has noted the important role of
 geography alongside other socio-economic and demographic indicators in
@@ -929,8 +1227,8 @@ and approximately 20% of respondents to the 2016 survey did not report
 their income (Rose 2018). In that regard, the modal splits of low-income
 households observed through the TTS data may not accurately reflect the
 travel behaviours of food insecure populations, and our estimates might
-be somewhat conservative if those households who do not report income
-rely more on walking and/or transit for their mobility needs.
+in fact be somewhat conservative if those households who do not report
+income rely more on walking and/or transit for their mobility needs.
 
 # References
 
