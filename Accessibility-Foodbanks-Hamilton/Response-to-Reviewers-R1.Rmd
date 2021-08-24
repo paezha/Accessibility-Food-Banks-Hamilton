@@ -1,0 +1,58 @@
+---
+title: "Response to Reviewers"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+bibliography: references.bib
+header-includes:
+  - \usepackage{changepage}
+---
+
+We would like to express our gratitude to the editor and anonymous reviewer for their time and attention to our submission.
+
+## Reviewer \#1:
+
+Reviewer \#1: Overall, I found the paper well-written and clear. I did have some concerns, primarily with the paper's framing and the conclusions drawn:
+
+\textcolor{blue}{Thank you for the opportunity to revise the paper, and for the valuable suggestions to do so.}
+
+1.  The characterization of the emergency food services included is a little unclear. It seems until the table on page 10 that the focus is on food banks, but really it looks like the focus is on ALL emergency food provision (including communal meal services). The framing of the piece is therefore a little "off", as meal programs have a much longer history (pre-Victorian) than food banks, and are intended to support a somewhat different clientele (e.g., those without kitchen/cooking facilities, and usually "singles" rather than families). I think it would make sense for the authors to use the broader term "emergency food services" in the title and throughout, and to change the framing at the beginning (please note that I don't think it is necessary to go into the history of emergency food provision here at all really... but the current presentation beginning with food banks is misleading).
+
+\textcolor{blue}{Words go here.}
+
+2.  Relatedly, the conflation of food banks and meal programs is a bit of a challenge in terms of interpreting the data. For example, one would EXPECT congregate dining to essentially shut down during the pandemic, as this could be a route for disease spread. In some cases, some kind of food services may have continued to be offered (e.g., through takeout), but in general closures would be expected. In the food BANKS, however, the mode of delivery might need to be modified slightly, but direct impacts of covid would be less significant. Additionally, as mentioned above these services target different demographics. So, by conflating these two modes of food delivery, the utility of the analysis is compromised.
+
+\textcolor{blue}{Words go here.}
+
+3.  The presentation of data in relation to food security is a bit confusing, as data from pre-covid, during covid, and from both the U.S. and Canada is presented. This makes it a little challenging to draw out the contemporary situation in the study area, and should be presented more clearly (and given that they seem to have food security data from May 2020, and there is widely available data from 2018 as well, they SHOULD be able to give a clearer sense of how much food security has increased during the pandemic in Canada). Also, I think comparisons to the situation in the U.S. during covid should be made cautiously, as their social interventions have been very different than Canada's (and in both countries, responses have varied widely be state/province).
+
+\textcolor{blue}{Words go here.}
+
+4.  Overall, the paper seems longer than it needs to be in the introduction/context and conclusion sections - there is quite a bit of background that seems unnecessary, and unnecessary restatement of that material in the conclusion.
+
+\textcolor{blue}{Words go here.}
+
+5.  I disagree strongly with the author's conclusion that the "solution" is to create more uniform geographical coverage of emergency food programs. I think what this data shows more than anything is that - as is mentioned throughout the literature on food banks, starting with Janet Poppendieck's "Sweet Charity" (a key text not included here) and continued in the work of Val Tarasuk and others - food banks are an ineffective, inefficient (not to mention stigmatizing) solution to hunger at the best of times, and that during a crisis (when they are most needed) they are even LESS able to provide the services required. To me, the data here highlights strongly the need for an effective social safety net (including decent EI support that is rolled out quickly, and paid sick days, both of which have been partially improved but also subjects of contestation in Ontario/Canada during the pandemic) that would make food banks redundant. That said, there may still be a place for emergency food services as part of a "community service hub" model that helps people with their immediate needs while connecting them with longer-term supports (and having these give good geographic coverage would make sense). But overall I think this data proves that food banks are NOT effective in emergencies (at least of the pandemic type) and so we should be looking elsewhere for solutions rather than increasing our investments in this sector.
+
+\textcolor{blue}{Thank you for these comments. We fundamentally agree with you, and admit that we could have been more forceful in our conclusions. We did a major rewrite of the conclusions in response to your critique, including the following:}
+
+```{=tex}
+\begin{adjustwidth}{1cm}{}
+\textcolor{blue}{The fact that we must rely on a standard created for accessible drinking water in the developing world only serves to highlight the tragedy of food insecurity in an affluent country like Canada. More broadly, it points to the absurd need to understand how a bad situation was made worse by the pandemic: in effect, the analysis reveals that disparities in the need for emergency and community food services predated the pandemic, that the pandemic contributed to the deterioration of these services, and that populations already in distress, particularly children, ended up in an even more adverse state. How much worse, it is impossible to say, mainly because there is also a dearth of information, let alone standards, regarding acceptable or sufficient level of service when it comes to emergency food services. In fact, we would argue that the standard should be that no household faced food insecurity. As others have noted [e.g., Poppendieck, 1999; Men and Tarasuk, 2021] the root of food insecurity is income poverty. There is likely a place for emergency food and community food services. In addition to providing food, these services could satisfy social needs by offering a social setting for seniors or by helping to connect households in need with longer term supports. From a food security perspective, on the other hand, these services should work only as a short term solution, and not as a semi-permanent feature of life for some of our fellow human beings. From a human rights perspective, long-term reliance on emergency food services should be as unacceptable in Canada as lack of clean drinking water within 30 minutes is elsewhere. Thus, while our analysis is valuable to map the suffering caused by food insecurity, from a policy perspective maintaining a robust social safety net that includes Employment Insurance and paid sick days are better tools to reduce this suffering than increasing the accessibility of emergency food services for food insecure populations.}
+\end{adjustwidth}
+```
+
+Specific comments:
+
+Pg 2 paragraph 2 - a little unclear which of the data presented is pre-covid and which is during covid
+
+Pg 2 ln 46 (and also pg 21 ln 33) - were 40% of actual visitors children, or are they extrapolating from households with children? It seems unlikely that parents are actually bringing their children along, so "visitors" may be the wrong word ("users"?)
+
+Pg 4 paragraph 1 - not sure there is much evidence that connects food insecurity (which is usually "mild" in relation to true hunger/severe food\
+insecurity) in developed nations with nutrient deficiency? If so, this should be shared. If not, the argument should be clarified in relation to known outcomes (e.g., stress, obesity)
+
+Pg 4 paragraph 2 - not sure that food banks include meal programs/prepared meals (the food BANK wouldn't, although the organization might offer both)
+
+Pg 5 ln 27 - seems to imply that the U.S. experience of increasing food insecurity during the pandemic is true in Canada, but the U.S. context in terms of emergency income relief is very different, and the May 2020 statistic of 14.7% is not contextualised (is this an increase? From what?)
+
+Pg 23 (last page) - would be nice to have a final concluding sentence that restates the contribution of the paper, rather than ending with limitations.
