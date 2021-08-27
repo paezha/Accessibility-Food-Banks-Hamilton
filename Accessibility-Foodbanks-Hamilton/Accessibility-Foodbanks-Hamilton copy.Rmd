@@ -1,0 +1,1511 @@
+---
+title: "Changes in accessibility to food banks and food services during COVID-19 and implications for low income populations in Hamilton, Ontario"
+author:
+  - name: Author One
+    email: author1@example.com
+    affiliation: Some University
+  - name: Author Two
+    email: author2@example.com
+    affiliation: Another University
+    footnote: 1
+  - name: Author Three
+    email: author3@example.com
+    affiliation: Some University
+  - name: Author Four
+    email: author4@example.com
+    affiliation: Some University
+address:
+  - code: Some University
+    address: Department, Street, City, State, Zip
+  - code: Another University
+    address: Department, Street, City, State, Zip
+footnote:
+  - code: 1
+    text: "Corresponding Author"
+abstract: |
+  In this paper we analyze the changes in accessibility to community and emergency food services before and during the COVID-19 pandemic in the City of Hamilton, Ontario. Many of these food services are the last line of support for households facing food insecurity; as such, their relevance cannot be ignored in the midst of the economic upheaval caused by the pandemic. Our analysis is based on the application of balanced floating catchment areas and concentrates on households with lower incomes (<CAD40,000, approximately the Low Income Cutoff Value for a city of Hamilton's size). We find that accessibility was low to begin with in suburban and exurban parts of the city; furthermore, about 14\% of locations originally available in Hamilton closed during the pandemic, further reducing accessibility. The impact of closures on the level of service of the remaining facilities, and on accessibility, was disproportionate, with system-wide losses exceeding 40\%. Those losses were geographically and demographically uneven. While every part of the city faced a reduction in accessibility, inner suburbs fared worse in terms of loss of accessibility. As well, children (age $\le 18$) appear to have been impacted the most.
+journal: "Social Science and Medicine"
+date: "`r Sys.Date()`"
+bibliography: references.bib
+#linenumbers: true
+#numbersections: true
+csl: elsevier-harvard.csl
+output: rticles::elsevier_article
+header-includes:
+    - \usepackage[table]{xcolor}
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(
+  cache = TRUE, out.width = "100%", align = 'center', fig.width = 7, fig.height = 7
+)
+```
+
+```{r install-data-package, include = FALSE}
+# Run only once if needed to install data package 
+if (!require("foodbanksHamilton", character.only = TRUE)) {
+  devtools::install_github("https://github.com/paezha/Accessibility-Food-Banks-Hamilton", subdir = "foodbanksHamilton")
+}
+```
+
+```{r load-packages, cache=FALSE, include=FALSE}
+library(foodbanksHamilton) # Data package
+library(kableExtra)
+library(patchwork)
+library(sf)
+library(spdep)
+library(tidyverse)
+#library(tmap)
+```
+
+```{r invoke-data, include=FALSE}
+data(data_da_2016)
+data(dwelling_network_points_2016)
+data(foodbank_locations)
+data(foodbank_table)
+data(hamilton_boundary)
+data(modes_less40k)
+data(population_age_income)
+data(ttm_car)
+#data(ttm_transit_2020)
+#data(ttm_transit_2021)
+load("output-data-files/ttm_transit_2020.RData")
+load("output-data-files/ttm_transit_2021.RData")
+data(ttm_walk)
+```
+
+```{r remove-irrelevant-destinations, include=FALSE}
+## Data preparation
+# Remove entries in travel time matrices for inapplicable destinations
+# As a first step, we will remove the computed travel times to the three Community Kitchen locations (IDs 1-3):
+ttm_car <- ttm_car %>%
+  filter(!between(OBJECTID, left = 1, right = 3))
+
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  filter(!between(OBJECTID, left = 1, right = 3))
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
+  filter(!between(OBJECTID, left = 1, right = 3))
+
+ttm_walk <- ttm_walk %>%
+  filter(!between(OBJECTID, left = 1, right = 3))
+```
+
+```{r join-low-income-households, include=FALSE}
+## Data preparation
+# Join proportion of low income households per DA to dwellings and total number of residential units:
+dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
+  left_join(data_da_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::transmute(DAUID = GeoUID, 
+                               p_inc_less40k),
+            by = "DAUID")
+```
+
+```{r probability-of-low-income-per-parcel, include=FALSE}
+## Data preparation
+# Calculate probability that a point on the network will have low income households. This is the proportion of low income households in the DA multiplied by the total number of residential units at the point:
+dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
+  mutate(income_less40k = p_inc_less40k * Dwellings)
+```
+
+```{r number-of-residential-units-per-DA, include=FALSE}
+## Data preparation
+# Prepare and join population data from Transportation Tomorrow Survey
+# Find number of residential units in each DA. This is needed to assign the population to parcels
+residential_units <- dwelling_network_points_2016 %>%
+  st_drop_geometry() %>%
+  group_by(TAZUID) %>%
+  summarize(residential_units = sum(Dwellings))
+```
+
+```{r join-population-to-parcels, include=FALSE}
+## Data preparation
+# Join number of low income households per DA to dwellings and total number of residential units:
+dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
+  left_join(population_age_income %>%
+              st_drop_geometry() %>%
+              dplyr::transmute(TAZUID,
+                               children,
+                               adults,
+                               seniors),
+            by = "TAZUID") %>%
+  left_join(residential_units,
+            by = "TAZUID")
+```
+
+```{r calculate-low-income-households-per-parcel, include=FALSE}
+## Data preparation
+# Calculate population per point on the network. This is the population in the DA divided by the total number of residential units. This gives the average number of people per residential unit. Then, multiply by the number of dwellings (residential units) at the point:
+dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
+  mutate(children = (children/residential_units) * Dwellings,
+         adults = (adults/residential_units) * Dwellings,
+         seniors = (seniors/residential_units) * Dwellings)
+```
+
+```{r join-household-data-to-travel-time-tables, include=FALSE}
+## Data preparation
+# Join the household data to the travel time matrices:
+ttm_car <- ttm_car %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            income_less40k,
+                            children,
+                            adults,
+                            seniors,
+                            DAUID, 
+                            TAZUID),
+            by = c("UID" = "ID"))
+
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            income_less40k,
+                            children,
+                            adults,
+                            seniors,
+                            DAUID, 
+                            TAZUID),
+            by = c("UID" = "ID"))
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            income_less40k,
+                            children,
+                            adults,
+                            seniors,
+                            DAUID, 
+                            TAZUID),
+            by = c("UID" = "ID"))
+
+ttm_walk <- ttm_walk %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            income_less40k,
+                            children,
+                            adults,
+                            seniors,
+                            DAUID, 
+                            TAZUID),
+            by = c("UID" = "ID"))
+```
+
+```{r join-foodbank-data-to-travel-time-tables, include=FALSE}
+## Data preparation
+# Join the foodbank data to the travel time tables:
+ttm_car <- ttm_car %>%
+  left_join(foodbank_locations %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            TYPE,
+                            COVIDClose),
+            by = c("OBJECTID" = "ID"))
+
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  left_join(foodbank_locations %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            TYPE,
+                            COVIDClose),
+            by = c("OBJECTID" = "ID"))
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
+  left_join(foodbank_locations %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            TYPE,
+                            COVIDClose),
+            by = c("OBJECTID" = "ID"))
+
+ttm_walk <- ttm_walk %>%
+  left_join(foodbank_locations %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID,
+                            TYPE,
+                            COVIDClose),
+            by = c("OBJECTID" = "ID"))
+```
+
+```{r drop-nas-from-travel-time-tables, include=FALSE}
+## Data preparation
+# Drop NAs:
+ttm_car <- ttm_car %>%
+  drop_na(TAZUID,
+          income_less40k)
+
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  drop_na(TAZUID,
+          income_less40k)
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
+  drop_na(TAZUID,
+          income_less40k)
+
+ttm_walk <- ttm_walk %>%
+  drop_na(TAZUID,
+          income_less40k)
+```
+
+```{r proportion-of-trips-by-mode-by-taz, include=FALSE}
+## Data preparation
+# Calculate proportion of trips by mode per TAZ:
+modes <- modes_less40k %>%
+  mutate(p_car = Driver/(Driver + Transit + Walk),
+         p_transit = Transit/(Driver + Transit + Walk),
+         p_walk = Walk/(Driver + Transit + Walk))
+```
+
+```{r fill-nas-transport-modes, include=FALSE}
+## Data preparation
+# Assume that TAZ with NAs have a proportion of car trips of one:
+modes <- modes %>%
+  dplyr::mutate(p_car = replace_na(p_car, 1),
+                p_transit = replace_na(p_transit, 0),
+                p_walk = replace_na(p_walk, 0))
+```
+
+```{r join-trips-by-mode-to-travel-time-tables, include=FALSE}
+## Data preparation
+# Join trip-making modal proportions
+ttm_car <- ttm_car %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+
+ttm_walk <- ttm_walk %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+```
+
+```{r join-travel-time-tables, include=FALSE}
+## Data preparation
+# Join Tables into Single TTM
+ttm_2020 <- ttm_car %>%
+  rename(travel_time_car = travel_time) %>%
+  full_join(ttm_transit_2020 %>%
+              transmute(UID,
+                        OBJECTID,
+                        travel_time_transit = travel_time),
+            by = c("UID", "OBJECTID")) %>%
+  full_join(ttm_walk %>%
+              transmute(UID,
+                        OBJECTID,
+                        travel_time_walk = travel_time),
+            by = c("UID", "OBJECTID"))
+
+ttm_2021 <- ttm_car %>%
+  rename(travel_time_car = travel_time) %>%
+  full_join(ttm_transit_2021 %>%
+              transmute(UID,
+                        OBJECTID,
+                        travel_time_transit = travel_time),
+            by = c("UID", "OBJECTID")) %>%
+  full_join(ttm_walk %>%
+              transmute(UID,
+                        OBJECTID,
+                        travel_time_walk = travel_time),
+            by = c("UID", "OBJECTID"))
+```
+
+```{r travel-time-tables-data-check, include=FALSE}
+## Data preparation - 2020
+# Check the NAs in travel time table:
+ttm_2020 %>% 
+  filter(is.na(travel_time_transit)) %>%
+  select(travel_time_transit,
+         p_transit) %>%
+  summary()
+
+# What do NAs here mean? Most DAs missing travel time by transit do not report trips by transit in the TTS. In some DAs there are trips by transit (p_transit != 0), but no foodbank can be reached by transit (travel_time_transit is NA). How many of these cases?
+ttm_2020 %>% 
+  filter(is.na(travel_time_transit) & p_transit > 0) %>%
+  select(travel_time_transit,
+         p_transit) %>%
+  summary()
+
+# It should be fine to replace the NAs with zeros, which multiplied by p_transit will return a zero (i.e., it is not possible to reach a foodbank by transit).
+#ttm_2020 <- ttm_2020 %>% 
+#  mutate(travel_time_transit = replace_na(travel_time_transit, 0))
+
+# Check the NAs in travel time by walk:
+ttm_2020 %>% 
+  filter(is.na(travel_time_walk)) %>%
+  select(travel_time_walk,
+         p_walk) %>%
+  summary()
+
+# Most DAs missing travel time by walking do not report trips by walking in the TTS. In some DAs there are trips by walking (p_walk != 0), but no foodbank can be reached by walk (travel_time_walk is NA). How many of these cases?
+ttm_2020 %>% 
+  filter(is.na(travel_time_walk) & p_walk > 0) %>%
+  select(travel_time_walk,
+         p_walk) %>%
+  summary()
+
+# Like with transit, it should be fine to replace the NAs with zeros, which multiplied by p_walk will return a zero (i.e., it is not possible to reach a foodbank by walking).
+#ttm_2020 <- ttm_2020 %>% 
+#  mutate(travel_time_walk = replace_na(travel_time_walk, 0))
+
+#Summary of the table after these operations:
+summary(ttm_2020)
+
+## Data preparation - 2021
+# Check the NAs in travel time table:
+ttm_2021 %>% 
+  filter(is.na(travel_time_transit)) %>%
+  select(travel_time_transit,
+         p_transit) %>%
+  summary()
+
+# What do NAs here mean? Most DAs missing travel time by transit do not report trips by transit in the TTS. In some DAs there are trips by transit (p_transit != 0), but no foodbank can be reached by transit (travel_time_transit is NA). How many of these cases?
+ttm_2021 %>% 
+  filter(is.na(travel_time_transit) & p_transit > 0) %>%
+  select(travel_time_transit,
+         p_transit) %>%
+  summary()
+
+# It should be fine to replace the NAs with zeros, which multiplied by p_transit will return a zero (i.e., it is not possible to reach a foodbank by transit).
+#ttm_2021 <- ttm_2021 %>% 
+#  mutate(travel_time_transit = replace_na(travel_time_transit, 0))
+
+# Check the NAs in travel time by walk:
+ttm_2021 %>% 
+  filter(is.na(travel_time_walk)) %>%
+  select(travel_time_walk,
+         p_walk) %>%
+  summary()
+
+# Most DAs missing travel time by walking do not report trips by walking in the TTS. In some DAs there are trips by walking (p_walk != 0), but no foodbank can be reached by walk (travel_time_walk is NA). How many of these cases?
+ttm_2021 %>% 
+  filter(is.na(travel_time_walk) & p_walk > 0) %>%
+  select(travel_time_walk,
+         p_walk) %>%
+  summary()
+
+# Like with transit, it should be fine to replace the NAs with zeros, which multiplied by p_walk will return a zero (i.e., it is not possible to reach a foodbank by walking).
+#ttm_2021 <- ttm_2021 %>% 
+#  mutate(travel_time_walk = replace_na(travel_time_walk, 0))
+
+#Summary of the table after these operations:
+summary(ttm_2021)
+```
+
+```{r calculate-expected-travel-times, eval = FALSE, include=FALSE}
+## Data preparation
+# Calculate expected travel times by mode. These are the travel time by the mode multiplied by the probability of using the mode (which is proxied by the proportion of trips by mode in the DA from the TTS). The total expected travel time is the sum of the expected travel times by mode:
+ttm_2020 <- ttm_2020 %>%
+  mutate(e_travel_time_car = travel_time_car * p_car,
+         e_travel_time_transit = travel_time_transit * p_transit,
+         e_travel_time_walk = travel_time_walk * p_walk,
+         e_travel_time = e_travel_time_car + e_travel_time_transit + e_travel_time_walk)
+
+ttm_2021 <- ttm_2021 %>%
+  mutate(e_travel_time_car = travel_time_car * p_car,
+         e_travel_time_transit = travel_time_transit * p_transit,
+         e_travel_time_walk = travel_time_walk * p_walk,
+         e_travel_time = e_travel_time_car + e_travel_time_transit + e_travel_time_walk)
+```
+
+
+```{r}
+ttm_2020_long <- ttm_2020 %>% transmute(UID, OBJECTID,
+                                        car_prob = p_car, 
+                                        transit_prob = p_transit, 
+                                        walk_prob = p_walk, 
+                                        car_traveltime = travel_time_car, 
+                                        transit_traveltime = travel_time_transit, 
+                                        walk_traveltime = travel_time_walk) %>% 
+  pivot_longer(cols = !c("UID", "OBJECTID"), 
+               names_to = c("mode", ".value"),
+               names_sep = "_") %>%
+  group_by(UID, OBJECTID) %>%
+  summarize(e_travel_time = weighted.mean(traveltime, prob, na.rm = TRUE))
+
+# income_less40k = first(income_less40k)) %>% 
+#  filter(!is.nan(e_travel_time))
+
+ttm_2021_long <- ttm_2021 %>% transmute(UID, OBJECTID,
+                                        car_prob = p_car, 
+                                        transit_prob = p_transit, 
+                                        walk_prob = p_walk, 
+                                        car_traveltime = travel_time_car, 
+                                        transit_traveltime = travel_time_transit, 
+                                        walk_traveltime = travel_time_walk) %>% 
+  pivot_longer(cols = !c("UID", "OBJECTID"), 
+               names_to = c("mode", ".value"),
+               names_sep = "_") %>%
+  group_by(UID, OBJECTID) %>%
+  summarize(e_travel_time = weighted.mean(traveltime, prob, na.rm = TRUE))
+# income_less40k = first(income_less40k)) %>% 
+#  filter(!is.nan(e_travel_time))
+
+ttm_2020 <- ttm_2020 %>% left_join(ttm_2020_long, by = c("UID", "OBJECTID")) %>% 
+  filter(!is.nan(e_travel_time))
+
+ttm_2021 <- ttm_2021 %>% left_join(ttm_2021_long, by = c("UID", "OBJECTID")) %>% 
+  filter(!is.nan(e_travel_time))
+```
+
+# Introduction
+
+Food insecurity is defined as an "inadequate or uncertain access to a sufficient quantity and/or adequate quality of food" due to a household's financial limitations [@enns2020experiences]. This condition has been associated with reductions in nutritional outcomes [@bhattacharya2004poverty; @kirkpatrick2008food; @olson1999nutrition] and negative physical and mental health impacts in children and adults [@elgar2021relative; @jones2017food; @ramsey2011food; @seligman2010food; @stuff2004household]. Over at least the past four decades food banks and related services have become an essential line of defense against food insecurity in Canadian communities [@riches2002food; @holmes2018nothing; @black2020examining; @tarasuk2020relationship]. In this respect, Canada is not unlike numerous other wealthy countries where a systematic dismantling of the welfare state took place in the intervening period [@tarasuk2014food].
+
+The emergence of COVID-19, the worst public health crisis since the 1918 flu pandemic, has exposed important social and economic fault lines, and pre-existing patterns of inequality appear to have been exacerbated. Along several other dimensions of stress [e.g., accessibility to health care facilities, @ghorbanzadeh2021spatial; @pereira2021geographic], this seems to be the case for food insecurity as well [@laborde2020poverty]. According to Statistics Canada [-@statisticscanada2020food], in the early stages of the pandemic almost 15% of individuals reported living in a household that faced food insecurity; the risk of food insecurity was substantially higher for households with children. The difference between households with and without children was significant, and 11.7% of households with children indicated that "food didn't last and [there was] no money to get more" sometimes or often, compared to 7.3% of households without children; likewise, 13% of households with children indicated that they "[c]ouldn't afford balanced meals" sometimes or often, compared to 8.8% of households without children. Additionally, Men and Tarasuk [-@men2021food] report that about 25% of individuals who experienced job insecurity (a relatively common occurrence during the pandemic) also experienced food insecurity associated with COVID-related disruptions to employment, financial hardship, and use of food charity.
+
+The impacts of food insecurity during the pandemic are alarming, since diet-related diseases, such as obesity, heart-disease, and diabetes, were already critical public health concerns in Canada prior to COVID-19 [@boucher2017ontario]. While emergency food services are not necessarily a stable solution to food insecurity and in fact may encourage a retrenchment of neoliberal policy [@wakefield2013sweet], at least they can be argued to provide a resource of last instance to households in precarious situations [@bazerghi2016role]. As a mid-size city grappling with deindustrialization, Hamilton exhibits high rates of poverty and food bank use. As recently as 2019, the Hamilton Hunger Report[^1] noted that food banks in the city recorded the highest number of visitors in the past 29 years; a rate of increase greater than population growth. Most troubling, approximately 40% of all visitors were children.
+
+[^1]: <https://www.hamiltonfoodshare.org/wp-content/uploads/Hamilton-Food-Share-Hunger-Report-2019.pdf>
+
+It is known that urban food environments, within which people make their daily food choices, are essential in influencing eating behaviours and health outcomes, based on factors such as food availability, ease of geographic accessibility and socio-demographic variations [@paez2010relative; @vanderlee2017food; @widener2018spatial]. However, while there is a wealth of literature that has examined the topic of geographic accessibility to healthy food through the "food desert" concept, there has been little research into accessibility to emergency and community food services. Previous work has explored differences in *accessing* food banks, such as how some households utilize food banks over short periods of time while others regularly utilize food banks as longer-term resource [e.g., @enns2020experiences]. In addition, transportation and locational considerations have been raised as key issues in food bank accessibility in previous qualitative research [@smith2017food]. However, we are not aware of any research that has focused on estimating or capturing this geographic component of accessibility.
+
+The study of place-based geographic accessibility is concerned with capturing the potential to reach destinations of value using the transportation network [@paez2012measuring]. Indeed, the Government of Canada's recent Food Policy has made "access" to healthy food a priority for Canadian communities[^2] and previous survey research has suggested that such accessibility plays a key role in user satisfaction with food bank service delivery [@holmes2018nothing]. However, as with research into the prevalence of food deserts, accessibility to food banks is unlikely to be evenly distributed, and variation throughout a city can be expected due to transportation network characteristics and the spatial distribution of service locations and the population they are meant to serve. Furthermore, policy responses to the COVID-19 pandemic likely have added to the distress of vulnerable households. Non-pharmaceutical interventions during the pandemic involving restrictions in mobility have increased the friction of travel, in particular by transit on which low income populations are more reliant [e.g., @deweese2020tale]. At the same time, the pandemic has created additional stress for the operators of food banks through disruptions in the supply chain [e.g., @mckay2021exploring] as well as concerns surrounding the delivery of service in safe conditions and possible cancellation of food service programs.
+
+[^2]: <https://www.agr.gc.ca/eng/about-our-department/key-departmental-initiatives/food-policy/the-food-policy-for-canada/?id=1597863791042>
+
+For this study, we aim to look at how the landscape of food banks and related services (e.g. low-cost or free meal service providers) available in Hamilton, Ontario, changed during the pandemic. Did the number of open food bank services diminish? If so, what was the accessibility to food banks before the pandemic from the perspective of low income households, and how has it changed during the pandemic with respect to geographic access and congestion at remaining sites? And finally, who are most likely to have been impacted by changes in the accessibility landscape? This paper first looks at the distribution of food banks and related services before and during the pandemic. Then, we use the balanced floating catchment area approach of Paez et al. [-@paez2019demand] to investigate the accessibility situation. For this, we adopt a fully disaggregated approach based on parcel-level data. Socio-economic and demographic data are drawn from the latest Census of Canada (2016), whereas travel information is from the most recent regional travel survey from 2016. This paper follows reproducible research recommendations [see @brunsdon2020opening], and the research was conducted using open source tools for transportation analysis [@lovelace2021open]. The code and data necessary to reproduce the analysis are available in a public repository[^3].
+
+[^3]: <https://drive.google.com/drive/folders/1-l8hO1pMIqaBqf57j_M_BMrXhXFvrV2c?usp=sharing>
+
+# Food Insecurity and Food Bank Use in Canada
+
+Food insecurity is the inability to acquire and consume an adequate amount or good quality food, leading to inadequate nutrient intake [@enns2020experiences; @kirkpatrick2008food; @tarasuk2009household]. This nutrient deficiency is associated with major population health concerns, particularly among Canadians at socio-economic disadvantage [@bazerghi2016role]. Official government surveys such as the Household Food Security Survey Module (HFSSM), the Canadian Community Health Surveys (CCHS), the Longitudinal and International Study of Adults (LISA), and official classifications determined by Health Canada in relation to socio-demographic variables offer some insight into food insecurity in Canada [@kirkpatrick2008food; @tarasuk2009household; @gundersen2018food]. Nationally, it has been found that food insecurity impacts approximately 12.3% of Canadian households [@tarasuk2014food]
+
+Food banks - sometimes also referred to as 'food pantries' and 'food shelves' - originated as a community response to aid those with inadequate food by voluntarily offering them meals and ingredients [@riches2002food; @loopstra2012relationship]. The scope and objectives of food banks can vary by region and by country, and these organizations can include not only prepared meals and aliments, but also shared spaces to connect in community gardens and community kitchens [@wakefield2013sweet]. Although in their origin food banks were meant to be provide a temporary solution to accommodate those in hunger due to job retrenchments and economic downfalls since the 1980s, over time they have evolved into a community practice to secure emergency food supplies for those in need [@loopstra2012relationship; @wakefield2013sweet].
+
+In Canada, the number of food banks has steadily increased in the past few decades [@wakefield2013sweet]. The largest database of food banks and their use comes from the non-profit association Food Banks Canada (FBC), which conducts an annual assessment through its affiliated members. FBC's 2018 Hunger Count report[^4] (the most recent available) listed 1,830 member food banks across the country, and found that Canadians visited food banks 1.1 million times in March of 2018. Of those accessing food banks, certain population characteristics tend to be over-represented compared to national totals from the 2016 Canadian Census of Population. According to FBC's 2018 data, single-adult households represent 45% of those utilizing food banks despite making up 28% of Canada's population, 19% are single-parent households (compared to 10% nationally), and 35% of those using food bank services are children aged 0-18 even though their share of Canada's national population is approximately 20%. In addition, 59% of households accessing food banks list social or disability assistance as their primary source of income.
+
+[^4]: <https://foodbankscanada.ca/getmedia/241fb659-05f5-44a2-9cef-56f5f51db523/HungerCount-2018_FINAL_EN.pdf.aspx?ext=.pdf>
+
+Similarly, using data from the 2011-2012 CCHS, Tarasuk et al. [-@tarasuk2019geographic] found higher odds of food insecurity amongst households relying on social assistance, those without a university degree or with children under the age of 18, and individuals that lived alone, renters, and those identifying as Aboriginal. While surveys revealed that only 20 to 30 percent of those experiencing food insecurity were found to frequent food banks in Canada [@tarasuk2014food], pre-pandemic research from Ottawa [@enns2020experiences] and Vancouver [@black2020examining] suggests that long-term users tend to be older, have health or mobility challenges, live in large households, and are less likely to have employment income.
+
+Economic stress caused by the COVID-19 pandemic, rising unemployment rates, and changes in poverty levels have disrupted the food environment and led to higher rates of food insecurity [@niles2020early]. Pandemic-related food security studies in the US have found a substantial increase in households experiencing food insecurity for the first time, and also in households experiencing more severe food insecurity than before [@niles2020early; @wolfson2020food]. Most recently in May 2020, Canada recorded 14.7% of its population living in food insecurity in the past 30 days [@statisticscanada2020food]. Considering the negative mental and physical health effects, increases in food insecurity rates due to the onset of COVID-19, signal a change in the food environment with potential damages to population health during the course of the pandemic and beyond [@niles2020early]. Recent data[^5] from FBC showed that 52% of member food banks reported an increase in usage in March of 2020 when initial lockdown restrictions were put in place across much of the country. The pandemic also created significant staffing issues with 42% of food banks reporting a reduction in volunteers. However, 53% of food banks later reported a decrease in use into the summer of 2020 which FBC members attributed to emergency financial support programs from the federal government. Nevertheless, some of these benefit programs were temporary. Although more recent statistics on food bank use in Hamilton in 2020 and 2021 are not yet available, data from the Daily Bread Food Bank in neighbouring Toronto for August 2020 shows visits climbing 51% year-over-year in that city[^6], which suggests that many households in Hamilton are likely to turn to food bank services to meet their needs.
+
+[^5]: <https://www.foodbankscanada.ca/FoodBanks/MediaLibrary/COVID-Report_2020/A-Snapshot-of-Food-Banks-in-Canada-and-the-COVID-19-Crisis_Exec-Sum_EN.pdf>
+
+[^6]: <https://www.dailybread.ca/wp-content/uploads/2020/11/Whos-Hungry-Report-2020.pdf>
+
+In terms of geography, previous research conducted at the provincial scale using data from the 2011-2012 CCHS found that the prevalence of food insecurity ranged across the country from 11.8% of households in Ontario to 41% of households in Nunavut [@tarasuk2019geographic]. However, although previous research has examined the characteristics of individuals and households accessing food banks, the locational or transportation accessibility aspect of food bank access is not well understood. A wealth of literature examining the food desert concept suggests that, in addition to socio-economic and demographic factors, location and transportation networks play a key role in a household's accessibility to healthy foods [@paez2010relative; @vanderlee2017food; @widener2018spatial]. For food banks specifically, previous qualitative research in Ontario by Smith-Carrier et al. [-@smith2017food] has noted that "transportation can be challenging, particularly if the food bank is situated in a remote location" (p. 32). Particularly, it appears that participants experience challenges with the "inordinate amount of time necessary to obtain food, and difficulties associated with transportation" (p. 39). Users of food banks, according to this research, rely on a variety of modes of transportation to access services. Consequently, the location of facilities matters; in the words of an interviewee: "I wish it [the food bank] was a little more centrally located. Because if I didn't have a bike I'd have to walk it all the way out there and back. I wonder about people who don't" (p. 39).
+
+To offer greater insight into the role of transportation and location in food bank accessibility, this research examines how geographic accessibility to food banks and food services changed in Hamilton during the COVID-19 pandemic.
+
+# Methods and Materials
+
+## Methods
+
+For the research in this paper we adopt the balanced floating catchment area approach of Paez et al. [-@paez2019demand]. This method for estimating accessibility is a form of the widely-used two-stage floating catchment area method [@radke2000spatial; @luo2003measures]. Floating catchment areas are used to estimate accessibility when there are potential congestion effects, and operate by calculating first the *demand* for spatially distributed services. The demand (usually the number of people who require a service) is used to calculate a level of service. In a second step, the level of service is allocated back to the population. Demand and level of service are allocated using some form of distance-decay to embody the geographical principle that, given a choice, people prefer to travel less than more when reaching destinations.
+
+More formally, the first step of this method is as follows:
+
+$$
+L_j = \frac{S_j}{\sum_{i=1}^nP_iw_{ij}}
+$$
+
+\noindent where $S_j$ is the level of supply at location $j$, in simplest terms whether a service point is present (i.e., $S_j=1$) or not (i.e., $S_j=0$); $P_i$ is the population at location $i$ that demands the service; and $w_{ij}$ is a weight, typically a function of the distance between locations $i$ and $j$. $L_j$ is the level of service at location $j$ and it is the inverse of the number of people that need to be serviced.
+
+The second step in this process is then summing the level of service that each population unit can reach, according to the distance-decay weight:
+
+$$
+A_i = \sum_{j=1}^JL_jw_{ji}
+$$
+
+\noindent where $A_i$ is the accessibility to the service, which is in the same units as the level of service: as the inverse of the population being serviced. When the population being serviced is low accessibility is high (i.e., there is little competition for the service), and viceversa.
+
+Floating catchment area methods are prone to overestimation of the population and the level of service due to multiple-counting. The population at $P_i$ is allocated to *every* service point $j$ for which $w_{ij}>0$. Similarly, the level of service at $LOS_j$ is allocated to *every* population point for which $w_{ji}>0$. This inflation effect has been known for several years, and several modifications have been proposed to mitigate it [e.g., @wan2012three; @delamater2013spatial]. A definitive solution to this issue was presented by Paez et al. [-@paez2019demand]. In order to avoid the multiple-counting in the summations, the population and the level of service need to be allocated *proportionally*. This is achieved by standardizing the weights as follows:
+
+$$
+w_{ij}^\text{st} = \frac{w_{ij}}{\sum_{i=1}^nw_{ij}}
+$$
+
+\noindent and:
+
+$$
+w_{ji}^\text{st} = \frac{w_{ji}}{\sum_{j=1}^Jw_{ji}}
+$$
+
+The standardized weights satisfy the following conditions:
+
+$$
+\sum_{i=1}^nw_{ij}^\text{st}=1
+$$
+
+\noindent and:
+
+$$
+\sum_{j=1}^Jw_{ji}^\text{st}=1
+$$
+
+Since the population is allocated proportionally, its value is preserved:
+
+$$
+\sum_{i=1}^nP_iw_{ij}^\text{st}=P_i
+$$
+
+\noindent as is the level of service:
+
+$$
+\sum_{j=1}^JL_jw_{ji}^\text{st}=L_j
+$$
+
+## Study Area
+
+With a population of around 540,000, the City of Hamilton is the fourth largest city in Ontario. It has historically been home to major manufacturing industries but de-industrialization that has occurred over the past several decades has led Hamilton to become one of the most highly divided cities in Ontario, with a significant proportion of its residents living at or below Canada's poverty level [@deluca2012code; @jakar2019turning; @latham2007determinants]. In 2016, the Hamilton Community Foundation reported that based on the Low-Income Cut-Off, Hamilton recorded a poverty rate of 16.7%, which was well above the average rate of Ontario (13.7%) and the average national rate (12.8%).[^7]. According to data from Hamilton Food Share[^8], approximately 23,000 individuals accessed food banks in the city in March of 2019. Within this total is 9,125 visits by children (minors up to 18 years old), up from 8,278 the year before. Feed Ontario, the province's largest collective of hunger-relief organizations, found that on a per-capita basis, the level of need in the inner core of central Hamilton was second highest in Ontario[^9].
+
+[^7]: <https://www.hamiltoncommunityfoundation.ca/vital-signs/low-income-2018/>
+
+[^8]: <https://www.hamiltonfoodshare.org/wp-content/uploads/Hamilton-Food-Share-Hunger-Report-2019.pdf>
+
+[^9]: <https://feedontario.ca/research/report-hunger-map/>
+
+Geographically, the "old" City of Hamilton was amalgamated with several of its surrounding municipalities in 2001, with the city now featuring a mix of urban, suburban, exurban, and rural areas. Lower-cost housing proximate to the city's industrial north end has traditionally attracted immigrants and less-affluent residents compared to the city's wealthier suburbs. However, the decentralization of population from the inner core has led to challenges in transit connectivity to amenities and services and the proportion of auto users compared to transit users remains very high [@behan2008smart; @topalovic2012light]. In addition, the city is separated geographically by the Niagara Escarpment. With sections of rocky cliff that approach 100m in height, the escarpment presents a significant challenge for promoting active travel and transport connections between "mountain" and "lower city" neighbourhoods. Taken together, the high level of food need, population locations, and transportation network characteristics combine to inform spatial accessibility to food banks and food services in the city.
+
+## Data
+
+Data have been prepared for sharing as a data package[^10]. The contents of the data package are described next.
+
+[^10]: <https://drive.google.com/drive/folders/1-l8hO1pMIqaBqf57j_M_BMrXhXFvrV2c?usp=sharing>
+
+### Statistics Canada
+
+Population and income statistics for 2016 were retrieved at the level of Dissemination Areas (DAs) using the package `cancensus` [@vonBergmann2021cancensus]. DAs are the smallest publicly available census geography in Canada. Income data corresponds to the count of households by different total income groupings.
+
+### Origins: Residential parcels
+
+We converted all recorded residential land parcels in the City of Hamilton to points on the road network. Each point includes information about the number of residential units in the parcel. Next, we define low-income households as those having a total income of less than CAD40,000, which is approximately the mid-point of the low income cut-off (LICOs) for families in Canadian cities with populations greater than 500,000 in 2016, to match other Census data [@statisticscanada2020licos]. We then "populate" each residential unit with the probability of being a low-income household based on the counts of households by income groups in the DA in which the parcel is located. While this method assumes a constant probability of low-income household status for all residential units in a DA, the parcel-level analysis affords a high level of spatial disaggregation for the accessibility analysis.
+
+### Destinations: Food Banks and Food Service Locations
+
+The locations of food banks and related food services were obtained from the Hamilton Public Library's Food Access Guide[^11]. The guide was updated in April of 2021 to indicate any change affected on the services due to the pandemic. This includes modified business hours, a need to make reservations before frequenting, and locations that have completely shut down in consequence. Table 1 defines each service type and the number of locations pre- and during the COVID-19 pandemic. While some food bank services have a specific a target population, such as prioritizing families with young children aged between 0 and 3 or accepting only those providing proof of low-income status through housing and utility statements, all the food bank services indicated below are designed to accommodate those in need of food at zero to low cost. With our focus on food banks and food services that offer free or low-cost meals at particular locations, we first removed services such as Meals on Wheels and other food access services such as food box, community kitchens, student nutrition programs, and shopping and transportation. With some providers offering different food services at the same location (e.g. food bank with free and community meal services), and some of these services closing after the onset of the COVID-19 pandemic, we opted to geocode based on the service type. On the other hand, two free meal services held on different days at the same location were collapsed into a single service point for the accessibility analysis. Additional details on the operations of individual facilities is not publicly available, and with the changes in operations it proved unfeasible to collect it. For this reason, the analysis to follow is of accessibility to the location of food banks and services, but not to specific services (e.g., breakfasts vs. food boxes).
+
+[^11]: <http://foodaccessguide.ca/sites/default/files/partnersites/pdf/foodaccessguide.pdf>
+
+```{r table-food-bank-info, echo=FALSE, results='asis'}
+foodbank_table %>% kable("latex",
+                         booktabs = TRUE,
+                         align = ("cccccc"),
+                         col.names = c("Type", 
+                                       "Description", 
+                                       "Locations Pre-COVID", 
+                                       "Locations During COVID", 
+                                       "Additional Notes"),
+                         caption = "\\label{tab:food-bank-info}foodbank and Food Service Information.",
+                         escape = FALSE) %>%
+  kable_styling(latex_options = c("striped", "scale_down")) %>%
+  column_spec(2, width = "15em") %>%
+  column_spec(5, width = "15em")
+```
+
+### Routing and travel time tables
+
+Travel time tables for three modes (car, transit, walking) were computed using the parcels as the origins and the locations of the community and emergency food service locations as the destinations. For routing, the package `r5r` [@pereira2021r5r] was used with a network extract for the City of Hamilton from OpenStreetMaps and the General Transit Feed Specification (GTFS) files for the Hamilton Street Railway, the local transit operator, as well as for Burlington Transit, which operates some service in the city. For transit routing purposes we used maximum travel time values of 300 min and a 2,000 m cap on walking distance: any destination that exceeded these thresholds was ignored. The transit analysis was run twice to account for changes in service levels before and during the pandemic. For the pre-pandemic period, the departure time used for routing was 8:00AM on March 31, 2020 to reflect transit service around the morning service peak on a typical Tuesday just prior to the onset of major pandemic-related lockdowns in Ontario. For the pandemic period, we re-ran the analysis for March 30, 2021.
+
+### Transportation Tomorrow Survey
+
+We used the Data Retrieval System of the Transportation Tomorrow Survey (TTS)\footnote{\url{http://dmg.utoronto.ca/}} to download cross-tabulations of: 1) primary mode of travel per trip by income by place of residence; and 2) age by income by place of residence. These data are from the 2016 Survey (the most recent available). The data are geocoded at the level of Traffic Analysis Zones (TAZ) using the most recent zoning system from 2006 and expansion factors are applied to weight the trips . Each parcel point is populated with the proportion of trips by three modes of travel: car (as driver or passenger), transit, and walk.
+
+### Expected Travel Times
+
+Once we obtained travel time tables with population (number of households) and proportion of trips by mode, we calculated the expected travel time $ett$ from each parcel $i$ to a food bank or food service location $j$ as follows:
+
+$$
+ett_{ij} = p^c_i\cdot tt^c_{ij} + p^t_i\cdot tt^t_{ij} + p^w_i\cdot tt^w_{ij}
+$$
+
+\noindent where $p^k_i$ is the proportion of trips by mode $k$ in the TAZ of parcel $i$, and $tt^k_{ij}$ is the travel time from parcel $i$ to the food bank. In other words, the expected travel time reflects the weighted average of travel times to the food bank, with the weights given by the expected modal split of trips made by low-income households in the TAZ per the TTS data.
+
+# Results and Discussion
+
+```{r accessibility-threshold-sensitivity, include=FALSE}
+## Analysis
+# Testing different thresholds to check how accessibility changes. Here, the thresholds are varied from 2 min to 30 min in 2 min step increments
+threshold_seq <- seq(from = 2, to = 30, by = 1)
+
+# Initialize a data frame to store results
+accessibility_test <- data.frame(threshold = threshold_seq, 
+                                 accessibility = numeric(length(threshold_seq)))
+
+# Calculate the system-wide accessibility according to each threshold
+for(i in 1:length(threshold_seq)){
+  results_test <-  ttm_2021 %>% 
+    transmute(UID, OBJECTID, travel_time = e_travel_time, population = income_less40k, supply = 1) %>%
+    b2sfca(threshold = i )
+  accessibility_test$accessibility[i] <- sum(results_test$accessibility$accessibility)
+}
+```
+
+```{r results-pre-covid, include=FALSE}
+## Analysis 
+# Calculate k-min accessibility pre-covid:
+results_pre <- ttm_2021 %>%
+  #dplyr::filter(COVIDClose == "No") %>%
+  transmute(UID, 
+            OBJECTID, 
+            travel_time = e_travel_time, 
+            population = income_less40k, 
+            supply = 1) %>%
+  b2sfca(threshold = 15)
+```
+
+```{r results-during-covid, include=FALSE}
+## Analysis 
+# Calculate k-min accessibility during covid:
+results_covid <- ttm_2021 %>%
+  dplyr::filter(COVIDClose == "No") %>%
+  transmute(UID, 
+            OBJECTID, 
+            travel_time = e_travel_time, 
+            population = income_less40k, 
+            supply = 1) %>%
+  b2sfca(threshold = 15)
+```
+
+```{r results-during-covid-on-2020-network, include=FALSE}
+## Analysis 
+# Calculate k-min accessibility during covid:
+results_covid_2020 <- ttm_2020 %>%
+  dplyr::filter(COVIDClose == "No") %>%
+  transmute(UID, 
+            OBJECTID, 
+            travel_time = e_travel_time, 
+            population = income_less40k, 
+            supply = 1) %>%
+  b2sfca(threshold = 15)
+```
+
+```{r, bind-accessibility-results, include=FALSE}
+## Analysis
+# Bind level of service results:
+los <- rbind(data.frame(results_pre$los, 
+                        timing = "Pre-covid", 
+                        threshold = "30 min"),
+             data.frame(results_covid$los, 
+                        timing = "During covid", 
+                        threshold = "30 min")) %>%
+  mutate(timing = factor(timing, 
+                         levels = c("Pre-covid", 
+                                    "During covid"),
+                         ordered = TRUE))
+
+# Bind accessibility results:
+accessibility <- rbind(data.frame(results_pre$accessibility, 
+                                  timing = "Pre-covid", 
+                                  threshold = "30 min"),
+                       data.frame(results_covid$accessibility, 
+                                  timing = "During covid", 
+                                  threshold = "30 min")) %>%
+  mutate(timing = factor(timing, 
+                         levels = c("Pre-covid", 
+                                    "During covid"),
+                         ordered = TRUE))
+```
+
+```{r, bind-accessibility-results-for-network-comparison, include=FALSE}
+## Analysis
+# Bind level of service results:
+los_2020 <- rbind(data.frame(results_covid$los, 
+                        timing = "During covid", 
+                        threshold = "30 min"),
+                  data.frame(results_covid_2020$los, 
+                        timing = "Covid 2020", 
+                        threshold = "30 min")) %>%
+  mutate(timing = factor(timing, 
+                         levels = c("During covid", 
+                                    "Covid 2020"),
+                         ordered = TRUE)) %>% 
+  left_join(foodbank_locations %>% transmute(OBJECTID = ID, TYPE), by = "OBJECTID")
+
+los_2020_diff <- los_2020 %>% filter(TYPE == "Food Banks") %>% 
+  pivot_wider(id_cols = OBJECTID, names_from = "timing", values_from = "los") %>% 
+  mutate(los_diff = `During covid` / `Covid 2020`) %>% 
+  summarize(mean_diff = mean(los_diff, na.rm = TRUE), 
+            max_diff = max(los_diff, na.rm = TRUE), 
+            min_diff = min(los_diff, na.rm = TRUE))
+
+# Bind accessibility results:
+accessibility_2020 <- rbind(data.frame(results_covid$accessibility, 
+                                  timing = "During covid", 
+                                  threshold = "30 min"),
+                            data.frame(results_covid_2020$accessibility, 
+                                  timing = "Covid 2020", 
+                                  threshold = "30 min")) %>%
+  mutate(timing = factor(timing, 
+                         levels = c("During covid",
+                                    "Covid 2020"),
+                         ordered = TRUE))
+
+access_2020_diff <- accessibility_2020 %>%
+  pivot_wider(id_cols = UID, names_from = "timing", values_from = "accessibility") %>% 
+  
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, TAZUID),
+            by = c("UID" = "ID")) %>%
+  group_by(TAZUID) %>% summarize(access_covid = sum(`During covid`, na.rm = TRUE), access_2020 = sum(`Covid 2020`, na.rm = TRUE)) %>%
+  mutate(acc_diff = access_covid / access_2020) %>%
+  #left_join(modes %>% transmute(TAZUID, geometry), by = "TAZUID") %>% st_as_sf() #%>%
+  summarize(mean_diff = mean(acc_diff, na.rm = TRUE), 
+            max_diff = max(acc_diff, na.rm = TRUE), 
+            min_diff = min(acc_diff, na.rm = TRUE))
+```
+
+Figure \ref{fig:foodbanks} shows the location of food banks and services in the City of Hamilton and their status. Before the pandemic there were `r nrow(foodbank_locations)` of which `r nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))` (`r round(nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations) * 100, 2)`%) closed during the pandemic. As shown in the figure, food services tend to be predominantly located in the central parts of the city. This is not surprising: population density is high there, and it is also the part of the city where lower income households are more numerous in absolute and relative terms (see Figure \ref{fig:low-income-households}). Alas, this is also the part of the city where most of the closures during the pandemic happened.
+
+```{r plot-location-foodbanks, echo=FALSE, fig.cap="\\label{fig:foodbanks}Location of food banks/services and operation status; the dotted box is an inset of the central part of the City of Hamilton"}
+## Analysis
+# Plot location of foodbanks
+
+# Create a bounding box for an inset
+inset_box <- st_bbox(c(xmin = -79.975,
+                       xmax = -79.775, 
+                       ymax = 43.2, 
+                       ymin = 43.3), 
+                     crs = st_crs(4326)) %>%
+  st_as_sfc()
+
+fb <- ggplot() +
+  geom_sf(data = hamilton_boundary,
+          fill = "lightgray") +
+  geom_sf(data = foodbank_locations,
+          aes(size = COVIDClose,
+              shape = COVIDClose)) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_shape_manual(name = "Closed during COVID-19",
+                     values = c("Yes" = 4, "No" = 1)) +
+  scale_size_manual(values = c("Yes" = 3, "No" = 2)) +
+  guides(size = "none") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = "none")
+
+fb_inset <- ggplot() +
+  geom_sf(data = hamilton_boundary %>% 
+            st_transform(4326),
+          fill = "lightgray") +
+  geom_sf(data = foodbank_locations,
+          aes(size = COVIDClose,
+              shape = COVIDClose)) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_shape_manual(name = "Closed during COVID-19",
+                     values = c("Yes" = 4, "No" = 1)) +
+  scale_size_manual(values = c("Yes" = 3, "No" = 2)) +
+  xlim(-79.975, -79.775) +
+  ylim(43.2, 43.3) +
+  guides(size = "none") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = "bottom")
+
+fb / fb_inset
+```
+
+```{r plot-low-income-households, echo=FALSE, fig.cap="\\label{fig:low-income-households}Number and proportion of households with incomes less than CAD40,000."}
+lih <- ggplot() +
+  geom_sf(data = data_da_2016,
+          aes(fill = income_less40k),
+          color = NA) +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Number of households", 
+                       option = "A",
+                       direction = -1,
+                       breaks = c(200, 400, 600)) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+
+p_lih <- ggplot() +
+  geom_sf(data = data_da_2016,
+          aes(fill = p_inc_less40k),
+          color = NA) +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Proportion of households", 
+                       option = "A",
+                       direction = -1,
+                       breaks = c(0.25, 0.50, 0.75)) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+
+lih / p_lih
+```
+
+To implement the accessibility calculations, we must select a distance-decay function. In this task we find limited support in the literature, which is mostly silent on the travel patterns of people who visit food banks and community food services. For this reason, we opt for a simple cumulative opportunities function as follows:
+
+$$
+w_{ij}=w_{ji}=
+\begin{cases}
+1 & \text{ if } ett_{ij}\le \delta\\
+0 & \text{ otherwise}
+\end{cases}
+$$
+
+\noindent where $ett_{ij}$ is the multimodal expected travel time as described previously, and $\delta$ is a travel threshold. When the expected travel time exceeds this threshold, a facility is no longer considered accessible. Moreover, the weights are standardized for the balanced floating catchment area approach.
+
+Figure \ref{fig:sensitivity-analysis} shows the results of conducting a sensitivity analysis of the system-wide accessibility as we vary the threshold (considering the situation before the pandemic). There is a clear pattern whereby more strict values of $\delta$ are associated with higher levels of system-wide accessibility: while increases in accessibility that result from decreases in the travel time window might seem counter-intuitive, this is a result of lower *congestion*, since fewer households are serviced and thus competition for the same resources is more limited. System-wide accessibility declines with higher values of $\delta$: as more households are serviced, congestion grows and the level of service declines, although this happens at a declining rate. We are not aware of any research that explains how long people are expected to travel for food banks, but we note that in developing countries, accessible sources of drinking water are those that can be reached in less than 30 minutes [round trip, see @world2019progress]. There is no reason why people in affluent countries should be expected to spend more time travelling for a basic necessity such as food. Accordingly, we adopt a 15-minute threshold for the analysis (representing a one-way trip). This threshold is also approximately where the rate of change in accessibility slows down.
+
+```{r plot-results-sensitivity-analysis, out.width="60%", echo=FALSE, fig.cap="\\label{fig:sensitivity-analysis}Accessibility as a function of threshold"}
+acc_sensitivity <- ggplot(accessibility_test, 
+                          aes(x = threshold, y = accessibility)) +
+  geom_line() +
+  ylab("Accessibility") +
+  xlab("Threshold (in min)") +
+  theme_minimal()
+
+acc_sensitivity
+```
+
+Using the 15-minute threshold, we find that the system-wide accessibility (interpreted as a provider-to-population ratio) was `r round(sum(results_pre$accessibility$accessibility), 3)` (food banks/service locations per low income household in the city) before COVID-19, but declined to `r round(sum(results_covid$accessibility$accessibility), 3)` during the pandemic. It is striking that although almost `r round((1 - nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations)) * 100)`% of food facilities remained in operation during the pandemic, there was a loss of accessibility greater than `r abs(round((sum(results_covid$accessibility$accessibility) - sum(results_pre$accessibility$accessibility))/sum(results_pre$accessibility$accessibility) * 100))`%, suggesting the location of emergency and community food services plays an important role in serving those in need.
+
+```{r join-zonal-ids-to-accessibility-table, include=FALSE}
+## Analysis
+# Join zonal identifiers to accessibility results:
+accessibility <- accessibility %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID,
+                            DAUID,
+                            TAZUID,
+                            children,
+                            adults,
+                            seniors),
+            by = c("UID" = "ID")) %>%
+  left_join(population_age_income %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID),
+            by = "TAZUID") 
+```
+
+```{r, join-geometry-to-level-of-service, include=FALSE}
+## Analysis 
+# Join geometry:
+los <- los %>%
+  left_join(foodbank_locations %>%
+              dplyr::select(ID),
+            by = c("OBJECTID" = "ID")) %>%
+  st_as_sf()
+```
+
+Turning to the location of individual facilities, the levels of service offered before and during the pandemic are shown in Figure \ref{fig:levels-of-service}. The level of service is functionally the inverse of the number of low-income households in the travel-mode weighted travel time catchment area of the facilities (this is because $S_j=1 \forall j$, i.e., each location represents a "capacity" of 1). Higher values mean that a facility is expected to service fewer households. Conversely, lower values indicate greater congestion.
+
+The general pattern of the levels of service is similar before and during the pandemic, with lower values in the center of the city where low-income households exhibit multimodal trip patterns that favour proximate service locations. Three more peripheral facilities towards the south of the city have moderate levels of service, presumably because they are expected to service relatively suburban/exurban populations generally reliant on automobiles for travel. During the pandemic, however, the levels of service dropped, in some cases quite substantially. The pattern of the losses in level of service, moreover, is not uniform. The upper pane of Figure \ref{fig:levels-of-service-changes} shows that the peripheral facilities in the suburban/exurban parts of the city saw major declines during the pandemic as more urban locations closed and demand increased for the remaining locations. Further, the inset map shows that the levels of service also deteriorated in the central part of the city. However, the loss of level of service was not as large in the core (where most of the food banks/services are found), but instead was more marked in the inner ring around the core, where facilities may have faced greater demand from both central city and suburban populations after the closure of service locations during the pandemic.
+
+For the food banks specifically, while only one location closed after the onset of COVID-19, changes in the transportation network account for some differences in levels of service across the pre- and during pandemic periods. A comparison of levels-of-service calculated for the during-pandemic period using the 2021 travel time matrix compared to a scenario where the network is held constant using 2020 transit service levels reveals that the average level of service for remaining food banks was 0.3% lower when using the 2021 transit network. Of the 25 remaining food bank locations, 14 saw their levels-of-service decline when using the 2021 transit network compared to assuming constant 2020 transit service characteristics with a maximum decline of -21% across network scenarios. This suggests that transit service improved in some parts of the city which reduces the mode-weighted travel times between some dwellings and food bank locations and results in increased demand for service at these locations. On the other hand, 8 food banks exhibit increases in their levels of service of up to 7% across the network scenarios, suggesting changes in the transit network that increase travel times for some households to food bank locations lead to these locations servicing fewer people in our calculations.
+
+```{r plot-levels-of-service, echo=FALSE, fig.cap="\\label{fig:levels-of-service}Levels of service at each facility pre-COVID-19 (top panel) and during COVID-19 (bottom panel)."}
+## Analysis
+# Plot levels of service before and during covid
+
+# Pre-covid
+los_pre <- ggplot() +
+  geom_sf(data = hamilton_boundary) +
+  geom_sf(data = los %>%
+            filter(timing == "Pre-covid"),
+          aes(color = los,
+              size = los),
+          alpha = 0.5) +
+  geom_sf(data = foodbank_locations,
+          aes(shape = COVIDClose)) +
+  scale_color_viridis_c(name = "Level of service \npre-COVID-19",
+                        option =  "A", 
+                        direction = -1,
+                        breaks = c(0.0010,
+                                   0.0020,
+                                   0.0040,
+                                   0.0060,
+                                   0.0080),
+                        labels = c("0.0010",
+                                   "0.0020",
+                                   "0.0040",
+                                   "0.0060",
+                                   "0.0080")) +
+  scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
+  guides(size = "none", shape = "none") +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
+
+# During covid
+los_covid <- ggplot() +
+  geom_sf(data = hamilton_boundary) +
+  geom_sf(data = los %>%
+            filter(timing == "During covid"),
+          aes(color = los,
+              size = los),
+          alpha = 0.5) +
+  geom_sf(data = foodbank_locations,
+          aes(shape = COVIDClose)) +
+  scale_color_viridis_c(name = "Level of service \nduring COVID-19",
+                        option =  "A", 
+                        direction = -1,
+                        breaks = c(0.00100,
+                                   0.00200,
+                                   0.00400,
+                                   0.00600,
+                                   0.00800),
+                        labels = c("0.0010",
+                                   "0.0020",
+                                   "0.0040",
+                                   "0.0060",
+                                   "0.0080")) +
+  scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
+  guides(size = "none", shape = "none") +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
+
+los_pre / los_covid
+```
+
+```{r plot-levels-of-service-changes, echo=FALSE, fig.cap="\\label{fig:levels-of-service-changes}Changes in levels of service at each facility from pre-COVID-19 to during COVID-19."}
+# This figure shows the places where the level of service deteriorated most (excluding the places that closed, where it vanished).
+los_change <- los %>%
+  st_drop_geometry() %>%
+  pivot_wider(names_from = timing, 
+              values_from = los, 
+              values_fill = 0) %>%
+  filter(`During covid` > 0) %>%
+  mutate(los_d = `During covid` - `Pre-covid`) %>%
+  left_join(foodbank_locations %>%
+              transmute(OBJECTID = ID,
+                        geometry),
+            by = "OBJECTID") %>%
+  st_as_sf() %>% 
+  left_join(foodbank_locations %>% st_drop_geometry() %>% transmute(OBJECTID = ID, TYPE), by = "OBJECTID")
+
+lc <- ggplot() +
+  geom_sf(data = hamilton_boundary) +
+  geom_sf(data = los_change, 
+          aes(color = los_d,
+              size = los_d),
+          alpha = 0.3) +
+  geom_sf(data = foodbank_locations,
+          aes(shape = COVIDClose)) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_color_viridis_c(name = "Change in level of service",
+                        option =  "A", 
+                        direction = 1,
+                        breaks = c(-0.0001,
+                                   -0.0002,
+                                   -0.0004,
+                                   -0.0006,
+                                   -0.0008),
+                        labels = c("-0.0001",
+                                   "-0.0002",
+                                   "-0.0004",
+                                   "-0.0006",
+                                   "-0.0008")) +
+  scale_size(trans = 'reverse') +
+  scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
+  guides(size = "none", shape = "none") +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "none")
+
+lc_inset <- ggplot() +
+  geom_sf(data = hamilton_boundary %>% 
+            st_transform(4326)) +
+  geom_sf(data = los_change, 
+          aes(color = los_d,
+              size = los_d),
+          alpha = 0.7) +
+  geom_sf(data = foodbank_locations,
+          aes(shape = COVIDClose)) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_color_viridis_c(name = "Change in level of service",
+                        option =  "A", 
+                        direction = 1,
+                        breaks = c(-0.0001,
+                                   -0.0002,
+                                   -0.0004,
+                                   -0.0006,
+                                   -0.0008),
+                        labels = c("-0.0001",
+                                   "-0.0002",
+                                   "-0.0004",
+                                   "-0.0006",
+                                   "-0.0008")) +
+  scale_size(name = "Change in level of service",
+             trans = 'reverse',
+             breaks = c(-0.0001,
+                        -0.0002,
+                        -0.0004,
+                        -0.0006,
+                        -0.0008),
+             labels = c("-0.0001",
+                        "-0.0002",
+                        "-0.0004",
+                        "-0.0006",
+                        "-0.0008")) +
+  scale_shape_manual(values = c("Yes" = 4, "No" = 1)) +
+  xlim(-79.975, -79.775) +
+  ylim(43.2, 43.3) +
+  guides(color = guide_legend(title.position = "top"), 
+         #size = FALSE, 
+         shape = "none") +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+
+lc / lc_inset
+```
+
+To further elucidate this issue, we now turn to the results of the accessibility analysis. As with the level of service of individual facilities, the general pattern of accessibility before and during the pandemic is similar. Figure \ref{fig:accessibility} reveals that, compared with the outer rural zones, the more urban zones of the city generally exhibit higher accessibility to food banks and food service locations. However, the pattern is not particularly smooth - this is largely attributable to the weighting of travel times by mode of transportation according to the trip patterns of low-income household respondents captured by the TTS. For example, in zones where low-income households make a high proportion of trips by walking, access to food bank locations by walking is afforded a concomitantly high weight in our calculations of travel time compared to transit or car travel. From this, highly-accessible locations result from a mix of characteristics: low-income households in locations where travel options that align with zonal modal split are available to connect them to food bank locations with high levels of service within 15 minutes. This seems to track with the experience of some users of these services, as reported by Smith-Carrier et al. [-@smith2017food].
+
+```{r aggregate-accessibility-by-taz, include=FALSE}
+## Analysis
+# Accessibility by TAZ:
+accessibility_taz <- accessibility %>%
+  group_by(TAZUID, 
+           timing) %>%
+  summarize(accessibility = sum(accessibility),
+            timing = first(timing),
+            .groups = "drop") %>%
+  left_join(population_age_income %>%
+              transmute(TAZUID,
+                        children,
+                        adults,
+                        seniors),
+            by = "TAZUID") %>%
+  st_as_sf()
+```
+
+```{r plot-accessibility, echo=FALSE, fig.align = 'center', fig.cap="\\label{fig:accessibility}Accessibility by traffic analysis zone pre-COVID-19 (top panel) and during COVID-19 (bottom panel)."}
+## Analysis
+# Plot accessibility before and during covid:
+acc_pre <- ggplot() +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
+  geom_sf(data = accessibility_taz %>%
+            filter(timing == "Pre-covid"),
+          aes(fill = accessibility)) +
+  scale_fill_viridis_c(name = "Accessibility \npre-COVID-19",
+                       option =  "A", 
+                       direction = -1,
+                       breaks = c(0.0030,
+                                  0.0024,
+                                  0.0018,
+                                  0.0012,
+                                  0.0006),
+                       labels = c("0.0030",
+                                  "0.0024",
+                                  "0.0018",
+                                  "0.0012",
+                                  "0.0006")) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
+
+acc_covid <- ggplot() +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
+  geom_sf(data = accessibility_taz %>%
+            filter(timing == "During covid"),
+          aes(fill = accessibility)) +
+  scale_fill_viridis_c(name = "Accessibility \nduring COVID-19",
+                       option =  "A", 
+                       direction = -1,
+                       breaks = c(0.0024,
+                                  0.0018,
+                                  0.0012,
+                                  0.0006,
+                                  0.0001),
+                       labels = c("0.0024",
+                                  "0.0018",
+                                  "0.0012",
+                                  "0.0006",
+                                  "0.0001")) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "right")
+
+acc_pre / acc_covid
+```
+
+```{r accessibility-changes-by-taz, include=FALSE}
+## Analysis
+# Calculate accessibility change by TAZ:
+accessibility_taz_change <- accessibility_taz %>%
+  st_drop_geometry() %>%
+  pivot_wider(names_from = timing, 
+              values_from = accessibility) %>%
+  # Calculate changes in accessibility
+  mutate(acc_d = `During covid` - `Pre-covid`) %>%
+  # Join TAZ geometry
+  left_join(population_age_income %>%
+              transmute(TAZUID,
+                        geometry),
+            by = "TAZUID") %>%
+  # Convert to simple features
+  st_as_sf()
+```
+
+We find that the accessibility landscape deteriorated substantially during the pandemic, with accessibility dropping on average by almost `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% mean() %>% abs() %>% round()`%, but with large variations: some zones experienced changes in accessibility of only about `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% max() %>% abs() %>% round()`%, whereas the most affected zone saw a loss of accessibility of almost `r accessibility_taz_change %>% st_drop_geometry() %>% summarize(d = (.[[6]] - .[[5]])/.[[5]] * 100) %>% pull(d) %>% min() %>% abs() %>% round()`%. Figure \ref{fig:accessibility-changes-with-local-i} shows the changes in accessibility. Every zone is worse off after the closure of facilities during the pandemic, but some parts of the city seem to have been particularly affected. To better highlight these changes, we used a local indicator of spatial autocorrelation [@anselin1995local] to explore the pattern of change in accessibility. Twenty-four TAZs are flagged as having significantly large losses of accessibility (at $p\le 0.10$, without correcting for multiple comparisons). Those zones are highlighted in the figure, where it can be seen that they form more or less compact neighborhoods. Remarkably, the largest significant drops in accessibility are not downtown, but located in two cases in the industrial north of the city, in one case in an inner suburb above the escarpment, and lastly in a more suburban/exurban region in the south-west.
+
+```{r plot-accessibility-changes, echo=FALSE,  fig.align = 'center', fig.cap="\\label{fig:accessibility-changes}Changes in accessibility from pre-COVID-19 to during COVID-19."}
+## Analysis
+# Plot
+acc_change <- ggplot() +
+  #geom_sf(data = hamilton_boundary) +
+  geom_sf(data = accessibility_taz_change,
+          aes(fill = acc_d),
+          color = NA) +
+  geom_sf(data = population_age_income,
+          fill = NA) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Change in accessibility",
+                       option =  "A", 
+                       direction = 1,
+                       breaks = c(-0.0008,
+                                  -0.0006,
+                                  -0.0004,
+                                  -0.0002),
+                       labels = c("-0.0008",
+                                  "-0.0006",
+                                  "-0.0004",
+                                  "-0.0002")) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "none")
+
+acc_change_inset <- ggplot() +
+  geom_sf(data = accessibility_taz_change %>%
+            st_transform(crs = 4326),
+          aes(fill = acc_d)) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Change in accessibility",
+                       option =  "A", 
+                       direction = 1,
+                       breaks = c(-0.0008,
+                                  -0.0006,
+                                  -0.0004,
+                                  -0.0002),
+                       labels = c("-0.0008",
+                                  "-0.0006",
+                                  "-0.0004",
+                                  "-0.0002")) +
+  guides(fill = guide_legend(title.position = "top")) +
+  xlim(-79.975, -79.775) +
+  ylim(43.2, 43.3) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+
+acc_change / acc_change_inset
+```
+
+```{r weights-matrix, include=FALSE}
+taz_nb <- poly2nb(accessibility_taz_change, queen = TRUE)
+taz_w <- nb2listw(taz_nb)
+```
+
+```{r moran-test-accessibility-changes, include=FALSE}
+moran.test(accessibility_taz_change$acc_d, taz_w)
+```
+
+```{r local-moran-i, include=FALSE}
+local_i <- localmoran(accessibility_taz_change$acc_d,
+                      taz_w, 
+                      alternative = "two.sided",
+                      p.adjust.method = "none") %>% 
+  data.frame() %>%
+  rename(p_val = Pr.z....0.) %>%
+  mutate(significance = ifelse(p_val <= 0.10, "sig", "n.s."),
+         significance = factor(significance,
+                               levels = c("n.s.", "sig")))
+
+summary(local_i)
+```
+
+```{r join-local-i-to-table, include=FALSE}
+accessibility_taz_change$significance <- local_i$significance
+```
+
+```{r plot-local-i, echo=FALSE, fig.cap="\\label{fig:accessibility-changes-with-local-i}Changes in accessibility from pre-COVID-19 to during COVID-19. Highlighted areas had significantly large changes in accessibility according to Local Moran's I." }
+ggplot() +
+  geom_sf(data = accessibility_taz_change,
+          aes(fill = acc_d,
+              color = significance,
+              alpha = significance),
+          size = 1) +
+  geom_sf(data = hamilton_boundary,
+          fill = NA) +
+  geom_sf(data = inset_box,
+          linetype = "dotted",
+          color = "red",
+          fill = NA) +
+  scale_fill_viridis_c(name = "Change in accessibility",
+                       option =  "A", 
+                       direction = 1,
+                       breaks = c(-0.0008,
+                                  -0.0006,
+                                  -0.0004,
+                                  -0.0002),
+                       labels = c("-0.0008",
+                                  "-0.0006",
+                                  "-0.0004",
+                                  "-0.0002")) +
+  scale_color_manual(values = c("n.s." = "lightgray", 
+                                "sig" = "black")) +
+  scale_alpha_manual(values = c("n.s." = 0.5, 
+                                "sig" = 1)) +
+  guides(color = "none", 
+         alpha = "none",
+         fill = guide_legend(title.position = "top")) +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        legend.position = "bottom")
+```
+
+For the more suburban clusters of zones, the decrease in accessibility is derived from the closure of locations throughout the city reachable by car. In the cluster of central suburban zones for example, low-income households in the outer ring of zones that exhibit medium to high decreases in accessibility within this cluster appear to be largely auto-dependent in their tripmaking, which each each exhibiting between `r round(modes %>% st_drop_geometry() %>% filter(TAZUID %in% c(5143, 5135, 5121, 5110, 5102, 5092, 5063)) %>% summarize(min(p_car)) *100)`-`r round(modes %>% st_drop_geometry() %>% filter(TAZUID %in% c(5143, 5135, 5121, 5110, 5102, 5092, 5063)) %>% summarize(max(p_car)) *100)`% of their modal split for car trips. This results in the parcels within these zones having a large number of potentially accessible locations in the travel time matrix. But by extension, the change in accessibility over the pre- and during-COVID-19 time periods is affected not only by the closure of service locations proximate to the zones, but also the locations in the central city. The zone with the greatest decrease in accessibility within this cluster (-0.0009) has a high rate of car trips and connects to the most food bank locations in total as well as those that stayed open or closed.
+
+In the cluster to the south-west, the decrease in accessibility is predominately driven by the closure of a high level-of-service Community Meals provider. However, like the more central suburban zones, low-income households within this cluster are also between 90% to 100% auto-dependent in their tripmaking in the TTS. The story is similar for the zone located in the north-west that exhibits the greatest decrease in accessibility. Here, low-income households responding to the TTS conducted 100% of their trips by car and, as a result, dwellings within this zone have access to the second-highest number of food bank and service locations within 15 minutes. However, this also means zonal accessibilities are greatly affected by the number of closures throughout the city. Finally, in the city's north end and north-east zones, low-income households exhibit a mixture of tripmaking behaviour in the TTS. Households in some zones take transit more often and one zone in particular has 100% of its trips by walking. For these zones, the decrease in accessibility tends to be a product of the closure of several inner-city food bank and service locations reachable by multiple modes.
+
+Just as the effects of the closures appear to have been uneven in space, they also seem to have had different impacts on various population segments. Using data on low income individuals by age drawn from the TTS, Table \ref{tab:accessibility-by-age} shows the estimated number of people in each age group by their level of accessibility before and during the pandemic. Here, it is important to note that the quartiles are relative: people in the top 25% of accessibility still have lower accessibility during the pandemic than before. In reality, every population group is worse off during the pandemic in terms of their accessibility to food banks and services in the City of Hamilton. However, some age groups were affected more. As seen in the table, the distribution within quartiles for adults changed only slightly, and in fact there are fewer adults in the bottom three quartiles as some found themselves in the (deteriorated) top quartile of accessibility during the pandemic. The story is different for seniors, a greater number of whom are now in the third quartile, due to a combination of seniors facing a worse accessibility situation, and just a few moving from the bottom quartile (pre-pandemic) to the third during the pandemic. Those aged 18 and less appear to have fared worse, and the largest change is in the number of children who were in the third quartile before the pandemic and found themselves in the bottom accessibility class during the pandemic. These results suggest that, through a combination of the typical modes of transportation of lower income households and the spatial distribution of the population, the food bank/service locations closed had a differential impact that more greatly affected the youngest among the population in low income households.
+
+```{r accessibility-change-by-parcel, include=FALSE}
+## Analysis
+# Calculate accessibility change by parcel:
+accessibility_change <- accessibility %>%
+  select(UID, timing, accessibility) %>%
+  pivot_wider(names_from = timing, 
+              values_from = accessibility,
+              values_fill = 0) %>%
+  # Calculate changes in accessibility
+  mutate(acc_d = `During covid` - `Pre-covid`)
+```
+
+```{r join-accessibility-change-to-table, include=FALSE}
+## Analysis
+# Join accessibility change to accessibility table:
+accessibility <- accessibility %>%
+  left_join(accessibility_change %>%
+              select(UID, acc_d),
+            by = "UID")
+```
+
+```{r quartiles-of-accessibility-change, include=FALSE}
+## Analysis
+# Quartiles of accessibility pre-covid:
+acc_quantiles_pre <- quantile(accessibility_change$`Pre-covid`,
+                              c(0, 0.25, 0.5, 0.75, 1))
+# Quartiles of accessibility change:
+acc_quantiles_during <- quantile(accessibility_change$`During covid`,
+                                 c(0, 0.25, 0.5, 0.75, 1))
+```
+
+```{r accessibility-labels, include=FALSE}
+## Analysis
+# Add labels of accessibility loss to table:
+accessibility <- accessibility %>%
+  mutate(accessibility_pre_level = case_when(accessibility <= acc_quantiles_pre[2] ~ "Bottom 25\\%",
+                                             accessibility > acc_quantiles_pre[2] & accessibility <= acc_quantiles_pre[3] ~ "Third 25\\%",
+                                             accessibility > acc_quantiles_pre[3] & accessibility <= acc_quantiles_pre[4] ~ "Second 25\\%",
+                                             accessibility > acc_quantiles_pre[4] ~ "Top 25\\%"),
+         accessibility_pre_level = factor(accessibility_pre_level,
+                                          levels = c("Top 25\\%", "Second 25\\%", "Third 25\\%", "Bottom 25\\%"),
+                                          ordered = TRUE),
+         accessibility_during_level = case_when(accessibility <= acc_quantiles_during[2] ~ "Bottom 25\\%",
+                                                accessibility > acc_quantiles_during[2] & accessibility <= acc_quantiles_during[3] ~ "Third 25\\%",
+                                                accessibility > acc_quantiles_during[3] & accessibility <= acc_quantiles_during[4] ~ "Second 25\\%",
+                                                accessibility > acc_quantiles_during[4] ~ "Top 25\\%"),
+         accessibility_during_level = factor(accessibility_during_level,
+                                             levels = c("Top 25\\%", "Second 25\\%", "Third 25\\%", "Bottom 25\\%"),
+                                             ordered = TRUE))
+```
+
+```{r aggregate-accessibility-by-age-group, include=FALSE}
+summary_pre <- accessibility %>%
+  filter(timing == "Pre-covid") %>%
+  group_by(accessibility_pre_level) %>%
+  summarize(children_pre = sum(children) %>% 
+              round(),
+            adults_pre = sum(adults) %>% 
+              round(),
+            seniors_pre = sum(seniors) %>% 
+              round(),
+            .groups = "drop")
+
+summary_during <- accessibility %>%
+  filter(timing == "During covid") %>%
+  group_by(accessibility_during_level) %>%
+  summarize(children_during = sum(children) %>% 
+              round(),
+            adults_during = sum(adults) %>% 
+              round(),
+            seniors_during = sum(seniors) %>% 
+              round(),
+            .groups_during = "drop")
+
+accessibility_by_age <- cbind(summary_pre, summary_during[,2:4]) %>%
+  mutate(children_change = round((children_during - children_pre)/children_pre * 100, 2),
+         adults_change = round((adults_during - adults_pre)/adults_pre * 100, 2),
+         seniors_change = round((seniors_during - seniors_pre)/seniors_pre * 100, 2),
+         children_pre = prettyNum(children_pre, big.mark = ","),
+         adults_pre = prettyNum(adults_pre, big.mark = ","),
+         seniors_pre = prettyNum(seniors_pre, big.mark = ","),
+         children_during = paste0(prettyNum(children_during, big.mark = ","), " (", children_change, "\\%)"),
+         adults_during = paste0(prettyNum(adults_during, big.mark = ","), " (", adults_change, "\\%)"),
+         seniors_during = paste0(prettyNum(seniors_during, big.mark = ","), " (", seniors_change, "\\%)")) %>%
+  transmute(accessibility_pre_level,
+            children_pre,
+            adults_pre,
+            seniors_pre,
+            children_during,
+            adults_during,
+            seniors_during)
+```
+
+```{r table-accessibility-by-age-group, echo=FALSE, results='asis'}
+accessibility_by_age %>%
+  kable("latex",
+        booktabs = TRUE,
+        align = ("lcccccc"),
+        col.names = c("Accessibility Quartile",
+                      "Children (age $\\le$ 18)", 
+                      "Adults (19-64)", 
+                      "Seniors (age $\\ge$ 65)", 
+                      "Children (age $\\le$ 18)", 
+                      "Adults (19-64)", 
+                      "Seniors (age $\\ge$ 65)"),
+        caption = "\\label{tab:accessibility-by-age}Population at each accessibility level by age group among members households with incomes less than CAD40,000.",
+        escape = FALSE) %>%
+  kable_styling(latex_options = c("striped", "scale_down", "hold_position")) %>%
+  add_header_above(c(" " = 1, "Pre-COVID-19" = 3, "During COVID-19" = 3)) %>%
+  footnote(general = c("Population values have been rounded.", 
+                       "The values in brackets for population during COVID-19 are the changes from before the pandemic."))
+```
+
+```{r include=FALSE, eval = FALSE}
+## Analysis
+# Calculate accessibility by age group and accessibility level:
+accessibility_by_age <- accessibility %>%
+  filter(timing == "During covid") %>% 
+  group_by(timing, 
+         accessibility_level) %>%
+  summarize(children = sum(children),
+            adults = sum(adults),
+            seniors = sum(seniors),
+            accessibility = sum(accessibility),
+            .groups = "drop")
+# The accessibility level is the magnitude of the accessibility loss: the top 25% faced the smallest losses in accessibility, and the bottom 25% faced the greatest losses in accessibility. 
+```
+
+```{r include=FALSE, eval = FALSE}
+cbind(accessibility_by_age %>% 
+        filter(timing == "Pre-covid") %>% 
+        select(children:accessibility) %>% 
+        rename(accessibility_pre = accessibility),
+      accessibility_by_age %>% 
+        filter(timing == "During covid") %>% 
+        transmute(accessibility_covid = accessibility)) %>%
+  mutate(pct_children = round(children/sum(children) * 100, 1),
+         pct_children = paste0("(", pct_children, "\\%)", sep = ""),
+         pct_adults = round(adults/sum(adults) * 100, 1),
+         pct_adults = paste0("(", pct_adults, "\\%)", sep = ""),
+         pct_seniors = round(seniors/sum(seniors) * 100, 1),
+         pct_seniors = paste0("(", pct_seniors, "\\%)", sep = ""),
+         children = round(children) %>% 
+           prettyNum(big.mark = ","),
+         adults = round(adults) %>% 
+           prettyNum(big.mark = ","),
+         seniors = round(seniors) %>% 
+           prettyNum(big.mark = ","),
+         children = paste0(children, " ", pct_children, sep = ""),
+         adults = paste0(adults, " ", pct_adults, sep = ""),
+         seniors = paste0(seniors, " ", pct_seniors, sep = ""),
+         change = (accessibility_covid - accessibility_pre) %>% 
+           round(5),
+         accessibility_pre = round(accessibility_pre, 5),
+         accessibility_covid = round(accessibility_covid, 5)) %>%
+  transmute(children,
+            adults,
+            seniors,
+            accessibility_pre,
+            accessibility_covid,
+            change) %>%
+  kable("latex",
+        booktabs = TRUE,
+        align = ("cccccc"),
+        col.names = c("Children (age $\\le$ 18)", 
+                      "Adults (19-64)", 
+                      "Seniors (age $\\ge$ 65)", 
+                      "Before COVID-19", 
+                      "During COVID-19", 
+                      "Difference"),
+        caption = "\\label{tab:accessibility-by-age}Accessibility by age group among members households with incomes less than CAD40,000.",
+        escape = FALSE) %>%
+  kable_styling(latex_options = c("striped", "scale_down")) %>%
+  add_header_above(c("Population" = 3, "Accessibility" = 3)) %>%
+  footnote(general = "Population values have been rounded")
+```
+
+# Conclusions
+
+Food insecurity is a significant issue for many Canadian households and is associated with reductions in nutrition and poor mental and physical health outcomes. While food bank use can provide some relief, the levels of need in the City of Hamilton were on the rise before the onset of the COVID-19 pandemic, with a troubling increase in the number of visits made by children. While temporary financial relief measures may have helped reduce food bank use in the summer of 2020, the pandemic has in all probability increased food insecurity for many households. To compound matters, the pandemic has also resulted in major disruptions, including to employment, mobility alternatives, and to food bank and food service delivery. In response, this research has sought to better understand accessibility to food banks and food service locations, as well as how the closure of some locations over the pre- and during-COVID time periods affected the potential for low-income households to reach these amenities. Using the balanced floating catchment area method to account for population demand and congestion effects at service points, we estimated multi-modal accessibility to food bank and food service locations for low-income households. The weighting of travel time estimates by the modal split in different zonal geographies tailors the results to patterns of travel behaviour captured in the regional travel survey. Moreover, our parcel-level analysis presents a disaggregate approach to estimating accessibility based on the locations of residential parcels and dwellings.
+
+Our results show that while accessibility levels were lower in the city's more car-oriented suburban and rural areas to begin with, the closure of 14% of the city's food bank and low-cost or free food service locations during the pandemic resulted in an overall decrease in accessibility across the city. However, these effects were not uniform over space or for different population groups. Since the balanced floating catchment area method takes into account changes in demand and congestion for service providers, the closure of food bank and food service locations can reverberate throughout the catchment areas of the whole city. For some suburban zones, the closure of a relatively high level-of-service location results in the remaining services being spread over a larger population. In others, high auto dependence for trips leads to decreases in accessibility that accumulate due to the loss of several food bank and service locations initially reachable within 15 minutes by car. Reductions in accessibility in the city's more urban north end, where low-income households conduct higher proportions of trips by transit and walking, emphasize the importance of geographic proximity in the potential to reach food bank and service locations for these residents. Beyond geography, the results also highlight the differential impact of food banks closing during COVID-19 on population groups, with seniors and children most affected.
+
+In the absence of information regarding how food insecure households travel to food banks and related services, we examined accessibility to food banks using a 15 minutes (one-way) travel time threshold. The fact that we must rely on a standard created for accessible drinking water in the developing world only serves to highlight the tragedy of food insecurity in an affluent country like Canada. More broadly, it points to the absurd need to understand how a bad situation was made worse by the pandemic: in effect, the analysis reveals that disparities in accessibility to food banks and services predated the pandemic, that the pandemic contributed to the deterioration of these services, and that populations already in distress, particularly children, ended up in an even more adverse state. How much worse, it is impossible to say, mainly because there is also a dearth of information, let alone standards, regarding what is an *acceptable* or *sufficient* level of service when it comes to food banks. Whether this is one facility per 1,000 population or three facilities per 1,000 population, or any other number, we know not. But like international human rights standards for accessibility to clean drinking water within 30 minutes (round-trip), this work strongly suggests that adopting better defined standards for access to food banks that move beyond generalized conceptualizations of "access" to consider the geographic component of accessibility (and its interactions with travel behaviour and individual/household socioeconomic and demographic traits) would make a meaningful contribution to understanding food access and "food bank deserts" for food insecure populations.
+
+In summary, while previous work has noted the important role of geography alongside other socio-economic and demographic indicators in household access to healthy food, this is, to the best of our knowledge, the first study that has focused on the geographic component of food bank accessibility. Beyond accounting for the inflation of demand that occurs in traditional floating catchment area methods, our application of the balanced floating catchment area approach offers a novel analysis of food bank and food service accessibility that is sensitive to the locations of low-income households, information on their age distributions and typical trip-making behaviour, food bank and food service locations and their operations over time, and the characteristics of the city's multi-modal transportation network. Despite the limitations noted above, the findings from this analysis can provide quantitative evidence to help urban planners and community administrators strategically allocate food bank services considering accessibility for different population groups, especially when considering the unequal distribution of impacts from the COVID-19 pandemic.
+
+In terms of future research, it is important to note that the degree to which our low-income cut-off of CAD\$40,000 reflects food insecurity in the different zones of the study area is not known. We also consider all food banks and food service locations equally. Information on differential capacities at food provider locations is currently not collected, and given the closure of facilities was not possible to obtain. Data on services, such as the number of meals served, could be used to refine the analysis in the future. Moreover, while the travel survey allows us to model multi-modal accessibilities that align with travel behaviour observed in the travel survey and capture differences in accessibility by age categories, the use of travel survey data for modelling food insecurity also has its limitations. Research into the population weighting methods used in the TTS note that the survey may under-count the lowest- and highest-income households in the survey study region, although the magnitude of this under-counting is unknown, and approximately 20% of respondents to the 2016 survey did not report their income [@rose2018transportation]. In that regard, the modal splits of low-income households observed through the TTS data may not accurately reflect the travel behaviours of food insecure populations, and our estimates might in fact be somewhat conservative if those households who do not report income rely more on walking and/or transit for their mobility needs.
+
+# References {#references .unnumbered}
