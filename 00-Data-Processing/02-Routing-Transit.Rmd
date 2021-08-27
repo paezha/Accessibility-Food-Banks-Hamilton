@@ -14,7 +14,7 @@ rm(list = ls())
 ```
 
 Load packages used in the notebook:
-```{r message = FALSE}
+```{r include = FALSE}
 library(cancensus)
 library(disk.frame)
 #library(pycno)
@@ -22,6 +22,7 @@ library(readr)
 library(r5r) # the r5r package requires Java Development Kit version 11, which can be downloaded from https://www.oracle.com/java/technologies/javase-jdk11-downloads.html
 library(sf)
 library(smoothr)
+library(tidytransit)
 library(tidyverse)
 library(tmap)
 library(tmaptools)
@@ -73,17 +74,21 @@ Set Up R5 Routing. First define the path to where the graph is located:
 r5_path <- file.path("./r5_graph")
 ```
 
-Download and import GTFS (Hamilton transit data)
-```{r eval=FALSE}
-download.file(url = "https://transitfeeds.com/p/hamilton-street-railway/31/latest/download", destfile = file.path(r5_path, "HSR_transit.zip"), mode = "wb")
-```
+Download and import GTFS files
 
-Download and import GTFS (Hamilton transit data)
 ```{r eval=FALSE}
-download.file(url = "https://transitfeeds.com/p/burlington-transit/294/latest/download", destfile = file.path(r5_path, "Burlington_transit.zip"), mode = "wb")
+# gtfs files
+download.file(url = "http://transitfeeds.com/p/hamilton-street-railway/31/20210122/download", 
+              destfile = file.path(r5_path, "HSR.zip"), 
+              mode = "wb")
+
+download.file(url = "http://transitfeeds.com/p/burlington-transit/294/20210315/download", 
+              destfile = file.path(r5_path, "BURT.zip"), 
+              mode = "wb")
 ```
 
 Build the graph:
+
 ```{r build-graph, include = FALSE}
 r5_hamilton_cma <- setup_r5(data_path = r5_path, verbose = FALSE)
 ```
@@ -108,65 +113,25 @@ destinations_j <- data.frame(ID = foodbank_locations$ID,
 ```
 
 Calculate OD Matrix for transit:
+
 ```{r calculate transit od matrix}
-# set up batching according to how many origin rows to process at one time
-chunksize = 2000 # larger chunks for walking will give enough origins in each chunk to allow multiprocessing to spin up with R5R
-num_chunks = ceiling(nrow(origins_i)/chunksize)
-
-# create origin-destination pairs
-origins_chunks <- as.disk.frame(origins_i,
-                          outdir = "./df/origins_i",
-                          nchunks = num_chunks,
-                          overwrite = TRUE)
-
-start.time <- Sys.time()
-pb <- txtProgressBar(0, num_chunks, style = 3)
-
-for (i in 1:num_chunks){
-  origins_i_chunk <- get_chunk(origins_chunks, i)
-  ttm_chunk <- travel_time_matrix(r5_hamilton_cma,
-                          origins = origins_i_chunk,
+ttm_transit <- travel_time_matrix(r5_hamilton_cma,
+                          origins = origins_i,
                           destinations = destinations_j,
                           mode = c("WALK", "TRANSIT"),
                           mode_egress = c("WALK"),
                           departure_datetime = as.POSIXct(strptime("2021-03-30 08:00:00", "%Y-%m-%d %H:%M:%S", tz = "EST5EDT")),
-                          max_walk_dist = 10000, # metres
-                          max_trip_duration = 180)
-  
-  # export output as disk.frame
-  ifelse(i == 1, output_df <- as.disk.frame(ttm_chunk,
-                                            nchunks = 1,
-                                            outdir = "./df/output_ttm_transit",
-                                            compress = 100,
-                                            overwrite = TRUE),
-         add_chunk(output_df, ttm_chunk, chunk_id = i))
-  setTxtProgressBar(pb, i)
-}
-end.time <- Sys.time()
-ttm_transit_time <- end.time - start.time
-ttm_transit_time
+                          max_walk_dist = 2000, # metres
+                          max_trip_duration = 300, 
+                          verbose = FALSE)
 ```
 
 ## Extract travel time matrix
 
-```{r load od matrix for transit, include=FALSE}
-# connect to the walking travel time matrix disk frame
-ttm_transit.disk.frame <- disk.frame("./df/output_ttm_transit")
-#opportunities_j <- as.data.frame(nyc_cb_point) %>% select(GEOID10, total_emp) %>% rename(toId = GEOID10, o_j = total_emp)
-```
-
-Convert disk.frame to data frame:
-```{r}
-ttm_transit <- as.data.frame(ttm_transit.disk.frame) %>%
-  transmute(UID = as.numeric(fromId), OBJECTID = as.numeric(toId), travel_time)
-```
-
-Make sure that the origin destination pairs are distinct in the travel time matrices:
 ```{r}
 ttm_transit <- ttm_transit %>%
-  distinct(UID, 
-           OBJECTID,
-           .keep_all = TRUE)
+  transmute(UID = as.numeric(fromId), OBJECTID = as.numeric(toId), travel_time) %>%
+  distinct(UID, OBJECTID, .keep_all = TRUE)
 ```
 
 ## Save data to disk

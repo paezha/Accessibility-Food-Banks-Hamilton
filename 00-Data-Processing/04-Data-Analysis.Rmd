@@ -24,6 +24,8 @@ load("output-data-files/foodbank_locations.RData")
 load("output-data-files/modes_less40k.RData")
 load("output-data-files/ttm_car.RData")
 load("output-data-files/ttm_transit.RData")
+load("output-data-files/ttm_transit_2020.RData")
+load("output-data-files/ttm_transit_2021.RData")
 load("output-data-files/ttm_walk.RData")
 #data("data_da_2016")
 #data("dwelling_network_points_2016")
@@ -35,46 +37,8 @@ load("output-data-files/ttm_walk.RData")
 #data("ttm_walk")
 ```
 
-## Remove entries in travel time matrices for inapplicable destinations
 
-As a first step, we will remove the computed travel times to the three Community Kitchen locations (IDs 1-3):
-```{r}
-ttm_car <- ttm_car %>%
-  filter(!between(OBJECTID, left = 1, right = 3))
-
-ttm_transit <- ttm_transit %>%
-  filter(!between(OBJECTID, left = 1, right = 3))
-
-ttm_walk <- ttm_walk %>%
-  filter(!between(OBJECTID, left = 1, right = 3))
-```
-
-## Quick check
-
-Distribution of the number of foodbanks that can be reached by each mode at the maximum travel time used in the calculation of the time matrices (180 min or 10,000 m).
-
-Car:
-```{r}
-ttm_car %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
-```
-
-All parcels can reach every foodbank within 180 min.
-
-Transit:
-```{r}
-ttm_transit %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
-```
-
-Half of all parcels can reach 49 foodbanks or more in 180 min or less.
-
-Walking:
-```{r}
-ttm_walk %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
-```
-
-Half of all parcels can reach 42 foodbanks or more in 180 min or less.
-
-## Prepare data
+# Prepare socioeconomic demographic data
 
 Join number of low income households per DA to dwellings and total number of residential units:
 ```{r}
@@ -126,6 +90,72 @@ dwelling_network_points_2016 <- dwelling_network_points_2016 %>%
          seniors = (seniors/residential_units) * Dwellings)
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Travel Scenario: 2020
+## Remove entries in travel time matrices for inapplicable destinations
+
+As a first step, we will remove the computed travel times to the three Community Kitchen locations (IDs 1-3):
+```{r}
+ttm_car <- ttm_car %>%
+  filter(!between(OBJECTID, left = 1, right = 3))
+
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  filter(!between(OBJECTID, left = 1, right = 3))
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
+  filter(!between(OBJECTID, left = 1, right = 3))
+
+ttm_walk <- ttm_walk %>%
+  filter(!between(OBJECTID, left = 1, right = 3))
+```
+
+## Quick check
+
+Distribution of the number of foodbanks that can be reached by each mode at the maximum travel time used in the calculation of the time matrices (180 min or 10,000 m).
+
+Car:
+```{r}
+ttm_car %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
+```
+
+All parcels can reach every foodbank within 180 min.
+
+Transit in 2020:
+```{r}
+ttm_transit_2020 %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
+```
+
+Half of all parcels can reach 52 foodbanks or more in 180 min or less. 
+
+Transit in 2021:
+
+```{r}
+ttm_transit_2021 %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
+```
+
+Half of all parcels can reach 49 foodbanks or more in 180 min or less.
+
+Walking:
+```{r}
+ttm_walk %>% group_by(UID) %>% summarize(fb_per_parcel = n()) %>% summary()
+```
+
+Half of all parcels can reach 42 foodbanks or more in 180 min or less.
+
+## Join Socioeconomic and Demographic Data
+
 Join the household data to the travel time matrices:
 ```{r}
 ttm_car <- ttm_car %>%
@@ -140,7 +170,19 @@ ttm_car <- ttm_car %>%
                             TAZUID),
             by = c("UID" = "ID"))
 
-ttm_transit <- ttm_transit %>%
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  left_join(dwelling_network_points_2016 %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            income_less40k,
+                            children,
+                            adults,
+                            seniors,
+                            DAUID, 
+                            TAZUID),
+            by = c("UID" = "ID"))
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
   left_join(dwelling_network_points_2016 %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
@@ -166,6 +208,7 @@ ttm_walk <- ttm_walk %>%
 ```
 
 Join the food bank data to the travel time matrices:
+
 ```{r}
 ttm_car <- ttm_car %>%
   left_join(foodbank_locations %>%
@@ -175,7 +218,15 @@ ttm_car <- ttm_car %>%
                             COVIDClose),
             by = c("OBJECTID" = "ID"))
 
-ttm_transit <- ttm_transit %>%
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  left_join(foodbank_locations %>%
+              st_drop_geometry() %>%
+              dplyr::select(ID, 
+                            TYPE,
+                            COVIDClose),
+            by = c("OBJECTID" = "ID"))
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
   left_join(foodbank_locations %>%
               st_drop_geometry() %>%
               dplyr::select(ID, 
@@ -198,7 +249,11 @@ ttm_car <- ttm_car %>%
   drop_na(TAZUID,
           income_less40k)
 
-ttm_transit <- ttm_transit %>%
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  drop_na(TAZUID,
+          income_less40k)
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
   drop_na(TAZUID,
           income_less40k)
 
@@ -234,7 +289,16 @@ ttm_car <- ttm_car %>%
                         p_walk),
             by = "TAZUID")
 
-ttm_transit <- ttm_transit %>%
+ttm_transit_2020 <- ttm_transit_2020 %>%
+  left_join(modes %>%
+              st_drop_geometry() %>%
+              transmute(TAZUID,
+                        p_car,
+                        p_transit,
+                        p_walk),
+            by = "TAZUID")
+
+ttm_transit_2021 <- ttm_transit_2021 %>%
   left_join(modes %>%
               st_drop_geometry() %>%
               transmute(TAZUID,
@@ -256,9 +320,22 @@ ttm_walk <- ttm_walk %>%
 ### Join Tables into Single TTM
 Join all tables:
 ```{r}
-ttm <- ttm_car %>%
+ttm_2020 <- ttm_car %>%
   rename(travel_time_car = travel_time) %>%
-  full_join(ttm_transit %>%
+  full_join(ttm_transit_2020 %>%
+              transmute(UID,
+                        OBJECTID,
+                        travel_time_transit = travel_time),
+            by = c("UID", "OBJECTID")) %>%
+  full_join(ttm_walk %>%
+              transmute(UID,
+                        OBJECTID,
+                        travel_time_walk = travel_time),
+            by = c("UID", "OBJECTID"))
+
+ttm_2021 <- ttm_car %>%
+  rename(travel_time_car = travel_time) %>%
+  full_join(ttm_transit_2021 %>%
               transmute(UID,
                         OBJECTID,
                         travel_time_transit = travel_time),
@@ -272,7 +349,13 @@ ttm <- ttm_car %>%
 
 Check the NAs in travel time table:
 ```{r}
-ttm %>% 
+ttm_2020 %>% 
+  filter(is.na(travel_time_transit)) %>%
+  select(travel_time_transit,
+         p_transit) %>%
+  summary()
+
+ttm_2021 %>% 
   filter(is.na(travel_time_transit)) %>%
   select(travel_time_transit,
          p_transit) %>%
@@ -281,7 +364,13 @@ ttm %>%
 
 What does this mean? Most DAs missing travel time by transit do not report trips by transit in the TTS. In some DAs there are trips by transit (p_transit != 0), but no foodbank can be reached by transit (travel_time_transit is NA). How many of these cases?
 ```{r}
-ttm %>% 
+ttm_2020 %>% 
+  filter(is.na(travel_time_transit) & p_transit > 0) %>%
+  select(travel_time_transit,
+         p_transit) %>%
+  summary()
+
+ttm_2021 %>% 
   filter(is.na(travel_time_transit) & p_transit > 0) %>%
   select(travel_time_transit,
          p_transit) %>%
@@ -290,13 +379,22 @@ ttm %>%
 
 It should be fine to replace the NAs with zeros, which multiplied by p_transit will return a zero (i.e., it is not possible to reach a foodbank by transit).
 ```{r}
-ttm <- ttm %>% 
+ttm_2020 <- ttm_2020 %>% 
+  mutate(travel_time_transit = replace_na(travel_time_transit, 0))
+
+ttm_2021 <- ttm_2021 %>% 
   mutate(travel_time_transit = replace_na(travel_time_transit, 0))
 ```
 
 Check the NAs in travel time by walk:
 ```{r}
-ttm %>% 
+ttm_2020 %>% 
+  filter(is.na(travel_time_walk)) %>%
+  select(travel_time_walk,
+         p_walk) %>%
+  summary()
+
+ttm_2021 %>% 
   filter(is.na(travel_time_walk)) %>%
   select(travel_time_walk,
          p_walk) %>%
@@ -305,7 +403,13 @@ ttm %>%
 
 What does this mean? Most DAs missing travel time by walking do not report trips by walking in the TTS. In some DAs there are trips by walking (p_walk != 0), but no foodbank can be reached by walk (travel_time_walk is NA). How many of these cases?
 ```{r}
-ttm %>% 
+ttm_2020 %>% 
+  filter(is.na(travel_time_walk) & p_walk > 0) %>%
+  select(travel_time_walk,
+         p_walk) %>%
+  summary()
+
+ttm_2021 %>% 
   filter(is.na(travel_time_walk) & p_walk > 0) %>%
   select(travel_time_walk,
          p_walk) %>%
@@ -314,37 +418,47 @@ ttm %>%
 
 Like with transit, it should be fine to replace the NAs with zeros, which multiplied by p_walk will return a zero (i.e., it is not possible to reach a foodbank by walking).
 ```{r}
-ttm <- ttm %>% 
+ttm_2020 <- ttm_2020 %>% 
+  mutate(travel_time_walk = replace_na(travel_time_walk, 0))
+
+ttm_2021 <- ttm_2021 %>% 
   mutate(travel_time_walk = replace_na(travel_time_walk, 0))
 ```
 
 Summary of the table after these operations:
 ```{r}
-summary(ttm)
+summary(ttm_2020)
+summary(ttm_2021)
 ```
 
 Calculate expected travel times by mode. These are the travel time by the mode multiplied by the probability of using the mode (which is proxied by the proportion of trips by mode in the DA from the TTS). The total expected travel time is the sum of the expected travel times by mode:
 ```{r}
-ttm <- ttm %>%
+ttm_2020 <- ttm_2020 %>%
+  mutate(e_travel_time_car = travel_time_car * p_car,
+         e_travel_time_transit = travel_time_transit * p_transit,
+         e_travel_time_walk = travel_time_walk * p_walk,
+         e_travel_time = e_travel_time_car + e_travel_time_transit + e_travel_time_walk)
+
+ttm_2021 <- ttm_2021 %>%
   mutate(e_travel_time_car = travel_time_car * p_car,
          e_travel_time_transit = travel_time_transit * p_transit,
          e_travel_time_walk = travel_time_walk * p_walk,
          e_travel_time = e_travel_time_car + e_travel_time_transit + e_travel_time_walk)
 ```
 
-What is the mean expected travel time for each parcel over all the foodbanks (open and closed)?
+What is the mean expected travel time for each parcel over all the foodbanks (open and closed) in 2020?
 ```{r}
-e_travel_time_parcel <- ttm %>% 
+e_travel_time_parcel_2020 <- ttm_2020 %>% 
   group_by(UID) %>%
   summarize(DAUID = first(DAUID),
             e_travel_time = mean(e_travel_time))
 
-summary(e_travel_time_parcel)
+summary(e_travel_time_parcel_2020)
 ```
 
 Join geometry for plotting:
 ```{r}
-e_travel_time_parcel <- e_travel_time_parcel %>%
+e_travel_time_parcel_2020 <- e_travel_time_parcel_2020 %>%
   left_join(dwelling_network_points_2016 %>%
               select(ID, geometry),
             by = c("UID" = "ID")) %>%
@@ -355,26 +469,34 @@ Plot:
 ```{r}
 ggplot() +
   geom_sf(data = hamilton_boundary) +
-  geom_sf(data = e_travel_time_parcel,
+  geom_sf(data = e_travel_time_parcel_2020,
           aes(color = e_travel_time),
           alpha = 0.3) + 
   scale_color_distiller(palette = "OrRd", direction = 1)
 ```
 
+
+
+
+
+
+
+
+
 What is the mean expected travel time for each parcel over all the foodbanks that did NOT close during COVID?
 ```{r}
-e_travel_time_parcel_2 <- ttm %>% 
+e_travel_time_parcel_2021 <- ttm_2021 %>% 
   filter(COVIDClose == "No") %>%
   group_by(UID) %>%
   summarize(DAUID = first(DAUID),
             e_travel_time = mean(e_travel_time))
 
-summary(e_travel_time_parcel_2)
+summary(e_travel_time_parcel_2021)
 ```
 
 Join geometry for plotting:
 ```{r}
-e_travel_time_parcel_2 <- e_travel_time_parcel_2 %>%
+e_travel_time_parcel_2021 <- e_travel_time_parcel_2021 %>%
   left_join(dwelling_network_points_2016 %>%
               select(ID, geometry),
             by = c("UID" = "ID")) %>%
@@ -385,7 +507,7 @@ Plot:
 ```{r}
 ggplot() +
   geom_sf(data = hamilton_boundary) +
-  geom_sf(data = e_travel_time_parcel_2,
+  geom_sf(data = e_travel_time_parcel_2021,
           aes(color = e_travel_time),
           alpha = 0.3) + 
   scale_color_distiller(palette = "OrRd", direction = 1)
@@ -393,9 +515,22 @@ ggplot() +
 
 Notice how expected travel time to all open food banks can _decrease_ with the closures! Food banks on average are a little bit closer, but there are _fewer_ of them, which will tend to increase the demand: 
 ```{r}
-summary(e_travel_time_parcel)
-summary(e_travel_time_parcel_2)
+summary(e_travel_time_parcel_2020)
+summary(e_travel_time_parcel_2021)
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Accessibility
 
@@ -411,7 +546,7 @@ Define a function for calculating accessibility using a binary impedance functio
 #' #add(1, 1)
 #' #add(10, 1)
 
-b2sfca <- function(ttm = ttm, threshold = threshold){
+b2sfca <- function(ttm, threshold){
   # calculate the impedance
   ttm <- ttm %>%
     dplyr::mutate(impedance_binary = ifelse(travel_time <= threshold, 1, 0))
@@ -466,7 +601,7 @@ b2sfca <- function(ttm = ttm, threshold = threshold){
 
 Calculate accessibility with a threshold of 15 min:
 ```{r}
-acc_15min <- ttm %>% 
+acc_15min <- ttm_2020 %>% 
   transmute(UID, OBJECTID, travel_time = e_travel_time, population = income_less40k, supply = 1) %>%
   b2sfca(threshold = 15)
 ```
@@ -485,7 +620,7 @@ threshold_seq <- seq(from = 2, to = 30, by = 2)
 accessibility_test <- data.frame(threshold = threshold_seq, 
                                  accessibility = numeric(length(threshold_seq)))
 for(i in 1:length(threshold_seq)){
-  results_test <-  ttm %>% 
+  results_test <-  ttm_2020 %>% 
   transmute(UID, OBJECTID, travel_time = e_travel_time, population = income_less40k, supply = 1) %>%
     b2sfca(threshold = i )
   accessibility_test$accessibility[i] <- sum(results_test$accessibility$accessibility)
@@ -501,7 +636,7 @@ acc_sensitivity
 
 30-min accessibility pre-covid:
 ```{r 30-min-pre-covid, include=FALSE}
-results_30min_pre <- ttm %>%
+results_30min_pre <- ttm_2020 %>%
   #dplyr::filter(COVIDClose == "No") %>%
   transmute(UID, 
             OBJECTID, 
@@ -513,7 +648,7 @@ results_30min_pre <- ttm %>%
 
 30-min accessibility during covid:
 ```{r 30-min-during-covid, include=FALSE}
-results_30min_covid <- ttm %>%
+results_30min_covid <- ttm_2021 %>%
   dplyr::filter(COVIDClose == "No") %>%
   transmute(UID, 
             OBJECTID, 
@@ -844,7 +979,7 @@ min_ttm_car_baseline <- ttm_car %>%
   ## Calculate weighted travel time:
   mutate(weighted_travel_time = travel_time * p_car)
 
-min_ttm_transit_baseline <- ttm_transit %>%
+min_ttm_transit_baseline <- ttm_transit_2020 %>%
   #dplyr::filter(COVIDClose == "No") %>%
   filter(TYPE != "Food Banks") %>%
   group_by(UID) %>%
@@ -982,7 +1117,7 @@ min_ttm_car_covid <- ttm_car %>%
   ## Calculate weighted travel time:
   mutate(weighted_travel_time = travel_time * p_car)
 
-min_ttm_transit_covid <- ttm_transit %>%
+min_ttm_transit_covid <- ttm_transit_2021 %>%
   dplyr::filter(COVIDClose == "No", TYPE != "Food Banks") %>%
   group_by(UID) %>%
   summarize(travel_time = min(travel_time),
