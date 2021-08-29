@@ -1,0 +1,21 @@
+---
+title: "CRediT Statement"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+bibliography: references.bib
+header-includes:
+  - \usepackage{changepage}
+---
+
+<!--
+Conceptualization $\cdot$ Methodology	$\cdot$ Software $\cdot$ Validation	$\cdot$ Formal analysis	$\cdot$ Investigation	$\cdot$ Resources	$\cdot$ Data Curation	$\cdot$ Writing - Original Draft $\cdot$ Writing - Review & Editing	$\cdot$ Visualization $\cdot$ Supervision $\cdot$ Project administration $\cdot$ Funding 
+-->
+
+Christopher D. Higgins: Conceptualization $\cdot$ Methodology	$\cdot$ Software $\cdot$ Validation	$\cdot$ Formal analysis	$\cdot$ Investigation	$\cdot$ Data Curation	$\cdot$ Writing - Original Draft $\cdot$ Visualization $\cdot$ Supervision
+
+Antonio Páez: Conceptualization $\cdot$ Methodology	$\cdot$ Software $\cdot$ Validation	$\cdot$ Formal analysis	$\cdot$ Investigation	$\cdot$ Data Curation	$\cdot$ Writing - Original Draft $\cdot$ Visualization
+
+Gyoorie Kim: Conceptualization $\cdot$ Investigation	$\cdot$ Data Curation	$\cdot$ Writing - Review & Editing
+
+Jue Wang: Conceptualization $\cdot$ Resources	$\cdot$ Writing - Review & Editing	$\cdot$ Supervision

@@ -10,6 +10,10 @@ header-includes:
 
 We would like to express our gratitude to the editor and anonymous reviewer for their time and attention to our submission.
 
+Please note that the revised code and data to reproduce the paper are available in an anonymous drive folder, and will be available in a public repository. 
+
+https://drive.google.com/drive/u/1/folders/1-l8hO1pMIqaBqf57j_M_BMrXhXFvrV2c
+
 ## Reviewer \#1:
 
 Reviewer \#1: Overall, I found the paper well-written and clear. I did have some concerns, primarily with the paper's framing and the conclusions drawn:
