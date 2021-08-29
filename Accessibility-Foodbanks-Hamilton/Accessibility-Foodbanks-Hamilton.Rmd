@@ -61,17 +61,17 @@ library(tidyverse)
 data(data_da_2016)
 data(dwelling_network_points_2016)
 data(foodbank_locations)
-#data(foodbank_table)
+data(foodbank_table)
 data(hamilton_boundary)
 data(modes_less40k)
 data(population_age_income)
 data(ttm_car)
-#data(ttm_transit)
+data(ttm_transit)
 data(ttm_walk)
 
 # load updated files manually
-load("./output-data-files/ttm_transit.RData")
-load("./output-data-files/foodbank_table.RData")
+#load("./output-data-files/ttm_transit.RData")
+#load("./output-data-files/foodbank_table.RData")
 ```
 
 ```{r remove-irrelevant-destinations, include=FALSE}
