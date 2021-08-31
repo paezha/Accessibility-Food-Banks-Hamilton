@@ -362,6 +362,10 @@ ttm <- ttm %>% left_join(ttm_long, by = c("UID", "OBJECTID")) %>%
   filter(!is.nan(e_travel_time))
 ```
 
+**Keywords**: Food insecurity; Emergency and community food services; Food banks; Accessibility; Balanced Floating Catchment Areas; COVID-19; Hamilton; Ontario; Reproducible research
+
+\newpage
+
 # Introduction
 
 Food insecurity is defined as an "inadequate or uncertain access to a sufficient quantity and/or adequate quality of food" due to a household's financial limitations [@enns2020experiences]. This condition has been associated with reductions in nutritional outcomes [@bhattacharya2004poverty; @kirkpatrick2008food; @olson1999nutrition] and negative physical and mental health impacts in children and adults [@elgar2021relative; @jones2017food; @ramsey2011food; @seligman2010food; @stuff2004household]. Over at least the past four decades food banks and related services have become an essential line of defense against food insecurity in Canadian communities [@riches2002food; @holmes2018nothing; @black2020examining; @tarasuk2020relationship]. In this respect, Canada is not unlike numerous other wealthy countries where a systematic dismantling of the welfare state took place in the intervening period [@tarasuk2014food].

@@ -24,9 +24,6 @@ address:
 footnote:
   - code: 1
     text: "Corresponding Author"
-abstract: |
-  In this paper we analyze the changes in accessibility to emergency and community food services before and during the COVID-19 pandemic in the City of Hamilton, Ontario. Many of these food services are the last line of support for households facing food insecurity; as such, their relevance cannot be ignored in the midst of the economic upheaval caused by the pandemic. Our analysis is based on the application of balanced floating catchment areas and concentrates on households with lower incomes (<CAD40,000, approximately the Low Income Cutoff Value for a city of Hamilton's size). We find that accessibility was low to begin with in suburban and exurban parts of the city; furthermore, about 14\% of locations originally available in Hamilton closed during the pandemic, further reducing accessibility. The impact of closures on the level of service of the remaining facilities, and on accessibility, was disproportionate, with system-wide losses exceeding 40\%. Those losses were geographically and demographically uneven. While every part of the city faced a reduction in accessibility, inner suburbs fared worse in terms of loss of accessibility. As well, children (age $\le 18$) appear to have been impacted the most.
-
 journal: "Social Science and Medicine"
 date: "`r Sys.Date()`"
 bibliography: references.bib
@@ -38,6 +35,3 @@ header-includes:
     - \usepackage[table]{xcolor}
 ---
 
-# CRediT author statement
-
-**Christopher D. Higgins**: Conceptualization $\cdot$ Methodology	$\cdot$ Software $\cdot$ Validation	$\cdot$ Formal analysis	$\cdot$ Investigation	$\cdot$ Data Curation	$\cdot$ Writing - Original Draft $\cdot$ Visualization $\cdot$ Supervision **Antonio Páez**: Conceptualization $\cdot$ Methodology	$\cdot$ Software $\cdot$ Validation	$\cdot$ Formal analysis	$\cdot$ Investigation	$\cdot$ Data Curation	$\cdot$ Writing - Original Draft $\cdot$ Visualization **Gyoorie Kim**: Conceptualization $\cdot$ Investigation	$\cdot$ Data Curation	$\cdot$ Writing - Review & Editing **Jue Wang**: Conceptualization $\cdot$ Resources	$\cdot$ Writing - Review & Editing	$\cdot$ Supervision

@@ -1,0 +1,14 @@
+---
+title: "Highlights"
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+bibliography: references.bib
+header-includes:
+  - \usepackage{changepage}
+---
+
+- We study the effect of the pandemic on emergency and community food services 
+- After the closure of some facilities level of service deteriorated system-wide
+- There was a loss of accessibility across the board
+- Accessibility deteriorated more rapidly for minors and older adults
