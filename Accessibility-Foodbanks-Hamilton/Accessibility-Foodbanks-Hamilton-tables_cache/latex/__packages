@@ -1,0 +1,17 @@
+base
+foodbanksHamilton
+kableExtra
+patchwork
+sf
+sp
+spData
+spdep
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats

@@ -57,6 +57,10 @@ library(spdep)
 library(tidyverse)
 ```
 
+```{r directory-for-figures, include=FALSE}
+ifelse(!dir.exists(file.path("./figures")), dir.create(file.path("./figures")), FALSE)
+```
+
 ```{r invoke-data, include=FALSE}
 data(data_da_2016)
 data(dwelling_network_points_2016)
@@ -636,6 +640,8 @@ fb_inset <- ggplot() +
         legend.position = "bottom")
 
 fb / fb_inset
+
+ggsave("./figures/figure-1.png")
 ```
 
 ```{r plot-low-income-households, echo=FALSE, fig.cap="\\label{fig:low-income-households}Number and proportion of households with incomes less than CAD40,000."}
@@ -676,6 +682,8 @@ p_lih <- ggplot() +
         legend.position = "bottom")
 
 lih / p_lih
+
+ggsave("./figures/figure-2.png")
 ```
 
 To implement the accessibility calculations, we must select a distance-decay function. In this task we find limited support in the literature, which is mostly silent on the travel patterns of people who visit food banks and community food services. For this reason, we opt for a simple cumulative opportunities function as follows:
@@ -701,6 +709,8 @@ acc_sensitivity <- ggplot(accessibility_test,
   theme_minimal()
 
 acc_sensitivity
+
+ggsave("./figures/figure-3.png")
 ```
 
 Using the 15-minute threshold, we find that the system-wide accessibility was `r round(sum(results_pre$accessibility$accessibility), 3)` (food banks/service locations per low income household in the city) before COVID-19, but declined to `r round(sum(results_covid$accessibility$accessibility), 3)` during the pandemic. It is striking that although almost `r round((1 - nrow(foodbank_locations %>% filter(COVIDClose == "Yes"))/nrow(foodbank_locations)) * 100)`% of facilities remained in operation during the pandemic, there was a loss of accessibility greater than `r abs(round((sum(results_covid$accessibility$accessibility) - sum(results_pre$accessibility$accessibility))/sum(results_pre$accessibility$accessibility) * 100))`%, suggesting the location of emergency and community food services plays an important role in serving those in need.
@@ -801,6 +811,8 @@ los_covid <- ggplot() +
         legend.position = "right")
 
 los_pre / los_covid
+
+ggsave("./figures/figure-4.png")
 ```
 
 ```{r plot-levels-of-service-changes, echo=FALSE, fig.cap="\\label{fig:levels-of-service-changes}Changes in levels of service at each facility from pre-COVID-19 to during COVID-19."}
@@ -900,6 +912,8 @@ lc_inset <- ggplot() +
         legend.position = "bottom")
 
 lc / lc_inset
+
+ggsave("./figures/figure-5.png")
 ```
 
 To further elucidate this issue, we now turn to the results of the accessibility analysis. As with the level of service of individual facilities, the general pattern of accessibility before and during the pandemic is similar. Figure \ref{fig:accessibility} reveals that, compared with the outer rural zones, the more urban zones of the city generally exhibit higher accessibility to food banks and food service locations. However, the pattern is not particularly smooth - this is largely attributable to the weighting of travel times by mode of transportation according to the trip patterns of low-income household respondents captured by the TTS. For example, in zones where low-income households make a high proportion of trips by walking, access to food bank locations by walking is afforded a concomitantly high weight in our calculations of travel time compared to transit or car travel. From this, highly-accessible locations result from a mix of characteristics: low-income households in locations where travel options that align with zonal modal split are available to connect them to food bank locations with high levels of service within 15 minutes. This seems to track with the experience of some users of these services, as reported by Smith-Carrier et al. [-@smith2017food].
@@ -972,6 +986,8 @@ acc_covid <- ggplot() +
         legend.position = "right")
 
 acc_pre / acc_covid
+
+ggsave("./figures/figure-6.png")
 ```
 
 ```{r accessibility-changes-by-taz, include=FALSE}
@@ -1050,6 +1066,8 @@ acc_change_inset <- ggplot() +
         legend.position = "bottom")
 
 acc_change / acc_change_inset
+
+ggsave("./figures/figure-7.png")
 ```
 
 ```{r weights-matrix, include=FALSE}
@@ -1113,6 +1131,8 @@ ggplot() +
   theme_minimal() +
   theme(axis.text = element_blank(),
         legend.position = "bottom")
+
+ggsave("./figures/figure-8.png")
 ```
 
 For the more suburban clusters of zones, the decrease in accessibility is derived from the closure of locations throughout the city reachable by car. In the cluster of central suburban zones for example, low-income households in the outer ring of zones that exhibit medium to high decreases in accessibility within this cluster appear to be largely auto-dependent in their tripmaking, which each each exhibiting between `r round(modes %>% st_drop_geometry() %>% filter(TAZUID %in% c(5143, 5135, 5121, 5110, 5102, 5092, 5063)) %>% summarize(min(p_car)) *100)`-`r round(modes %>% st_drop_geometry() %>% filter(TAZUID %in% c(5143, 5135, 5121, 5110, 5102, 5092, 5063)) %>% summarize(max(p_car)) *100)`% of their modal split for car trips. This results in the parcels within these zones having a large number of potentially accessible locations in the travel time matrix. But by extension, the change in accessibility over the pre- and during-COVID-19 time periods is affected not only by the closure of service locations proximate to the zones, but also the locations in the central city. The zone with the greatest decrease in accessibility within this cluster (-0.0009) has a high rate of car trips and connects to the most facility locations in total as well as those that stayed open or closed.
