@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Changes in accessibility to food banks and food services during COVID-19 and implications for low income populations in Hamilton, Ontario
+# Changes in accessibility to emergency and community food services during COVID-19 and implications for low income populations in Hamilton, Ontario
 
 <!-- badges: start -->
 <!-- badges: end -->
