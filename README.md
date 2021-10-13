@@ -11,7 +11,8 @@ Antonio Páez (McMaster University)
 Gyoorie Kim (University of Toronto Mississauga)  
 Jue Wang (University of Toronto Mississauga)
 
-Forthcoming in *Social Science and Medicine*
+Social Science and Medicine (2021)
+<https://doi.org/10.1016/j.socscimed.2021.114442>
 
 ## Abstract
 
@@ -160,8 +161,8 @@ recent regional travel survey from 2016. This paper follows reproducible
 research recommendations (see Brunsdon and Comber 2020), and the
 research was conducted using open source tools for transportation
 analysis (Lovelace 2021). The data and code needed to reproduce the
-analysis are available in an (anonymous) [Drive
-Folder](https://drive.google.com/drive/folders/1-l8hO1pMIqaBqf57j_M_BMrXhXFvrV2c?usp=sharing).
+analysis are available in a [public
+repository](https://github.com/paezha/Accessibility-Food-Banks-Hamilton).
 
 # Food Insecurity and Emergency and Communal Food Services in Canada
 
@@ -455,8 +456,8 @@ spatial accessibility to food banks and food services in the city.
 ## Data
 
 Data have been prepared for sharing in the form of an open data product
-(see Arribas-Bel et al. 2021) available in an (anonymous) [Drive
-Folder](https://drive.google.com/drive/folders/1-l8hO1pMIqaBqf57j_M_BMrXhXFvrV2c?usp=sharing).
+(see Arribas-Bel et al. 2021) available in a [public
+repository](https://github.com/paezha/Accessibility-Food-Banks-Hamilton).
 The contents of the data package are described next.
 
 ### Statistics Canada
